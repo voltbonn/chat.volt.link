@@ -303,10 +303,17 @@
       color: var(--purple);
       padding: 0;
     }
+    .chatbubble.assistant.error {
+      color: var(--red);
+    }
     .chatbubble.user {
       align-self: flex-end;
       background: var(--purple);
       color: var(--on-purple);
+    }
+    .chatbubble.user.error {
+      background: var(--red);
+      color: var(--on-red);
     }
     .chatbubble p {
       margin: 0;
@@ -396,7 +403,14 @@
         new_chatbubble.classList.add('chatbubble')
         new_chatbubble.classList.add(message.role)
 
-        let text = message.content
+        let text = ''
+        if (typeof message.content === 'string' && message.content.length > 0) {
+          text = message.content
+        }
+        if (typeof message.error === 'string' && message.error.length > 0) {
+          new_chatbubble.classList.add('error')
+          text = message.error
+        }
 
         // Make URLs clickable
         let url_regexp = /((?:https?):\/\/[a-zA-Z0-9][\w+\d+&@\-#\/%?=~_|!:,.;+]*)/gim;
@@ -405,6 +419,9 @@
         // Make emails clickable
         let email_regexp = /([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9_-]+)/gim;
         text = text.replace(email_regexp, '<a href="mailto:$1">$1</a>');
+
+        // replace \n with <br />
+        text = text.replace(/\n/g, '<br />')
 
         new_chatbubble.innerHTML = `<p>${text}</p>`
         new_messages_node.appendChild(new_chatbubble)
