@@ -1,5 +1,3 @@
-require('dotenv').config()
-
 const isDevEnvironment = process.env.environment === 'dev' || false
 const path = require('path')
 
@@ -43,13 +41,13 @@ function checkOrigin(origin) {
 
 const app = express()
 
-// set up rate limiter:
-app.use(rateLimit({
-  windowMs: 1 * 60 * 1000, // 1 minute
-  max: 30, // Limit each IP to 30 requests per `window` (here, per 1 minute)
-  standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
-  legacyHeaders: false, // Disable the `X-RateLimit-*` headers
-})) // apply rate limiter to all requests
+// // set up rate limiter:
+// app.use(rateLimit({
+//   windowMs: 1 * 60 * 1000, // 1 minute
+//   max: 30, // Limit each IP to 30 requests per `window` (here, per 1 minute)
+//   standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
+//   legacyHeaders: false, // Disable the `X-RateLimit-*` headers
+// })) // apply rate limiter to all requests
 
 app.use(express.json())
 
@@ -81,9 +79,17 @@ app.options("/*", function (req, res, next) {
   }
 })
 
-app.post('/api/chat', async (req, res) => {
-  // get data from req.body
 
+// set up rate limiter:
+app.use('/api/chat', rateLimit({
+  windowMs: 86400 * 1000, // 1 day
+  max: 120, // Limit each IP to X requests per `window`
+  message: 'Too many requests from this IP. We only allow 120 requests per IP per day.',
+  standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
+  legacyHeaders: false, // Disable the `X-RateLimit-*` headers
+})) // apply rate limiter to all requests
+
+app.post('/api/chat', async (req, res) => {
   let messages = req.body.messages || []
   if (Array.isArray(messages) === false) {
     res.json({
@@ -107,6 +113,14 @@ app.post('/api/chat', async (req, res) => {
     res.json({
       response: null,
       error: 'Plase enter a text.'
+    })
+    return
+  }
+
+  if (JSON.stringify(messages).length > 2000) {
+    res.json({
+      response: null,
+      error: 'The text is too long.'
     })
     return
   }
@@ -137,6 +151,7 @@ app.post('/api/chat', async (req, res) => {
 
     res.json({
       response: full_text,
+      error: null,
     })
   } catch (error) {
     console.error(error)
