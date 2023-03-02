@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8">
   <title>Volt FAQ Chat</title>
@@ -14,254 +15,319 @@
   <link rel="manifest" href="/manifest.json" />
 
   <style>
-:root {
-  --purple-lighter: #e6ccff;
-  --purple-light: #b58dd9;
-  --purple: #502379;
-  --purple-dark: #19022d;
-  --purple-darker: #0d0019;
+    :root {
+      --purple-lighter: #e6ccff;
+      --purple-light: #b58dd9;
+      --purple: #502379;
+      --purple-dark: #19022d;
+      --purple-darker: #0d0019;
 
-  --green-lighter: #d1ffe9;
-  --green-light: #94fcc9;
-  --green: #1bbe6f;
-  --green-dark: #005029;
-  --green-darker: #00190d;
+      --green-lighter: #d1ffe9;
+      --green-light: #94fcc9;
+      --green: #1bbe6f;
+      --green-dark: #005029;
+      --green-darker: #00190d;
 
-  --red-lighter: #ffd6cc;
-  --red-light: #ffad93;
-  --red: #e63e12;
-  --red-dark: #641400;
-  --red-darker: #190500;
+      --red-lighter: #ffd6cc;
+      --red-light: #ffad93;
+      --red: #e63e12;
+      --red-dark: #641400;
+      --red-darker: #190500;
 
-  --yellow-lighter: #fff1cc;
-  --yellow-light: #ffe787;
-  --yellow: #fdc220;
-  --yellow-dark: #926f0d;
-  --yellow-darker: #191300;
+      --yellow-lighter: #fff1cc;
+      --yellow-light: #ffe787;
+      --yellow: #fdc220;
+      --yellow-dark: #926f0d;
+      --yellow-darker: #191300;
 
-  --blue-lighter: #dff5ff;
-  --blue-light: #c3f1ff;
-  --blue: #82d0f4;
-  --blue-dark: #30708e;
-  --blue-darker: #031219;
+      --blue-lighter: #dff5ff;
+      --blue-light: #c3f1ff;
+      --blue: #82d0f4;
+      --blue-dark: #30708e;
+      --blue-darker: #031219;
 
-  --gray-lighter: #ffffff;
-  --gray-light: #edecee;
-  --gray: #c2bfc4;
-  --gray-dark: #726f76;
-  --gray-darker: #181719;
+      --gray-lighter: #ffffff;
+      --gray-light: #edecee;
+      --gray: #c2bfc4;
+      --gray-dark: #726f76;
+      --gray-darker: #181719;
 
-  --on-purple-lighter: var(--purple-darker);
-  --on-purple-light: var(--purple-darker);
-  --on-purple: var(--gray-lighter);
-  --on-purple-dark: var(--gray-lighter);
-  --on-purple-darker: var(--gray-lighter);
+      --on-purple-lighter: var(--purple-darker);
+      --on-purple-light: var(--purple-darker);
+      --on-purple: var(--gray-lighter);
+      --on-purple-dark: var(--gray-lighter);
+      --on-purple-darker: var(--gray-lighter);
 
-  --on-green-lighter: var(--green-darker);
-  --on-green-light: var(--green-darker);
-  --on-green: var(--gray-lighter);
-  --on-green-dark: var(--gray-lighter);
-  --on-green-darker: var(--gray-lighter);
+      --on-green-lighter: var(--green-darker);
+      --on-green-light: var(--green-darker);
+      --on-green: var(--gray-lighter);
+      --on-green-dark: var(--gray-lighter);
+      --on-green-darker: var(--gray-lighter);
 
-  --on-red-lighter: var(--red-darker);
-  --on-red-light: var(--red-darker);
-  --on-red: var(--gray-lighter);
-  --on-red-dark: var(--gray-lighter);
-  --on-red-darker: var(--gray-lighter);
+      --on-red-lighter: var(--red-darker);
+      --on-red-light: var(--red-darker);
+      --on-red: var(--gray-lighter);
+      --on-red-dark: var(--gray-lighter);
+      --on-red-darker: var(--gray-lighter);
 
-  --on-yellow-lighter: var(--yellow-darker);
-  --on-yellow-light: var(--yellow-darker);
-  --on-yellow: var(--yellow-darker);
-  --on-yellow-dark: var(--gray-lighter);
-  --on-yellow-darker: var(--gray-lighter);
+      --on-yellow-lighter: var(--yellow-darker);
+      --on-yellow-light: var(--yellow-darker);
+      --on-yellow: var(--yellow-darker);
+      --on-yellow-dark: var(--gray-lighter);
+      --on-yellow-darker: var(--gray-lighter);
 
-  --on-blue-lighter: var(--blue-darker);
-  --on-blue-light: var(--blue-darker);
-  --on-blue: var(--blue-darker);
-  --on-blue-dark: var(--gray-lighter);
-  --on-blue-darker: var(--gray-lighter);
+      --on-blue-lighter: var(--blue-darker);
+      --on-blue-light: var(--blue-darker);
+      --on-blue: var(--blue-darker);
+      --on-blue-dark: var(--gray-lighter);
+      --on-blue-darker: var(--gray-lighter);
 
-  --on-gray-lighter: var(--gray-darker);
-  --on-gray-light: var(--gray-darker);
-  --on-gray: var(--gray-darker);
-  --on-gray-dark: var(--gray-lighter);
-  --on-gray-darker: var(--gray-lighter);
+      --on-gray-lighter: var(--gray-darker);
+      --on-gray-light: var(--gray-darker);
+      --on-gray: var(--gray-darker);
+      --on-gray-dark: var(--gray-lighter);
+      --on-gray-darker: var(--gray-lighter);
 
-  --alpha-more: 0.8;
-  --alpha: 0.6;
-  --alpha-less: 0.2;
+      --alpha-more: 0.8;
+      --alpha: 0.6;
+      --alpha-less: 0.2;
 
-  --blur: 20px;
+      --blur: 20px;
 
-  --timing: .2s ease-in-out;
+      --timing: .2s ease-in-out;
 
-  --font-family: 'Ubuntu', 'Noto Kufi Arabic', 'Geeza Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
-  --font-family-code: 'Ubuntu Mono', 'Noto Kufi Arabic', 'Geeza Pro', 'Courier New', Courier, monospace;
+      --font-family: 'Ubuntu', 'Noto Kufi Arabic', 'Geeza Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+      --font-family-code: 'Ubuntu Mono', 'Noto Kufi Arabic', 'Geeza Pro', 'Courier New', Courier, monospace;
 
-  --basis: 1rem;
-  --basis_x0_5: calc(var(--basis) * 0.5);
-  --basis_x2: calc(var(--basis) * 2);
-  --basis_x4: calc(var(--basis) * 4);
-  --basis_x8: calc(var(--basis) * 8);
-}
+      --basis: 1rem;
+      --basis_x0_5: calc(var(--basis) * 0.5);
+      --basis_x2: calc(var(--basis) * 2);
+      --basis_x4: calc(var(--basis) * 4);
+      --basis_x8: calc(var(--basis) * 8);
+    }
 
-:root {
-  --font-family-website-title: var(--font-family);
-  --font-family-headline: var(--font-family);
-  --font-family-text: var(--font-family);
-  --font-family-button: var(--font-family);
-}
+    :root {
+      --font-family-website-title: var(--font-family);
+      --font-family-headline: var(--font-family);
+      --font-family-text: var(--font-family);
+      --font-family-button: var(--font-family);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
 
 
-body {
-  width: 600px;
-  max-width: 100%;
-  padding: 20px;
-  margin: 0 auto;
-}
+    body {
+      width: 600px;
+      max-width: 100%;
+      padding: 20px;
+      margin: 0 auto;
+      margin-block-end: 33vh;
+    }
 
-h1 {
-  font-family: var(--font-family-website-title);
-  font-weight: bold;
-  font-size: 60px;
-  letter-spacing: -1.5px;
-  line-height: 1.1;
-}
-@media (max-width: 700px) {
-  h1 {
-    font-size: 40px;
-  }
-}
+    h1 {
+      font-family: var(--font-family-website-title);
+      font-weight: bold;
+      font-size: 60px;
+      letter-spacing: -1.5px;
+      line-height: 1.1;
+    }
 
-body, p {
-  font-family: var(--font-family-text);
-  font-weight: normal;
-  font-size: 18px;
-  letter-spacing: 0.5px;
-  line-height: 1.2;
-  color: var(--purple);
-}
+    @media (max-width: 700px) {
+      h1 {
+        font-size: 40px;
+      }
+    }
 
-code {
-  font-family: var(--font-family-code);
-  font-size: 19px;
-  white-space: break-spaces;
-}
-textarea {
-  width: 100%;
-  min-height: 80px;
-  padding: 10px;
-  resize: vertical;
-  font-family: inherit;
-  font-size: inherit;
-  color: inherit;
-  border-radius: 0;
-  border: none;
-  outline: none;
-  box-shadow: 0 0 0 1px var(--purple);
-	transition: box-shadow 0.2s ease;
-}
-textarea:hover {
-  box-shadow: 0 0 0 2px var(--purple);
-}
-textarea:focus {
-  box-shadow: 0 0 0 5px var(--purple);
-}
+    body,
+    p {
+      font-family: var(--font-family-text);
+      font-weight: normal;
+      font-size: 18px;
+      letter-spacing: 0.5px;
+      line-height: 1.2;
+      color: var(--purple);
+    }
+    .caption {
+      font-size: 14px;
+      margin: 0;
+      color: var(--gray);
+    }
 
-button {
-  font-family: var(--font-family-button);
-  text-decoration: none;
+    code {
+      font-family: var(--font-family-code);
+      font-size: 19px;
+      white-space: break-spaces;
+    }
 
-  font-weight: inherit;
-  font-size: inherit;
-  letter-spacing: inherit;
+    textarea {
+      width: 100%;
+      min-height: 80px;
+      padding: 15px;
+      resize: vertical;
+      font-family: inherit;
+      font-size: inherit;
+      color: inherit;
+      border-radius: 0;
+      border: none;
+      outline: none;
+      box-shadow: inset 0 0 0 1px var(--gray);
+      transition: box-shadow 0.2s ease;
+    }
 
-  /* text-transform: uppercase; */
-  border: 0;
-  font-weight: bold;
-  cursor: pointer;
+    textarea:hover {
+      box-shadow: inset 0 0 0 2px var(--purple);
+    }
 
-	padding: 10px 20px;
-	border-radius: 0;
-	font-weight: bold;
-  box-shadow: 0 0 0 0 var(--purple-dark);
-	transition: box-shadow 0.2s ease;
-}
-button {
-	color: var(--text-color);
-	fill: var(--text-color);
-	background: var(--background-color);
-}
-button.text {
-	color: var(--background-color);
-	fill: var(--background-color);
-	background: var(--text-color);
-}
-button {
-  --background-color: var(--purple);
-  --text-color: var(--on-purple);
-}
-button.red {
-  --background-color: var(--red);
-  --text-color: var(--on-red);
-}
-button.blue {
-  --background-color: var(--blue-dark);
-  --text-color: var(--on-blue-dark);
-}
-button.green {
-  --background-color: var(--green);
-  --text-color: var(--on-green);
-}
-button.yellow {
-  --background-color: var(--yellow-dark);
-  --text-color: var(--on-yellow-dark);
-}
-button.small {
-  padding: 5px 10px;
-  font-size: 14px;
-}
-button[data-selected="true"] {
-  box-shadow: 0 0 0 2px var(--background-color);
-}
-button:not(:disabled):hover {
-  box-shadow: 0 0 0 2px var(--background-color);
-	text-decoration: none;
-}
-button.small:not(:disabled):hover {
-  box-shadow: 0 0 0 2px var(--background-color);
-}
-button:not(:disabled):active,
-button:not(:disabled):focus,
-button:not(:disabled).active,
-a.active button:not(:disabled) {
-  box-shadow: 0 0 0 0 var(--background-color);
-	text-decoration: none;
-}
-button:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
+    textarea:focus {
+      box-shadow: inset 0 0 0 5px var(--purple);
+    }
+
+    button {
+      font-family: var(--font-family-button);
+      text-decoration: none;
+
+      font-weight: inherit;
+      font-size: inherit;
+      letter-spacing: inherit;
+
+      /* text-transform: uppercase; */
+      border: 0;
+      font-weight: bold;
+      cursor: pointer;
+
+      padding: 10px 20px;
+      border-radius: 0;
+      font-weight: bold;
+      box-shadow: 0 0 0 0 var(--purple-dark);
+      transition: box-shadow 0.2s ease;
+    }
+
+    button {
+      color: var(--text-color);
+      fill: var(--text-color);
+      background: var(--background-color);
+    }
+
+    button.text {
+      color: var(--background-color);
+      fill: var(--background-color);
+      background: var(--text-color);
+    }
+
+    button {
+      --background-color: var(--purple);
+      --text-color: var(--on-purple);
+    }
+
+    button.red {
+      --background-color: var(--red);
+      --text-color: var(--on-red);
+    }
+
+    button.blue {
+      --background-color: var(--blue-dark);
+      --text-color: var(--on-blue-dark);
+    }
+
+    button.green {
+      --background-color: var(--green);
+      --text-color: var(--on-green);
+    }
+
+    button.yellow {
+      --background-color: var(--yellow-dark);
+      --text-color: var(--on-yellow-dark);
+    }
+
+    button.small {
+      padding: 5px 10px;
+      font-size: 14px;
+    }
+
+    button[data-selected="true"] {
+      box-shadow: 0 0 0 2px var(--background-color);
+    }
+
+    button:not(:disabled):hover {
+      box-shadow: 0 0 0 2px var(--background-color);
+      text-decoration: none;
+    }
+
+    button.small:not(:disabled):hover {
+      box-shadow: 0 0 0 2px var(--background-color);
+    }
+
+    button:not(:disabled):active,
+    button:not(:disabled):focus,
+    button:not(:disabled).active,
+    a.active button:not(:disabled) {
+      box-shadow: 0 0 0 0 var(--background-color);
+      text-decoration: none;
+    }
+
+    a {
+      text-decoration: underline;
+      color: inherit;
+    }
+    a:hover,
+    a:active,
+    a:focus,
+    a:visited {
+      text-decoration: double underline;
+      color: inherit;
+    }
+
+
+    button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .messages {
+      display: flex;
+      flex-direction: column;
+    }
+    .chatbubble {
+      position: relative;
+      display: inline-block;
+      padding: 10px;
+      margin-block-end: 10px;
+      max-width: 80%;
+      word-wrap: break-word;
+    }
+    .chatbubble.assistant {
+      align-self: flex-start;
+      background: var(--on-purple);
+      color: var(--purple);
+      padding: 0;
+    }
+    .chatbubble.user {
+      align-self: flex-end;
+      background: var(--purple);
+      color: var(--on-purple);
+    }
+    .chatbubble p {
+      margin: 0;
+      color: inherit;
+    }
+
   </style>
 </head>
+
 <body>
   <h1>Volt FAQ Chat</h1>
   <p><strong>The chat bot is focused on content for Volt Potsdam in Germany, but it also has some generell information about Volt.</strong></p>
-  <p>
-    You can ask the chat under /api/chat<br/>
-    Send a json object like the following via POST.
-  </p>
-  <pre><code id="messages">…loading</code></pre>
-  <p>It will return a json object like the following.</p>
-  <pre><code id="response">…loading</code></pre>
-
+  <div class="messages" id="messages"></div>
   <textarea id="new_message" rows="1" cols="50" placeholder="Type your message here...">What is Volt?</textarea>
   <br />
+  <p class="caption">Die eingegebenen Daten werden an Server der Firma OpenAI in Amerika gesendet. Es werden keine Metadaten über dich mitgeschickt.</p>
   <br />
-  <button class="text green" id="send_message">Send</button> or use the Enter key
-    
+  <button class="green" id="send_message">Send</button> or use the Enter key
+
   <script>
-    
+
     async function postData(url = '', data = {}) {
       // Default options are marked with *
       try {
@@ -290,27 +356,54 @@ button:disabled {
   
   
     const messages_node = document.getElementById('messages')
-    const response_node = document.getElementById('response')
     const new_message_node = document.getElementById('new_message')
     const send_message_node = document.getElementById('send_message')
   
     let messages = [
       {
+        "role": "assistant",
+        "content": "Hi! Ich beantworte dir gerne Fragen zu Volt :D"
+      },
+      {
         "role": "user",
-        "content": "Hi, bei was kannst du mir helfen?"
+        "content": "Wer leitet Potsdam"
       },
       {
         "role": "assistant",
-        "content": "Hallo! Ich kann dir Fragen zu Volt beantworten."
+        "content": "Die City-Leads von Volt Potsdam sind Thomas Rosen und Georg Sichardt. Wenn du weitere Informationen zu Volt Potsdam haben möchtest, empfehle ich dir, die Website https://www.voltbrandenburg.org/potsdam zu besuchen."
+      },
+      {
+        "role": "user",
+        "content": "gib mir ne email addresse"
+      },
+      {
+        "role": "assistant",
+        "content": "Volt Brandenburg hat die Email Adresse: brandenburg@volteuropa.org. Über diese kannst du auch Städte in Brandenburg erreichen. Wenn du spezifisch in Potsdam Kontakt aufnehmen möchtest, kannst du eine E-Mail an potsdam@voltdeutschland.org senden.D"
       }
     ]
-    let response = {
-      response: 'Hallo! Ich kann dir Fragen zu Volt beantworten.',
-      error: null,
-    }
-    function update_html() {
-      messages_node.innerText = JSON.stringify({ messages }, null, 2)
-      response_node.innerText = JSON.stringify(response, null, 2)
+    function display_messages() {
+      const new_messages_node = document.createElement('div')
+      
+      for (const message of messages) {
+        const new_chatbubble = document.createElement('div')
+        new_chatbubble.classList.add('chatbubble')
+        new_chatbubble.classList.add(message.role)
+
+        let text = message.content
+
+        // Make URLs clickable
+        let url_regexp = /((?:https?):\/\/[a-zA-Z0-9][\w+\d+&@\-#\/%?=~_|!:,.;+]*)/gim;
+        text = text.replace(url_regexp, '<a href="$1" target="_blank">$1</a>');
+
+        // Make emails clickable
+        let email_regexp = /([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9_-]+)/gim;
+        text = text.replace(email_regexp, '<a href="mailto:$1">$1</a>');
+
+        new_chatbubble.innerHTML = `<p>${text}</p>`
+        new_messages_node.appendChild(new_chatbubble)
+      }
+
+      messages_node.innerHTML = new_messages_node.innerHTML
     }
 
     function is_dev() {
@@ -327,7 +420,7 @@ button:disabled {
         .then(new_response => {
           response = new_response
           messages.push({ role: 'assistant', content: new_response.response })
-          update_html()
+          display_messages()
         
           // scroll to the new_message_node
           new_message_node.scrollIntoView({ behavior: 'smooth', block: 'end' })
@@ -346,7 +439,7 @@ button:disabled {
         .replace(/[\s\n\r]+$/gm, '') // remove lines and whitespace at the end
     
       messages.push({ role: 'user', content: new_message })
-      messages_node.innerText = JSON.stringify({ messages }, null, 2)
+      display_messages()
       new_message_node.value = ''
       send_messages()
     }
@@ -361,7 +454,8 @@ button:disabled {
       }
     })
   
-    update_html()
+    display_messages()
   </script>
 </body>
+
 </html>
