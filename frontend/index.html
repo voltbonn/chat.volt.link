@@ -1,0 +1,115 @@
+<style>
+  body {
+    font-family: Ubuntu, sans-serif;
+    color: #502379;
+    font-size: 16px;
+    width: 600px;
+    max-width: 100%;
+    padding: 20px;
+    margin: 0 auto;
+  }
+  code {
+    font-family: "Ubuntu Mono", monospace;
+    font-size: 17px;
+    white-space: break-spaces;
+  }
+  textarea {
+    width: 100%;
+    min-height: 80px;
+    padding: 10px;
+    resize: vertical;
+    font-family: inherit;
+    font-size: inherit;
+    color: inherit;
+  }
+</style>
+<h1>Volt FAQ Chat</h1>
+<p>You can ask the chat under /api/chat</p>
+<p>Send a json object like the following via POST.</p>
+<pre><code id="messages">…loading</code></pre>
+<p>It will return a json object like the following.</p>
+<pre><code id="response">…loading</code></pre>
+
+<textarea id="new_message" rows="1" cols="50" placeholder="Type your message here...">What is Volt?</textarea>
+<br />
+<br />
+<button id="send_message">Send</button> or use [Shift+Enter]
+
+<script>
+  
+  async function postData(url = '', data = {}) {
+    // Default options are marked with *
+    const response = await fetch(url, {
+      method: 'POST',
+      mode: 'cors',
+      cache: 'no-cache',
+      credentials: 'same-origin',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      referrerPolicy: 'no-referrer',
+      body: JSON.stringify(data),
+    })
+    return response.json() // parses JSON response into native JavaScript objects
+  }
+
+
+  const messages_node = document.getElementById('messages')
+  const response_node = document.getElementById('response')
+  const new_message_node = document.getElementById('new_message')
+  const send_message_node = document.getElementById('send_message')
+
+  let messages = [
+    { role: 'user', content: 'Hi, bei was kannst du mir helfen?' },
+    // { role: 'assistant', content: 'Who can I help you?' },
+    // { role: 'user', content: 'What is Volt?' },
+  ]
+  let response = {
+    response: '',
+    error: '',
+  }
+
+  function send_messages() {
+    postData('http://0.0.0.0:4008/api/chat', { messages })
+      .then(new_response => {
+        response = new_response
+        messages.push({ role: 'assistant', content: new_response.response })
+        messages_node.innerText = JSON.stringify({ messages }, null, 2)
+        response_node.innerText = JSON.stringify(new_response, null, 2)
+
+        // scroll to the new_message_node
+        new_message_node.scrollIntoView({ behavior: 'smooth', block: 'end' })
+        // focus new_message_node
+        new_message_node.focus()
+      });
+  }
+  function use_text_input() {
+    // delete the last message if it's from the user
+    if (messages[messages.length - 1].role === 'user') {
+      messages.pop()
+    }
+
+    const new_message = new_message_node.value
+      .replace(/^[\s\n\r]+/gm, '') // remove lines and whitespace at the beginning
+      .replace(/[\s\n\r]+$/gm, '') // remove lines and whitespace at the end
+
+    messages.push({ role: 'user', content: new_message })
+    messages_node.innerText = JSON.stringify({ messages }, null, 2)
+    new_message_node.value = ''
+    send_messages()
+  }
+
+  send_message_node.addEventListener('click', use_text_input)
+
+  // fire use_text_input when pressing the shift and enter key together
+
+
+  new_message_node.addEventListener('keyup', function(event) {
+    if (event.shiftKey === true && event.key === 'Enter') {
+      event.preventDefault()
+      use_text_input()
+    }
+  })
+  send_messages()
+
+</script>
