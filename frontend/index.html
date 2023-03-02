@@ -313,9 +313,18 @@ button:disabled {
       messages_node.innerText = JSON.stringify({ messages }, null, 2)
       response_node.innerText = JSON.stringify(response, null, 2)
     }
+
+    function is_dev() {
+      return window.location.hostname === 'localhost' || window.location.hostname === '0.0.0.0'
+    }
   
     function send_messages() {
-      postData('http://0.0.0.0:4008/api/chat', { messages })
+      const url = (
+        is_dev()
+          ? 'http://0.0.0.0:4009/api/chat'
+          : 'https://chat.volt.link/api/chat'
+      )
+      postData(url, { messages })
         .then(new_response => {
           response = new_response
           messages.push({ role: 'assistant', content: new_response.response })
