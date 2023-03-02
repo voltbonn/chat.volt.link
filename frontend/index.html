@@ -320,11 +320,15 @@
   <h1>Volt FAQ Chat</h1>
   <p><strong>The chat bot is focused on content for Volt Potsdam in Germany, but it also has some generell information about Volt.</strong></p>
   <div class="messages" id="messages"></div>
-  <textarea id="new_message" rows="1" cols="50" placeholder="Type your message here...">What is Volt?</textarea>
-  <br />
-  <p class="caption">Die eingegebenen Daten werden an Server der Firma OpenAI in Amerika gesendet. Es werden keine Metadaten über dich mitgeschickt.</p>
-  <br />
-  <button class="green" id="send_message">Send</button> or use the Enter key
+  <div id="input_box">
+    <textarea id="new_message" rows="1" cols="50" placeholder="Was möchtest du über Volt wissen?">What is Volt?</textarea>
+    <br />
+    <p class="caption">Die eingegebenen Daten werden an Server der Firma OpenAI in Amerika gesendet. Es werden keine Metadaten über dich mitgeschickt.</p>
+    <br />
+    <button class="green" id="send_message">Send</button> or use the Enter key
+    <br />
+    <br />
+  </div>
 
   <script>
 
@@ -358,29 +362,9 @@
     const messages_node = document.getElementById('messages')
     const new_message_node = document.getElementById('new_message')
     const send_message_node = document.getElementById('send_message')
+    const input_box_node = document.getElementById('input_box')
   
-    let messages = [
-      {
-        "role": "assistant",
-        "content": "Hi! Ich beantworte dir gerne Fragen zu Volt :D"
-      },
-      {
-        "role": "user",
-        "content": "Wer leitet Potsdam"
-      },
-      {
-        "role": "assistant",
-        "content": "Die City-Leads von Volt Potsdam sind Thomas Rosen und Georg Sichardt. Wenn du weitere Informationen zu Volt Potsdam haben möchtest, empfehle ich dir, die Website https://www.voltbrandenburg.org/potsdam zu besuchen."
-      },
-      {
-        "role": "user",
-        "content": "gib mir ne email addresse"
-      },
-      {
-        "role": "assistant",
-        "content": "Volt Brandenburg hat die Email Adresse: brandenburg@volteuropa.org. Über diese kannst du auch Städte in Brandenburg erreichen. Wenn du spezifisch in Potsdam Kontakt aufnehmen möchtest, kannst du eine E-Mail an potsdam@voltdeutschland.org senden.D"
-      }
-    ]
+    let messages = []
     function display_messages() {
       const new_messages_node = document.createElement('div')
       
@@ -423,7 +407,7 @@
           display_messages()
         
           // scroll to the new_message_node
-          new_message_node.scrollIntoView({ behavior: 'smooth', block: 'end' })
+          input_box_node.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'nearest' })
           // focus new_message_node
           new_message_node.focus()
         });
