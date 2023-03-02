@@ -448,13 +448,6 @@
       if (new_message.length === 0) {
         return
       }
-    
-      // delete the last message if it's from the user
-      if (messages.length > 0) {
-        if (messages[messages.length - 1].role === 'user') {
-          messages.pop()
-        }
-      }
 
       messages.push({ role: 'user', content: new_message })
       display_messages()
