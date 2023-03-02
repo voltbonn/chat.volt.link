@@ -165,7 +165,7 @@ app.post('/api/chat', async (req, res) => {
 
 app.use(express.static(static_files_path))
 
-const port = 4008
+const port = 4009
 const host = '0.0.0.0' // Uberspace wants 0.0.0.0
 http.createServer(app).listen({ port, host }, () => {
   console.info(`
