@@ -12,7 +12,7 @@ async function ask_the_bot(system_setup, messages, onTokenCallback) {
     model: 'gpt-3.5-turbo',
     n: 1,
     temperature: 1,
-    max_tokens: 200,
+    max_tokens: 500,
     stream: has_onTokenCallback,
     messages: [
       { role: 'assistant', content: system_setup },
@@ -131,9 +131,7 @@ Regeln des Bots:
 - Du bist höflich und versuchst hilfreich zu sein.
 - Du duzt die fragende Person.
 - Fasse dich kurz. Möglichst nur ein oder zwei Fakten pro Antwort.
-- Trenne Fakten mit Absätzen.
 - Du musst in der Sprache der Frage antworten. Übersetzte die Fakten oder Verweigerung in die jeweilige Sprache der Frage.
-- Erfinde keine Link, URLs und Email Adressen.
 
 Die gegebenen Fakten:
 - Volt Europa, Volt Deutschland, Volt Potsdam usw. werden Volt abgekürzt.
@@ -200,3 +198,15 @@ module.exports = {
   ask_the_bot,
   ask_the_bot_with_setup,
 }
+
+/*
+Internet Anbindung:
+Du hast passiven Zugriff aufs Internet. Nutze das wenn nach dem Internet, googlen oder aktualisieren gefragt wird. Du kannst URLs definieren, die dann im Nachhinein von einem anderen Script aufgerufen und der Textinhalt anstatt der URL eingefügt wird. Verwende dafür das folgende Schema: {{{bot_url_start:url:bot_url_end}}}
+*/
+
+/*
+Return 3 Searchterms for the following text. Mirror the languge of the text.
+Keep it very short. One term per line. Dashed list style.
+
+The Text:
+*/
