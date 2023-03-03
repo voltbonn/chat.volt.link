@@ -14,6 +14,8 @@
   <link rel="apple-touch-icon" href="/volt-logo-white-192.png" />
   <link rel="manifest" href="/manifest.json" />
 
+  <script async defer data-website-id="81c67243-c55c-476c-ada6-a9d97324d731" src="https://umami.volteuropa.org/umami.js" data-domains="chat.volt.link"></script>
+
   <style>
     :root {
       --purple-lighter: #e6ccff;
@@ -488,6 +490,10 @@
 
       if (new_message.length === 0) {
         return
+      }
+
+      if (!!umami) {
+        umami.trackEvent('Send Messages', { type: 'message', message: new_message })
       }
 
       messages.push({ role: 'user', content: new_message })
