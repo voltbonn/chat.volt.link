@@ -449,6 +449,10 @@
     function send_messages() {
       loading_node.classList.add('active')
 
+      if (window.hasOwnProperty('umami')) {
+        window.umami.trackEvent('send_messages', 'send_messages')
+      }
+      
       const url = (
         is_dev()
           ? 'http://0.0.0.0:4009/api/chat'
@@ -490,10 +494,6 @@
 
       if (new_message.length === 0) {
         return
-      }
-
-      if (window.hasOwnProperty('umami')) {
-        window.umami.trackEvent('Send Messages', { type: 'message', message: new_message })
       }
 
       messages.push({ role: 'user', content: new_message })
