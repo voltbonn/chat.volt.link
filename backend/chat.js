@@ -19,7 +19,7 @@ async function ask_the_bot(system_setup, messages, onTokenCallback, options = {}
   const completion = await openai.createChatCompletion({
     model: 'gpt-3.5-turbo',
     n: 1,
-    temperature: 0.9,
+    temperature: 1.1,
     max_tokens: 500,
     stream: has_onTokenCallback,
     messages: [
@@ -106,7 +106,7 @@ const facts = [
   fact`Europa|Personen``Seit 2019 sitzt Damian Boeselager für Volt Europa im EU-Parlament.`,
   fact`Mitmachen``Unter https://www.voltdeutschland.org/mitmachen kannst du dich bei Volt anmelden und mitmachen.`,
 
-  fact`Statistiken|Europa|Länder``Volt existiert in Albania, Austria, Belgium, Bulgaria, Switzerland, Cyprus, Česká republika, Germany, Danmark, Estonia, España, France, Greece, Croatia, Hungary, Ireland, Italia, Lithuania, Luxembourg, Latvia, Malta, Nederland, Poland, Portugal, Romania, Slovenia, Slovensko, Suomi, Sverige, Ukraine, UK, Schottland.`,
+  fact`Statistiken|Europa|Länder``Volt existiert in Albania, Austria, Belgium, Bulgaria, Switzerland, Cyprus, Česká republika, Germany, Danmark, Estonia, España, France, Greece, Croatia, Hungary, Ireland, Italia, Lithuania, Luxembourg, Latvia, Malta, Nederland, Poland, Portugal, Romania, Slovenia, Slovensko, Suomi, Sverige, Ukraine, UK (England, Schottland, Wales, Nord-Irland).`,
   fact`Statistiken|Europa|Personen``Volt hat über 100 gewählte Vertreter*innen in Europa.`,
   fact`Brandenburg|Spenden``Unter https://www.voltbrandenburg.org/spenden kann man an Volt Brandenburg spenden.`,
   fact`Deutschland|Shop``T-Shirts, Sweatshirts, Flaggen und vieles mehr gibt es unter https://merch.voltdeutschland.org/ (der Volt DE Shop)`,
@@ -125,7 +125,7 @@ const facts = [
   fact`Brandenburg|Potsdam|Cottbus|Lübbenau|Brandenburg an der Havel``Potsdam, Cottbus, Lübbenau, Brandenburg an der Havel, usw sind Städte in Brandenburg.`,
   fact`Events|Potsdam``Das nächste Meet&Greet in Potsdam ist am 06.03.2023 um 19 Uhr.`,
   fact`Events|Potsdam``Generell ist jeden Donnerstag um 19 Uhr ein Arbeitstreffen in Potsdam. Dies findet in einer lockern Arbeitsatmosphäre statt.`,
-  fact`Events|Potsdam``Am ersten Donnerstag im Monat ist um 29 Uhr Meet&Greet anstatt Arbeitstreffen. Dies findet meisten in einem Café oder einer Bar statt.`,
+  fact`Events|Potsdam``Am ersten Donnerstag im Monat ist um 19 Uhr Meet&Greet anstatt Arbeitstreffen. Dies findet meisten in einem Café oder einer Bar statt.`,
   fact`Events|Potsdam``Ab und zu veranstalten wir Infostände oder verteilen Flyer.`,
   fact`Events|Potsdam``Unregelmäßig gibt es Team-Events wie Bouldern oder Grillen.`,
   fact`Events|Socialmedia|Webseite|Potsdam|Brandenburg``Infos zum Meet&Greet gibt es auf Instagram (@voltpotsdam) und der Webseite (https://www.voltbrandenburg.org/potsdam)`,
