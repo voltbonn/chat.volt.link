@@ -108,6 +108,12 @@ app.post('/api/chat', async (req, res) => {
         && typeof message.content === 'string'
       )
     })
+    .map(message => {
+      return {
+        role: message.role,
+        content: message.content,
+      }
+    })
 
   if (messages.length === 0) {
     res.json({
