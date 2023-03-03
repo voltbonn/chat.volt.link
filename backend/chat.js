@@ -141,6 +141,14 @@ const facts = [
   fact`City-Lead|Potsdam``City-Leads von Volt Potsdam: Thomas Rosen und Georg Sichardt`,
 ]
 
+function get_possible_tags() {
+  const tags = [...new Set(facts.flatMap(f => f.tags))]
+    .sort((a, b) => a.localeCompare(b)) // sort by abc
+    .join(', ')
+
+  return tags
+}
+
 function shuffle(array) {
   let currentIndex = array.length, randomIndex;
 
@@ -173,7 +181,7 @@ async function get_matching_facts(text) {
 
   const facts_retrival_system_setup = `Wähle fünf Kategorie aus, die am besten helfen die Fragestellung zu beantworten. Verwende strikt nur die möglichen Kategorien. Trenne diese strikt mit Kommas, wie in den möglichen Kategorien vorgegeben.
 
-Mögliche Kategorien: Name, Abkürzung, Europa, Personen, Statistiken, Deutschland, Policy, Mitmachen, Länder, Brandenburg, Spenden, Shop, Vorsitz, Landesvorsitz, Potsdam, City-Leads, Email, Cottbus, Lübbenau, Brandenburg an der Havel, Events, Socialmedia, Webseite, Bundestag, kommunal, Erfolg, Regierung, Prozent, Darmstadt, Bonn, national, Niederlande, Bulgarien, City-Lead
+Mögliche Kategorien: ${get_possible_tags()}
 
 Fragestellung: ${text}`
 
