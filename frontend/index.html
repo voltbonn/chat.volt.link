@@ -492,8 +492,8 @@
         return
       }
 
-      if (!!umami) {
-        umami.trackEvent('Send Messages', { type: 'message', message: new_message })
+      if (window.hasOwnProperty('umami')) {
+        window.umami.trackEvent('Send Messages', { type: 'message', message: new_message })
       }
 
       messages.push({ role: 'user', content: new_message })
