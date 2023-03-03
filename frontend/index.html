@@ -8,8 +8,8 @@
   <meta charset="utf-8" />
   <link rel="icon" href="/favicon.ico" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="theme-color" content="#502379" media="(prefers-color-scheme: dark)" />
-  <meta name="background-color" content="#502379" media="(prefers-color-scheme: dark)" />
+  <meta name="theme-color" content="white" media="(prefers-color-scheme: dark)" />
+  <meta name="background-color" content="white" media="(prefers-color-scheme: dark)" />
 
   <link rel="apple-touch-icon" href="/volt-logo-white-192.png" />
   <link rel="manifest" href="/manifest.json" />
@@ -337,6 +337,10 @@
       transition-delay: 1s;
       transition: opacity 1s ease;
     }
+
+    li {
+      margin-inline-start: 20px;
+    }
   </style>
 </head>
 
@@ -395,7 +399,12 @@
     const input_box_node = document.getElementById('input_box')
     const loading_node = document.getElementById('loading')
   
-    let messages = []
+    let messages = [
+//       {
+//         role: 'assistant',
+//         content: ``,
+//       }
+    ]
     function display_messages() {
       const new_messages_node = document.createElement('div')
       
@@ -413,18 +422,18 @@
           text = message.error
         }
 
-        // Make URLs clickable
-        let url_regexp = /((?:https?):\/\/[a-zA-Z0-9][\w+\d+&@\-#\/%?=~_|!:,.;+]*)/gim;
-        text = text.replace(url_regexp, '<a href="$1" target="_blank">$1</a>');
+        
+        const url_regexp = /((?:https?):\/\/[a-zA-Z0-9][\w+\d+&@\-#\/%?=~_|!:,.;+]*)/gim;
+        const email_regexp = /([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9_-]+)/gim;
 
-        // Make emails clickable
-        let email_regexp = /([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9_-]+)/gim;
-        text = text.replace(email_regexp, '<a href="mailto:$1">$1</a>');
+        text = text
+          .replace(url_regexp, '<a href="$1" target="_blank">$1</a>') // Make URLs clickable
+          .replace(email_regexp, '<a href="mailto:$1">$1</a>') // Make emails clickable
+          .replace(/^- (.+)$/gm, `<li>$1</li>`) // replace - with <li>
+          .replace(/\n/g, '<br />') // replace \n with <br />
+          .replace(/<\/li><br \/>/g, '</li>') // remove accidental <br /> after </li>
 
-        // replace \n with <br />
-        text = text.replace(/\n/g, '<br />')
-
-        new_chatbubble.innerHTML = `<p>${text}</p>`
+        new_chatbubble.innerHTML = text
         new_messages_node.appendChild(new_chatbubble)
       }
 
@@ -448,14 +457,28 @@
           loading_node.classList.remove('active')
 
           response = new_response
-          messages.push({ role: 'assistant', content: new_response.response })
+          messages.push({
+            role: 'assistant',
+            content: new_response.response || null,
+            error: new_response.error || null,
+          })
           display_messages()
         
           // scroll to the new_message_node
           input_box_node.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'nearest' })
           // focus new_message_node
           new_message_node.focus()
-        });
+        })
+        .catch(new_response => {
+          loading_node.classList.remove('active')
+
+          messages.push({
+            role: 'assistant',
+            content: new_response.response || null,
+            error: new_response.error || null,
+          })
+          display_messages()
+        })
     }
     function use_text_input() {
     
