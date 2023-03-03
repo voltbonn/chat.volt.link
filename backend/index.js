@@ -83,8 +83,8 @@ app.options("/*", function (req, res, next) {
 // set up rate limiter:
 app.use('/api/chat', rateLimit({
   windowMs: 86400 * 1000, // 1 day
-  max: 240, // Limit each IP to X requests per `window`
-  message: `{ response: '', error: 'Too many requests from this IP. We only allow 240 requests per IP per day.' }`,
+  max: 120, // Limit each IP to X requests per `window`
+  message: `{ response: '', error: 'Too many requests from this IP. We only allow 120 requests per IP per day.' }`,
   standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
   legacyHeaders: false, // Disable the `X-RateLimit-*` headers
 })) // apply rate limiter to all requests
