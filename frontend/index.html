@@ -540,12 +540,12 @@
 
 
 
-  const url = (
-    is_dev()
-      ? 'http://0.0.0.0:4009/'
-      : 'https://chat.volt.link/'
-  )
-  const socket = io(url)
+    const url = (
+      is_dev()
+        ? 'http://0.0.0.0:4009/'
+        : 'https://chat.volt.link/'
+    )
+    const socket = io(url)
 
   
     socket.on('error', console.error.bind(console));
@@ -559,12 +559,10 @@
     //   display_messages()
     // })
     socket.on('partial_response', ({ id, response, error }) => {
-
-      console.log('partial_response', id, response, error)
-      
-      // append to existing message by id
+            
       const message_index = messages.findIndex(message => message.id === id)
       if (message_index === -1) {
+        // create new message
         messages.push({
           id,
           role: 'assistant',
@@ -572,6 +570,7 @@
           error: error || null,
         })
       } else {
+        // append to existing message by id
         messages[message_index].content += response
       }
 
