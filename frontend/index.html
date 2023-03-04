@@ -352,7 +352,7 @@
 
   <div class="messages" id="messages"></div>
   <div class="loading" id="loading">
-    <p class="caption">Lade...</p>
+    <p class="caption">Schreibt…</p>
   </div>
   <div class="input_box" id="input_box">
     <textarea id="new_message" rows="1" cols="50" placeholder="Was möchtest du über Volt wissen?"></textarea>
@@ -366,7 +366,8 @@
     <br />
   </div>
 
-  <script>
+  <script type="module">
+    import {io} from '/socket.io.esm.min.js'
 
     async function postData(url = '', data = {}) {
       // Default options are marked with *
@@ -406,6 +407,10 @@
 //         role: 'assistant',
 //         content: ``,
 //       }
+      // {
+      //   role: 'user',
+      //   content: `Was ist Volt?`,
+      // }
     ]
     function display_messages() {
       const new_messages_node = document.createElement('div')
@@ -447,12 +452,15 @@
     }
   
     function send_messages() {
-      loading_node.classList.add('active')
+      // loading_node.classList.add('active')
 
       if (window.hasOwnProperty('umami')) {
         window.umami.trackEvent('send_messages', 'send_messages')
       }
+
+      socket.emit('query', { messages });
       
+      /*
       const url = (
         is_dev()
           ? 'http://0.0.0.0:4009/api/chat'
@@ -462,7 +470,6 @@
         .then(new_response => {
           loading_node.classList.remove('active')
 
-          response = new_response
           messages.push({
             role: 'assistant',
             content: new_response.response || null,
@@ -485,6 +492,7 @@
           })
           display_messages()
         })
+        */
     }
     function use_text_input() {
     
@@ -513,6 +521,58 @@
     })
   
     display_messages()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    const socket = io('http://0.0.0.0:4009/')
+
+  
+    socket.on('error', console.error.bind(console));
+    // socket.on('response', ({ id, response, error }) => {
+    //   messages.push({
+    //     id,
+    //     role: 'assistant',
+    //     content: response || null,
+    //     error: error || null,
+    //   })
+    //   display_messages()
+    // })
+    socket.on('partial_response', ({ id, response, error }) => {
+
+      console.log('partial_response', id, response, error)
+      
+      // append to existing message by id
+      const message_index = messages.findIndex(message => message.id === id)
+      if (message_index === -1) {
+        messages.push({
+          id,
+          role: 'assistant',
+          content: response || null,
+          error: error || null,
+        })
+      } else {
+        messages[message_index].content += response
+      }
+
+      display_messages()
+    })
   </script>
 </body>
 
