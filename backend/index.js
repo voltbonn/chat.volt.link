@@ -91,6 +91,8 @@ app.use('/api/chat', rateLimit({
 
 app.post('/api/chat', async (req, res) => {
   let messages = req.body.messages || []
+  
+  // the messages should be an array
   if (Array.isArray(messages) === false) {
     res.json({
       response: null,
@@ -99,6 +101,7 @@ app.post('/api/chat', async (req, res) => {
     return
   }
 
+  // filter out invalid messages
   messages = messages
     .filter(message => {
       return (
@@ -115,6 +118,7 @@ app.post('/api/chat', async (req, res) => {
       }
     })
 
+  // there should be at least one message
   if (messages.length === 0) {
     res.json({
       response: null,
@@ -123,10 +127,14 @@ app.post('/api/chat', async (req, res) => {
     return
   }
 
+  // only use the last 5 messages
+  messages = messages.slice(-5)
+
+  // the chat should not be too long
   if (JSON.stringify(messages).length > 10000) {
     res.json({
       response: null,
-      error: 'The text is too long.'
+      error: 'The chat is too long. Please reload the website to start a new chat.'
     })
     return
   }
