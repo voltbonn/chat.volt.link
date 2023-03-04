@@ -6,6 +6,8 @@ const http = require('http')
 const express = require('express')
 const rateLimit = require('express-rate-limit')
 
+const crypto = require('crypto')
+
 // const { fetch } = require('cross-fetch')
 
 // const fs = require('fs')
@@ -89,103 +91,161 @@ app.use('/api/chat', rateLimit({
   legacyHeaders: false, // Disable the `X-RateLimit-*` headers
 })) // apply rate limiter to all requests
 
+async function get_next_message(messages, callback, partial_callback) {
+
+    // the messages should be an array
+    if (Array.isArray(messages) === false) {
+      callback({
+        response: null,
+        error: 'Plase enter a text.'
+      })
+      return
+    }
+
+    // filter out invalid messages
+    messages = messages
+      .filter(message => {
+        return (
+          typeof message === 'object'
+          && message !== null
+          && typeof message.role === 'string'
+          && typeof message.content === 'string'
+        )
+      })
+      .map(message => {
+        return {
+          role: message.role,
+          content: message.content,
+        }
+      })
+
+    // there should be at least one message
+    if (messages.length === 0) {
+      callback({
+        response: null,
+        error: 'Plase enter a text.'
+      })
+      return
+    }
+
+    // only use the last N messages (to prevent too long chats)
+    messages = messages.slice(-5)
+
+    // the chat should not be too long
+    if (JSON.stringify(messages).length > 10000) {
+      callback({
+        response: null,
+        error: 'The chat is too long. Please reload the website to start a new chat.'
+      })
+      return
+    }
+
+    // the last message should not be from the assistant
+    if (messages[messages.length - 1].role === 'assistant') {
+      callback({
+        response: null,
+        error: 'The last message should not be from the assistant.'
+      })
+      return
+    }
+
+
+    try {
+      const full_text = await ask_the_bot_with_setup(
+        messages,
+        // [
+        //   { role: 'user', content: 'Was ist Volt Europa?' },
+        // ],
+        // null,
+        token => {
+          partial_callback({
+            response: token,
+            error: null,
+          })
+          // process.stdout.write(token)
+          // let node wait for 100 ms
+          // Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, 50);
+        }
+      )
+
+      callback({
+        response: full_text,
+        error: null,
+      })
+    } catch (error) {
+      console.error(error)
+      callback({
+        response: '',
+        error: String(error),
+      })
+    }
+}
 app.post('/api/chat', async (req, res) => {
   let messages = req.body.messages || []
   
-  // the messages should be an array
-  if (Array.isArray(messages) === false) {
+  await get_next_message(messages, ({ response, error }) => {
     res.json({
-      response: null,
-      error: 'Plase enter a text.'
+      response,
+      error,
     })
-    return
-  }
-
-  // filter out invalid messages
-  messages = messages
-    .filter(message => {
-      return (
-        typeof message === 'object'
-        && message !== null
-        && typeof message.role === 'string'
-        && typeof message.content === 'string'
-      )
-    })
-    .map(message => {
-      return {
-        role: message.role,
-        content: message.content,
-      }
-    })
-
-  // there should be at least one message
-  if (messages.length === 0) {
-    res.json({
-      response: null,
-      error: 'Plase enter a text.'
-    })
-    return
-  }
-
-  // only use the last N messages (to prevent too long chats)
-  messages = messages.slice(-5)
-
-  // the chat should not be too long
-  if (JSON.stringify(messages).length > 10000) {
-    res.json({
-      response: null,
-      error: 'The chat is too long. Please reload the website to start a new chat.'
-    })
-    return
-  }
-
-  // the last message should not be from the assistant
-  if (messages[messages.length - 1].role === 'assistant') {
-    res.json({
-      response: null,
-      error: 'The last message should not be from the assistant.'
-    })
-    return
-  }
-
-
-  try {
-    const full_text = await ask_the_bot_with_setup(
-      messages,
-      // [
-      //   { role: 'user', content: 'Was ist Volt Europa?' },
-      // ],
-      null
-      // token => {
-      //   process.stdout.write(token)
-      //   // let node wait for 100 ms
-      //   // Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, 50);
-      // }
-    )
-
-    res.json({
-      response: full_text,
-      error: null,
-    })
-  } catch (error) {
-    console.error(error)
-    res.json({
-      response: '',
-      error: String(error),
-    })
-  }
+  })
   
 })
+
+
+
+
+
+const server = http.createServer(app);
+const { Server } = require("socket.io");
+const io = new Server(server);
+
+// Emit welcome message on connection
+io.on('connection', (socket) => {
+  console.log('a user connected');
+
+  socket.on('query', async ({ messages = [] }) => {
+    const md5_hash = crypto.createHash('md5').update(JSON.stringify(messages)).digest('hex')
+
+    await get_next_message(
+      messages,
+      ({ response, error }) => {
+        socket.emit('response', {
+          id: md5_hash,
+          response,
+          error,
+        });
+      },
+      ({ response, error }) => {
+        socket.emit('partial_response', {
+          id: md5_hash,
+          response,
+          error,
+        });
+      }
+    )
+  });
+
+  socket.on('disconnect', () => {
+    console.log('user disconnected');
+  });
+});
+
+
+
+
+
+
+
 
 app.use(express.static(static_files_path))
 
 const port = 4009
 const host = '0.0.0.0' // Uberspace wants 0.0.0.0
-http.createServer(app).listen({ port, host }, () => {
+server.listen({ port, host }, () => {
   console.info(`
     🚀 Server ready
     For uberspace: http://${host}:${port}/
     For local development: http://localhost:${port}/
   `)
 })
-
