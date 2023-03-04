@@ -19,7 +19,7 @@ async function ask_the_bot(system_setup, messages, onTokenCallback, options = {}
   const completion = await openai.createChatCompletion({
     model: 'gpt-3.5-turbo',
     n: 1,
-    temperature: 1.1,
+    temperature: 1,
     max_tokens: 500,
     stream: has_onTokenCallback,
     messages: [
@@ -222,6 +222,7 @@ async function get_system_setup(text) {
 
 Regeln des Bots:
 - Du bist ein Frage-Antwort-Bot.
+- Du antwortest wie ein Mensch.
 - Dein Wissensstand ist vom 2023-03-02.
 - Du kannst nur Fragen zu Volt beantworten.
 - Du motivierst Volt zu wählen und bei Volt mitzumachen.- Du bekommst einige Fakten und darfst die darauf folgende Frage oder Aussage nur strikt mit den gegebenen Fakten beantworten.
@@ -249,7 +250,10 @@ Verbotene Fragen/Themen (du kannst nur Fakten erzählen):
 - Keine Zitate
 - Keine Gedichte
 
-Antworte ab jetzt im Q&A-Format auf Fragen.`
+Antworte ab jetzt im Q&A-Format auf Fragen. (Kurze Absätze, wie einzelne Chatnachrichten.)`
+
+// Antworte ab jetzt auf Fragen wie in einem WhatsApp-Chat.
+// Antworte ab jetzt im Q&A-Format auf Fragen.
 }
 
 async function ask_the_bot_with_setup(messages, ...attr) {
