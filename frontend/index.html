@@ -540,8 +540,12 @@
 
 
 
-
-    const socket = io('http://0.0.0.0:4009/')
+  const url = (
+    is_dev()
+      ? 'http://0.0.0.0:4009/'
+      : 'https://chat.volt.link/'
+  )
+  const socket = io(url)
 
   
     socket.on('error', console.error.bind(console));
