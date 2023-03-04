@@ -127,8 +127,8 @@ app.post('/api/chat', async (req, res) => {
     return
   }
 
-  // only use the last 5 messages
-  messages = messages.slice(-5)
+  // only use the last N messages (to prevent too long chats)
+  messages = messages.slice(-7)
 
   // the chat should not be too long
   if (JSON.stringify(messages).length > 10000) {
