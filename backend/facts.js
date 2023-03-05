@@ -12,11 +12,11 @@ const facts = [
   fact`Europa|Personen``Der Italiener Andrea Venzon, die Französin Colombe Cahen-Salvador und der Deutsche Damian Boeselager gründeten Volt Europa am 29. März 2017.`,
   fact`Statistiken|Deutschland``In Deutschland wurde Volt als Partei am 3. März 2018 registriert.`,
   fact`Policy``Volt ist eine europaweite Partei und Bewegung.`,
-  fact`Europa|Personen``Seit 2019 sitzt Damian Boeselager für Volt Europa im EU-Parlament.`,
+  fact`Europa|Personen|Mandat``Seit 2019 sitzt Damian Boeselager für Volt Europa im EU-Parlament.`,
   fact`Mitmachen``Unter https://www.voltdeutschland.org/mitmachen kannst du dich bei Volt anmelden und mitmachen.`,
 
   fact`Statistiken|Europa|Länder``Volt existiert in Albania, Austria, Belgium, Bulgaria, Switzerland, Cyprus, Česká republika, Germany, Danmark, Estonia, España, France, Greece, Croatia, Hungary, Ireland, Italia, Lithuania, Luxembourg, Latvia, Malta, Nederland, Poland, Portugal, Romania, Slovenia, Slovensko, Suomi, Sverige, Ukraine, UK (England, Schottland, Wales, Nord-Irland).`,
-  fact`Statistiken|Europa|Personen``Volt hat über 100 gewählte Vertreter*innen in Europa.`,
+  fact`Statistiken|Europa|Personen|Mandat``Volt hat über 100 gewählte Vertreter*innen in Europa. Darunter einen gewählten Vertreter im Europäischen Parlament.`,
   fact`Brandenburg|Spenden``Unter https://www.voltbrandenburg.org/spenden kann man an Volt Brandenburg spenden.`,
   fact`Deutschland|Shop``T-Shirts, Sweatshirts, Flaggen und vieles mehr gibt es unter https://merch.voltdeutschland.org/ (der Volt DE Shop)`,
 
@@ -71,7 +71,7 @@ const facts = [
   fact`Policy``Volt main topics are the 5+1 Challenges: Smart State, Economic Renaissance, Social Equality, Global Balance, Citizen Empowerment and EU Reform.`,
   fact`Policy``Volts 5 Challenges are basically the same for every country, but their implementation can be adapted on the national level to take local realities into account. `,
   fact`Policy``Der jetzige Slogan von Volt lautet "Future. Made in Europe."`,
-  fact`Policy``Der ehemalige Slogan von Volt lautete: Pragmatisch, Progressiv, Paneuropäisch.`,
+  fact`Policy``Der ehemalige Slogan von Volt lautete: paneuropäisch, pragmatisch und progressiv.`,
 
   fact`Policy``
 Volt hat 5+1 Herausforderungen definiert, die jedes europäische Land angehen muss.
