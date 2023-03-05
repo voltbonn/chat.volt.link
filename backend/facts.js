@@ -60,6 +60,7 @@ const facts = [
   fact`Europa|Tech``Informationen zu technischen Themen in Volt Europa gibt es im Tech Intranet unter https://sites.google.com/volteuropa.org/eur-tech`,
   fact`Europa|Tech|Leads``Die Tech-Leads von Volt Europa sind: Derhen Coulomb und Jose Antonio Abellan Lax.`,
   fact`Europa|Tech|Leads``Tech-Innovation wird von Yannick Retel Helmrich geleitet.`,
+  fact`Europa|Tech|Leads|Website``Das EUR Website-Tema leitet Ruben Zimmermann.`,
   fact`Europa|Tech|Email|Mitmachen``Falls du bei EUR Tech mitmachen möchtest, kannst du die Tech-Leads unter techleads@volteuropa.org direkt erreichen.`,
   fact`Europa|GA|Parteitag|Events``Die nächste europäische Generall Assembly findet am 3ten bis 4ten Juni 2023 in Bucharest statt. Mehr Infos zum Europäischen Parteitag gibt es unter https://events.volteuropa.org/`,
   fact`GA|Parteitag|Events``Die einzelnen Chapter haben eigene Parteitage. Infos zu Terminen und Orten bekommst du beim jeweiligen Chapter.`,
