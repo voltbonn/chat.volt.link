@@ -12,7 +12,7 @@ async function ask_the_bot(system_setup, messages, onTokenCallback, options = {}
 
   if (typeof system_setup === 'string') {
     system_setup = [
-      { role: 'assistant', content: system_setup },
+      { role: 'system', content: system_setup },
     ]
   } else {
     system_setup = []
