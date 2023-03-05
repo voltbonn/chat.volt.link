@@ -12,11 +12,11 @@ const facts = [
   fact`Europa|Personen``Der Italiener Andrea Venzon, die Französin Colombe Cahen-Salvador und der Deutsche Damian Boeselager gründeten Volt Europa am 29. März 2017.`,
   fact`Statistiken|Deutschland``In Deutschland wurde Volt als Partei am 3. März 2018 registriert.`,
   fact`Policy``Volt ist eine europaweite Partei und Bewegung.`,
-  fact`Europa|Personen|Mandat``Seit 2019 sitzt Damian Boeselager für Volt Europa im EU-Parlament.`,
+  fact`Europa|Personen|Abgeordnete|Prozent``Seit 2019 ist Damian Boeselager für Volt Europa angetreten. In Deutschland hat er für Volt 0.7% erreicht. Seit dem sitzt er mit Volt in der Fraktion der Grünen im EU-Parlament.`,
   fact`Mitmachen``Unter https://www.voltdeutschland.org/mitmachen kannst du dich bei Volt anmelden und mitmachen.`,
 
   fact`Statistiken|Europa|Länder``Volt existiert in Albania, Austria, Belgium, Bulgaria, Switzerland, Cyprus, Česká republika, Germany, Danmark, Estonia, España, France, Greece, Croatia, Hungary, Ireland, Italia, Lithuania, Luxembourg, Latvia, Malta, Nederland, Poland, Portugal, Romania, Slovenia, Slovensko, Suomi, Sverige, Ukraine, UK (England, Schottland, Wales, Nord-Irland).`,
-  fact`Statistiken|Europa|Personen|Mandat``Volt hat über 100 gewählte Vertreter*innen in Europa. Darunter einen gewählten Vertreter im Europäischen Parlament.`,
+  fact`Statistiken|Europa|Personen|Abgeordnete``Volt hat über 100 gewählte Vertreter*innen in Europa. Darunter einen gewählten Vertreter im Europäischen Parlament.`,
   fact`Brandenburg|Spenden``Unter https://www.voltbrandenburg.org/spenden kann man an Volt Brandenburg spenden.`,
   fact`Deutschland|Shop``T-Shirts, Sweatshirts, Flaggen und vieles mehr gibt es unter https://merch.voltdeutschland.org/ (der Volt DE Shop)`,
 
