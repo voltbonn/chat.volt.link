@@ -129,7 +129,7 @@ async function get_next_message(messages, callback, partial_callback) {
     }
 
     // only use the last N messages (to prevent too long chats)
-    messages = messages.slice(-5)
+    messages = messages.slice(-7)
 
     // the chat should not be too long
     if (JSON.stringify(messages).length > 10000) {
