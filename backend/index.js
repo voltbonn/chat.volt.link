@@ -202,8 +202,6 @@ const io = new Server(server);
 
 // Emit welcome message on connection
 io.on('connection', (socket) => {
-  console.log('a user connected');
-
   socket.on('query', async ({ messages = [] }) => {
     const md5_hash = crypto.createHash('md5').update(JSON.stringify(messages)).digest('hex')
 
@@ -226,9 +224,9 @@ io.on('connection', (socket) => {
     )
   });
 
-  socket.on('disconnect', () => {
-    console.log('user disconnected');
-  });
+  // socket.on('disconnect', () => {
+  //   console.log('user disconnected');
+  // });
 });
 
 
