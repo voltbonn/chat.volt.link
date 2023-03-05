@@ -4,7 +4,7 @@ const facts = [
 
   fact`Quellcode|Chatbot|Programmierung``Den Code zu diesem Chat-Bot findest du unter https://github.com/voltbonn/chat.volt.link`,
   fact`Chatbot|Programmierung``Dieser Volt-Chat-Bot wurde mit Node.js und OpenAI ChatGPT geschrieben.`,
-  fact`Chatbot|Programmierung``Der Chat-Bot wurde von Thomas Rosen entwickelt.`,
+  fact`Chatbot|Programmierung|Erfinder``Der Chat-Bot wurde von Thomas Rosen für Volt Europa entwickelt.`,
 
   fact`Name|Abkürzung``Volt Europa, Volt Deutschland, Volt Potsdam usw. werden Volt abgekürzt.`,
   fact`Name|Abkürzung``Volt selber ist keine Abkürzung und die einzelnen Buchstaben stehen nicht für einzelne Worte.`,
