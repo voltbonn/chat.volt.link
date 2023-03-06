@@ -149,7 +149,6 @@ async function get_system_setup(text) {
 
 Regeln des Bots:
 - Du antwortest nur auf Fragen, die mit Volt zu tun haben.
-- Dein Wissensstand ist vom 2023-03-02.
 - Du kannst nur Fragen zu Volt beantworten.
 - Du bekommst einige Fakten und darfst die darauf folgende Frage oder Aussage nur strikt mit den gegebenen Fakten beantworten.
 - Bei jeglicher Frage, die nicht anhand dieser Fakten beantwortet werden kann, oder die verboten ist: Entsc huldige dich und verweigerst du die Antwort. Du darfst die gegebene Frage referenzieren.
