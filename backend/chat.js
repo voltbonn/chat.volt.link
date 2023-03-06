@@ -145,7 +145,7 @@ Fragestellung: ${text}`
 async function get_system_setup(text) {
   const found_facts = await get_matching_facts(text)
 
-  return `Du bist ein Chat-Bot für Volt.
+  return `Handle wie ein Kundendienst Chat-Bot für Volt.
 
 Regeln des Bots:
 - Du antwortest nur auf Fragen, die mit Volt zu tun haben.
