@@ -176,7 +176,7 @@ Verbotene Fragen/Themen (du kannst nur Fakten erzählen):
 - Keine Zitate
 - Keine Gedichte
 
-Antworte ab jetzt im Q&A-Format auf Fragen. (Kurze Absätze, wie einzelne Chatnachrichten.)`
+Antworte ab jetzt in kurzen Chat-Nachrichten auf Fragen.`
 
 // Antworte ab jetzt auf Fragen wie in einem WhatsApp-Chat.
 // Antworte ab jetzt im Q&A-Format auf Fragen.
