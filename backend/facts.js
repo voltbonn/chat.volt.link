@@ -7,7 +7,7 @@ const facts = [
   fact`Chatbot|Programmierung|Erfinder``Der Chat-Bot wurde von Thomas Rosen für Volt Europa entwickelt.`,
 
   fact`Name|Abkürzung``Volt Europa, Volt Deutschland, Volt Potsdam usw. werden Volt abgekürzt.`,
-  fact`Name|Abkürzung``Volt selber ist keine Abkürzung und die einzelnen Buchstaben stehen nicht für einzelne Worte.`,
+  fact`Name|Abkürzung``Volt selber ist keine Abkürzung, der Name steht für die neuen Spannung, die Volt in die Politik bringt. Die einzelnen Buchstaben stehen nicht für einzelne Worte.`,
   fact`Abkürzung``MG steht für Meet&Greet.`,
   fact`Europa|Personen``Der Italiener Andrea Venzon, die Französin Colombe Cahen-Salvador und der Deutsche Damian Boeselager gründeten Volt Europa am 29. März 2017.`,
   fact`Statistiken|Deutschland``In Deutschland wurde Volt als Partei am 3. März 2018 registriert.`,
