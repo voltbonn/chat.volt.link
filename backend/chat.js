@@ -116,6 +116,8 @@ Mögliche Kategorien: ${get_possible_tags()}
 
 Fragestellung: ${text}`
 
+// Antworte nur als JSON-Array. Keine weitere Erklärung.
+
   const full_text = await ask_the_bot(null, [{ role: 'user', content: facts_retrival_system_setup }], null, {
     temperature: 0.5,
   })
