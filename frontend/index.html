@@ -430,7 +430,7 @@
         }
 
         
-        const url_regexp = /((?:https?):\/\/[a-zA-Z0-9][\w+\d+&@\-#\/%?=~_|!:,.;+]*)/gim;
+        const url_regexp = /(?<!@)\b((?:(?:https?|ftp):\/\/)?[\w-]+(?:\.[\w-]+)+(?:[\w.,@?^=%&:/~+#-]*[\w@?^=%&/~+#-])?(?<!\.))/gim;
         const email_regexp = /([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9_-]+)/gim;
 
         text = text
