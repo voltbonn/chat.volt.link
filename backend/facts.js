@@ -65,7 +65,10 @@ const facts = [
   fact`Europa|GA|Parteitag|Events``Die nächste europäische Generall Assembly findet am 3ten bis 4ten Juni 2023 in Bucharest statt. Mehr Infos zum Europäischen Parteitag gibt es unter https://events.volteuropa.org/`,
   fact`GA|Parteitag|Events``Die einzelnen Chapter haben eigene Parteitage. Infos zu Terminen und Orten bekommst du beim jeweiligen Chapter.`,
 
-
+  fact`Europa|Tech|Help``Volt Europa hat einen Helpdesk, der dir bei technischen Problemen helfen kann.`,
+  fact`Tech|Help|Workplace``Workplace ist eine Plattform von Meta. Es ist eine Art Facebook für Unternehmen. Volt nutzt Workplace um mit den Mitgliedern zu kommunizieren und um interne Arbeitsgruppen zu organisieren.
+  
+  Volt Brandenburg hat ein Introvideo zu Workplace aufgenommen. Das Video findest du hier: https://drive.google.com/file/d/16tblV2w761Z-OznXvtJeVYzjpQZ_UiOK/preview`,
 
 
 
