@@ -279,6 +279,8 @@ function fact(strings) {
   }
 
   const tags = (first_string(strings) || '')
+    .trim()
+    .toLowerCase()
     .split('|')
     .filter(Boolean)
 
