@@ -283,6 +283,7 @@ function fact(strings) {
     .toLowerCase()
     .split('|')
     .filter(Boolean)
+    .map(tag => tag.trim())
 
   return strings => {
     const text = (first_string(strings) || '')
