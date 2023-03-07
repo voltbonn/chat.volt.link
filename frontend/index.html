@@ -357,21 +357,36 @@
 </head>
 
 <body>
-  <h1>Volt FAQ Chat</h1>
+  <h1>Volt Chat Bot</h1>
+  <!-- <p><strong>Der Chat-Bot kann dir einige Fragen zu Volt Potsdam, und technischen Fragen zu Volt beantworten. Es stehen aber auch ein paar generelle Information zu gesamt Volt zur Verfügung.</strong><br />You should be able to ask questions in any language.</p> -->
   <!-- <p><strong>Der Chat-Bot kann dir technischen Fragen zu Volt beantworten. Es stehen aber auch ein paar generelle Information zu gesamt Volt zur Verfügung.</strong><br />You should be able to ask questions in any language.</p> -->
+  <p><strong>The chatbot can answer technical questions about Volt. However, there are also some general information available about Volt as a whole.</strong><br /><br />You can ask questions in any language.</p>
 
   <div class="messages" id="messages"></div>
   <div class="loading" id="loading">
-    <p class="caption">Am denken…</p>
+    <p class="caption">
+      <!-- Am denken… -->
+      Thinking…
+    </p>
   </div>
   <div class="input_box" id="input_box">
-    <textarea id="new_message" rows="1" cols="50" placeholder="Was möchtest du über Volt wissen?"></textarea>
+    <textarea id="new_message" rows="1" cols="50" placeholder="What do you want to know or need help with?"></textarea>
+    <!-- Was möchtest du über Volt wissen oder brauchst Hilfe bei? -->
     <br />
     <div style="display: flex; gap: 20px; margin-block-start: 5px;">
-      <p class="caption">Die eingegebenen Daten werden an Server der Firma <a href="https://platform.openai.com/docs/data-usage-policies" target="_blank">OpenAI</a> in Amerika gesendet. Es werden keine Metadaten über dich mitgeschickt.</p>
-      <button class="green" id="send_message">Senden</button>
+      <!-- <p class="caption">Die eingegebenen Daten werden an Server der Firma <a href="https://platform.openai.com/docs/data-usage-policies" target="_blank">OpenAI</a> in Amerika gesendet. Es werden keine Metadaten über dich mitgeschickt.</p> -->
+
+      <p class="caption">The entered data is sent to servers of the company <a href="https://platform.openai.com/docs/data-usage-policies" target="_blank">OpenAI</a> in America. No metadata about you is sent along.</p>
+
+      <button class="green" id="send_message">
+        <!-- Senden -->
+        Send
+      </button>
     </div>
-    <p class="caption">oder verwende die Enter-Taste</p>
+    <p class="caption">
+      <!-- oder verwende die Enter-Taste -->
+      or use the Enter-Key.
+    </p>
     <br />
     <br />
   </div>
