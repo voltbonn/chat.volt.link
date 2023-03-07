@@ -463,7 +463,7 @@
         }
 
         
-        const url_regexp = /(?<!@)\b((?:(?:https?|ftp):\/\/)?[\w-]+(?:\.[\w-]+)+(?:[\w.,@?^=%&:/~+#-]*[\w@?^=%&/~+#-])?(?<!\.))/gim;
+        const url_regexp = /(?<!@)\b((?:(?:https?|ftp):\/\/)?([\w-]+(?:\.[\w-]+)+(?:[\w.,@?^=%&:/~+#-]*[\w@?^=%&/~+#-])?(?<!\.)))/gim;
         const email_regexp = /([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9_-]+)/gim;
 
         // make all URLs have a protocol
@@ -484,7 +484,7 @@
         text = markdown.render(text)
 
         text = text
-          .replace(url_regexp, '<a href="$1" target="_blank">$1</a>') // Make URLs clickable
+          .replace(url_regexp, '<a href="$1" target="_blank">$2</a>') // Make URLs clickable
           .replace(email_regexp, '<a href="mailto:$1">$1</a>') // Make emails clickable
           .replace(/^- (.+)$/gm, `<li>$1</li>`) // replace - with <li>
           .replace(/\n/g, '<br />') // replace \n with <br />
