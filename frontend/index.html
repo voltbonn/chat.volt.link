@@ -117,6 +117,8 @@
 
     * {
       box-sizing: border-box;
+      margin: 0;
+      padding: 0;
     }
 
 
@@ -134,12 +136,17 @@
       font-size: 60px;
       letter-spacing: -1.5px;
       line-height: 1.1;
+      margin-block-end: 2rem;
     }
 
     @media (max-width: 700px) {
       h1 {
         font-size: 40px;
       }
+    }
+
+    p {
+      margin-block-end: 1rem;
     }
 
     body,
@@ -339,6 +346,9 @@
       transition-delay: 1s;
       transition: opacity 1s ease;
     }
+    .loading p.caption {
+      color: var(--purple);
+    }
 
     li {
       margin-inline-start: 20px;
@@ -352,7 +362,7 @@
 
   <div class="messages" id="messages"></div>
   <div class="loading" id="loading">
-    <p class="caption">Schreibt…</p>
+    <p class="caption">Am denken…</p>
   </div>
   <div class="input_box" id="input_box">
     <textarea id="new_message" rows="1" cols="50" placeholder="Was möchtest du über Volt wissen?"></textarea>
@@ -368,6 +378,13 @@
 
   <script type="module">
     import {io} from '/socket.io.esm.min.js'
+
+    import '/remarkable.min.js';
+
+    const markdown = new window.remarkable.Remarkable('full', {
+      html: true,
+      typographer: true
+    });
 
     async function postData(url = '', data = {}) {
       // Default options are marked with *
@@ -403,18 +420,19 @@
     const loading_node = document.getElementById('loading')
   
     let messages = [
-//       {
-//         role: 'assistant',
-//         content: ``,
-//       }
+      // {
+      //   role: 'assistant',
+      //   content: ``,
+      // },
       // {
       //   role: 'user',
       //   content: `Was ist Volt?`,
-      // }
+      // },
     ]
     function display_messages() {
       const new_messages_node = document.createElement('div')
-      
+
+
       for (const message of messages) {
         const new_chatbubble = document.createElement('div')
         new_chatbubble.classList.add('chatbubble')
@@ -432,6 +450,8 @@
         
         const url_regexp = /(?<!@)\b((?:(?:https?|ftp):\/\/)?[\w-]+(?:\.[\w-]+)+(?:[\w.,@?^=%&:/~+#-]*[\w@?^=%&/~+#-])?(?<!\.))/gim;
         const email_regexp = /([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9_-]+)/gim;
+
+        text = markdown.render(text)
 
         text = text
           .replace(url_regexp, '<a href="$1" target="_blank">$1</a>') // Make URLs clickable
@@ -452,7 +472,7 @@
     }
   
     function send_messages() {
-      // loading_node.classList.add('active')
+      loading_node.classList.add('active')
 
       if (window.hasOwnProperty('umami')) {
         window.umami.trackEvent('send_messages', 'send_messages')
@@ -559,6 +579,7 @@
     //   display_messages()
     // })
     socket.on('partial_response', ({ id, response, error }) => {
+      loading_node.classList.remove('active')
             
       const message_index = messages.findIndex(message => message.id === id)
       if (message_index === -1) {

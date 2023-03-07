@@ -5,6 +5,7 @@
     "express-rate-limit": "^6.7.0",
     "http": "^0.0.1-security",
     "openai": "^3.2.1",
+    "remarkable": "^2.0.1",
     "socket.io": "^4.6.1"
   },
   "scripts": {
