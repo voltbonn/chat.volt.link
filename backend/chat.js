@@ -130,12 +130,15 @@ Fragestellung: ${text}`
       .trim()
     )
 
+  found_categories.push('always') // to always include some generell facts
+
   // get the N facts with most matching tags
   const found_facts = shuffle(facts)
     .map(fact => {
       const matching_tags_count = fact.tags.filter(tag => found_categories.includes(tag)).length
       return { ...fact, matching_tags_count }
     })
+    .filter(f => f.matching_tags_count > 0)
     .sort((a, b) => b.matching_tags_count - a.matching_tags_count)
     .slice(0, max_facts)
     .map(f => `- ${f.text}`)
