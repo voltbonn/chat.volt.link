@@ -285,7 +285,9 @@ function fact(strings) {
     .filter(Boolean)
 
   return strings => {
-    const text = first_string(strings) || ''
+    const text = (first_string(strings) || '')
+      .trim()
+
     return {
       text,
       tags,
