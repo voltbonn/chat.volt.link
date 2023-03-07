@@ -1,17 +1,19 @@
 
 const facts = [
-  // fact``,
+  // fact````,
 
   fact`Quellcode|Chatbot|Programmierung``Den Code zu diesem Chat-Bot findest du unter https://github.com/voltbonn/chat.volt.link`,
   fact`Chatbot|Programmierung``Dieser Volt-Chat-Bot wurde mit Node.js und OpenAI ChatGPT geschrieben.`,
   fact`Chatbot|Programmierung|Erfinder``Der Chat-Bot wurde von Thomas Rosen für Volt Europa entwickelt.`,
+
+  fact````,
 
   fact`Name|Abkürzung``Volt Europa, Volt Deutschland, Volt Potsdam usw. werden Volt abgekürzt.`,
   fact`Name|Abkürzung``Volt selber ist keine Abkürzung, der Name steht für die neuen Spannung, die Volt in die Politik bringt. Die einzelnen Buchstaben stehen nicht für einzelne Worte.`,
   fact`Abkürzung``MG steht für Meet&Greet.`,
   fact`Europa|Personen``Der Italiener Andrea Venzon, die Französin Colombe Cahen-Salvador und der Deutsche Damian Boeselager gründeten Volt Europa am 29. März 2017.`,
   fact`Statistiken|Deutschland``In Deutschland wurde Volt als Partei am 3. März 2018 registriert.`,
-  fact`Policy``Volt ist eine europaweite Partei und Bewegung.`,
+  fact`Always|Policy``Volt ist eine europaweite Partei und Bewegung.`,
   fact`Europa|Personen|Abgeordnete|Prozent``Seit 2019 ist Damian Boeselager für Volt Europa angetreten. In Deutschland hat er für Volt 0.7% erreicht. Seit dem sitzt er mit Volt in der Fraktion der Grünen im EU-Parlament.`,
   fact`Mitmachen``Unter https://www.voltdeutschland.org/mitmachen kannst du dich bei Volt anmelden und mitmachen.`,
 
@@ -55,8 +57,8 @@ const facts = [
 
   fact`City-Lead|Potsdam``City-Leads von Volt Potsdam: Thomas Rosen und Georg Sichardt`,
 
-  fact`Europa|Tech|Help``Technische Hilfe für interne technische Probleme in Volt Europa bekommst du unter https://helpdesk.volteuropa.org/`,
-  fact`Europa|Tech|Help``Die Email Adresse des Helpdesk lautet help@volteuropa.org`,
+  fact`Europa|Tech|Help``Technische Hilfe für interne technische Probleme in Volt Europa bekommst du unter https://help.volteuropa.org/`,
+  fact`always|Europa|Tech|Help``Beim Helpdesk kannst jederzeit von echten Menschen Hilfe zu deinen technischen Problemen bekommen. Die Email Adresse des Volt Europa Helpdesk lautet help@volteuropa.org.`,
   fact`Europa|Tech``Informationen zu technischen Themen in Volt Europa gibt es im Tech Intranet unter https://sites.google.com/volteuropa.org/eur-tech`,
   fact`Europa|Tech|Leads``Die Tech-Leads von Volt Europa sind: Derhen Coulomb und Jose Antonio Abellan Lax.`,
   fact`Europa|Tech|Leads``Tech-Innovation wird von Yannick Retel Helmrich geleitet.`,
@@ -70,7 +72,7 @@ const facts = [
   
   Volt Brandenburg hat ein Introvideo zu Workplace aufgenommen. Das Video findest du hier: https://drive.google.com/file/d/16tblV2w761Z-OznXvtJeVYzjpQZ_UiOK/preview`,
 
-
+  fact`Glossar|City-Leads|kommunal``City-Leads = Personen die ein lokales Team in Volt leiten.`,
 
 
 
@@ -265,8 +267,77 @@ Wir wollen ein europäisches Grenzschutz-System, welches unter anderem die Ersta
 Unsere gemeinsamen, europäischen Werte sollen sicherstellen, dass Geflüchtete beim ersten Kontakt erkennen können, wofür wir als europäische Bürger stehen.
 `,
 
-  
-  // fact``,
+  fact`Tech|Tusker|Voting|Email|Purpose``For what? Tusker serves two main functions: voting for Volt members (whether this be at General Assemblies, National Assemblies or Local Assemblies as well of course for our Policy Votes and all different democratic expressions within Volt) & emailing (again, across the wide variety of segments Volt has).`,
+  fact`Tech|Tusker|Voting|Email|Access``For who? Tusker is reserved for usage by the following functions
+- General Secretary
+- Policy Co-Leads
+- Communications Team (European, National or Local)
+- People who have been nominated to manage a voting process by the adequate decision-making authority (more often than not this would the Executive Board of a given Chapter - national, regional or local) - this would often be someone who has been trained to use Tusker.
+
+Although Tech might support voting procedures and on relevant tickets where problems
+arise, the responsibility of voting procedures cannot be seen as a Tech-only owned activity but
+is conducted in conjunction with the relevant chapter (at either level that might be) so we can
+ensure the integrity of all votes.`,
+  fact`Tech|Tusker|Voting|Email``For when? Voting procedures happen very regularly across our different chapters. The same applies to emails to our members or email subscribers.`,
+  fact`Tech|Tusker|Voting|Usage``How to set-up a Tusker LiveEvent?
+For the smaller chapters, we understand that Tusker can be sometimes a hassle to set-up without any prior experience. Therefore, the Tech team will try and support to the best of our abilities the different chapters that require help.
+If this is the case, please copy and complete the following sheet (https://docs.google.com/spreadsheets/d/1jgFQBZCqeITaOycFEAc3-ziVTycjcOq91BbkfAhb49A/edit) with all relevant info and create a ticket by sending an email to help@volteuropa.org.
+In the title of the email, please use the following format:
+Tusker LiveEvent - {Chapter Name/Team Name) - {Date}
+Also please note that you should start this process at least 30 days ahead of the given voting date to ensure we can include the voting emails in your communications for the event and make sure we have enough bandwidth to support.
+For the larger chapter, we will strive to work with your teams but would prefer if a dedicated person within the chapter is responsible for Tusker LiveEvents (typically at the national level).
+For those interested, hereby a guide on how to set up a Tusker LiveEvent. (https://docs.google.com/document/d/1JiJDy3NOpCN5b8ZEFZRoVBrKUUz8ULFzxk5WSQeF4S8/edit)`,
+  fact`Tech|Tusker|Email|Usage``How to set-up a Tusker Emailing? No information available yet.`,
+  fact`Tech|Tusker|Voting|Email|Guide|Usage|Video``Recording for First Show & Tell for Tusker: https://drive.google.com/file/d/1KOVlx5wo2A7jgTTlQ2EhSb7WLjQTLl7I/view`,
+  fact`Tech|volt.team|AWS|Commands``A guide about volt.team that describes some useful commands for executing everyday maintenance tasks in volt.team: https://docs.google.com/document/d/18r6o9zSrgnEqTgD_93uj323nNlDPEx4e91QG_dd4Eb4/edit`,
+  fact`Tech|volt.team|AWS|Deployment``A document about how Carlo, Thor and Thomas deployed changes to volt.team: https://docs.google.com/document/d/1_UMmtlawvZvC9VnekaHXy4J6kFGOmNOJEvvj_cxhH8o/edit`,
+
+  fact`Tech|Tusker|Voting|LiveEvent|Guide|Create``Creating a LiveEvent in Tusker (Only Superadmins)
+1. Sign in to Tusker at https://tusker.volteuropa.org
+2. Click on “LiveEvents” in the sidebar and then on “Create new LiveEvent” on the top right
+3. Enter the information for the LiveEvent: Name, Team, and End date. The LiveEvent will be available until the chosen End date, so it’s usually a good idea to put the end day a day or two after the planned end of the actual event.
+4. Click on “Save” and the event is now created. You are now the super admin of this event and the only one who will be able to add members to this event.
+`,
+  fact`Tech|Tusker|Voting|LiveEvent|Guide|Members``Adding Members to an Event (Only Superadmins)
+1. After you’ve saved your new event, you can see the “Go to admin panel” button at the top of the page. Click on it in order to open the LiveEvent. You will be signed in automatically.
+2. Click on “Manage participants” in order to see the list of participants
+3. Click on “Add participants” in the top right corner of the modal dialog. You can now add a list of volt.team IDs and confirm by clicking on “Add participants”. You have to put one volt.team ID per line.
+`,
+  fact`Tech|Tusker|Voting|LiveEvent|Guide|Participants|Edit``Managing Participants
+1. After having added participants, you can see them in the “Manage participants” dialog.
+2. You can search for participants by their name or volt.team ID.
+3. If there are participants who are not supposed to have voting rights (e.g. a chair from another association), you can disable their voting rights by clicking on “Toggle voting rights”. Clicking the button again restores their voting rights.
+4. If there are participants who should be able to access the admin panel for the LiveEvent, you can grant them admin rights by clicking on “Toggle admin rights”. Clicking the button again removes their admin rights.
+5. You can send a link to the LiveEvent to individual participants by clicking on “Send link”. This link will enable them to access the LiveEvent even before an official invitation has been sent out via Tusker Mailing.
+`,
+  fact`Tech|Tusker|Voting|LiveEvent|Guide|Settings``Setting up the Event
+1. Before inviting participants, the event should be set up with the necessary information. Click on “Settings” in the admin panel in order to do so.
+2. In the “Settings” panel, you can change the following information:
+2a. Name: This name will be displayed at the top of the page
+2b. Description: This text is displayed to participants and guests of the event. You can use Markdown for formatting.
+2c. Welcome Text: This text is displayed to participants before they join the event. You can use Markdown for formatting.
+2d. YouTube ID: If the event includes a live stream on YouTube, you can add the video ID here. Please note that the video ID is just the part after ?v=, e.g.  https://www.youtube.com/watch?v=corSEueGSgM
+2e. Buttons: You can add one or several buttons to the LiveEvent.
+Each button can have an optional icon, a label, and a link. The link can include the \`$NAME\`, \`$TOKEN\` variable placeholders. These will be automatically replaced by the participant’s full name or a voting token respectively.
+Buttons can be set to only be displayed for participants; by default they are also visible to guests.`,
+  fact`Tech|Tusker|Voting|LiveEvent|Guide|Invitations``Sending Participant Invitations
+1. Invitations can be sent via Tusker Mailing.
+2. Only the team that has been set up to own the event (or its parent teams) can send out a LiveEvent invitation
+3. In order to send out the invitations, a Mailings channel needs to be set up. It is recommended that every team which holds LiveEvents maintains a LiveEvent mailing channel. (N.B.: German teams often call these channels “Parteitag …”, Dutch teams use “Digitale stemlink …”. Ideally the naming convention for new teams would include the term “Live” so it’s easy to recognize the relevant channels)
+4. The channel can be configured by clicking on the “Edit” button on the top right of the channel page.
+5. The channel needs to be updated for every new LiveEvent.
+6. The channel settings should include the following
+6a. Disable opt-out: Yes
+6b. Mark channel as private: Yes
+6c. Send campaigns in this channel to people who are in a … LiveEvent
+6d. LiveEvent Selection: Your Live Event
+7. You can then create a new campaign in the channel.
+The placeholder \`{{ live_event_token_url }}\` will be replaced with the participant’s access link. NB: If you send a preview email, the placeholder will remain empty. It’s best practice to make the access link a button for good visibility. This can be achieved with the following Markdown:
+\`#### [Join now!]({{ live_event_token_url }}?locale=de)\`
+You may replace “Join now” with your desired button label and the language code in “?locale=de” with your desired language (or leave it out to default to English).
+`,
+
+  // fact````,
 ]
 
 function fact(strings) {
