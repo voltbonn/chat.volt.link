@@ -466,6 +466,21 @@
         const url_regexp = /(?<!@)\b((?:(?:https?|ftp):\/\/)?[\w-]+(?:\.[\w-]+)+(?:[\w.,@?^=%&:/~+#-]*[\w@?^=%&/~+#-])?(?<!\.))/gim;
         const email_regexp = /([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9_-]+)/gim;
 
+        // make all URLs have a protocol
+        const url_matches = text.matchAll(url_regexp)
+        if (url_matches) {
+          for (const url_match of url_matches) {
+            const url = url_match[0]
+            if (
+              !url.startsWith('https://')
+              && !url.startsWith('http://')
+              && !url.startsWith('ftp://')
+            ) {
+              text = text.replaceAll(url, 'https://' + url)
+            }
+          }
+        }
+
         text = markdown.render(text)
 
         text = text
