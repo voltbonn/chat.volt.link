@@ -152,6 +152,7 @@ async function get_next_message(messages, callback, partial_callback) {
 
     try {
       const full_text = await ask_the_bot_with_setup(
+        { bot_name: 'helpdesk' },
         messages,
         // [
         //   { role: 'user', content: 'Was ist Volt Europa?' },

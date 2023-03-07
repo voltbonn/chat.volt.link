@@ -1,6 +1,7 @@
 const { Configuration, OpenAIApi } = require('openai')
 
 const { facts } = require('./facts.js')
+const { get_bot, filter_fact_by_bot, get_prompt, add_data_to_prompt } = require('./bots.js')
 
 const configuration = new Configuration({
   apiKey: process.env.OPENAI_API_KEY,
@@ -98,7 +99,8 @@ function shuffle(array) {
   return array;
 }
 
-async function get_matching_facts(text) {
+async function get_matching_facts(facts, text) {
+
   const max_facts = 20
 
   if (typeof text !== 'string' || text.length === 0) {
@@ -147,8 +149,22 @@ Fragestellung: ${text}`
   return found_facts
 }
 
-async function get_system_setup(text) {
-  const found_facts = await get_matching_facts(text)
+async function get_system_setup(options, text) {
+  const {
+    bot_name = 'helpdesk',
+  } = options || {}
+
+  const bot = get_bot(bot_name)
+
+  const filtered_facts = filter_fact_by_bot(facts, bot)
+  let found_facts = await get_matching_facts(filtered_facts, text)
+
+  const max_amount_of_letters = 2000 // otherwise loading the chat would take too long
+  found_facts = found_facts.slice(0, max_amount_of_letters)
+
+  const prompt = add_data_to_prompt(get_prompt('system_setup', bot), { facts: found_facts })
+
+  return prompt
 
   return `Handle wie ein Kundendienst Chat-Bot für Volt.
 
@@ -186,13 +202,13 @@ Antworte ab jetzt in kurzen Chat-Nachrichten auf Fragen.`
 // Antworte ab jetzt im Q&A-Format auf Fragen.
 }
 
-async function ask_the_bot_with_setup(messages, ...attr) {
+async function ask_the_bot_with_setup(options = {}, messages, ...attr) {
   // get the latest two messages
   const msgs = messages.slice(-2)
     .map(m => m.content)
     .join('\n')
 
-  const system_setup = await get_system_setup(msgs)
+  const system_setup = await get_system_setup(options, msgs)
 
   return await ask_the_bot(
     system_setup,
