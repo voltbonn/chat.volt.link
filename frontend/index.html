@@ -302,7 +302,9 @@
     }
     .chatbubble {
       position: relative;
-      display: inline-block;
+      display: inline-flex;
+      flex-direction: column;
+      gap: 10px;
       padding: 10px;
       margin-block-end: 10px;
       max-width: 80%;
@@ -310,9 +312,10 @@
     }
     .chatbubble.assistant {
       align-self: flex-start;
-      background: var(--on-purple);
+      background: var(--gray-light);
       color: var(--purple);
-      padding: 0;
+      /* padding: 0; */
+      border-radius: 10px 10px 10px 0;
     }
     .chatbubble.assistant.error {
       color: var(--red);
@@ -321,6 +324,7 @@
       align-self: flex-end;
       background: var(--purple);
       color: var(--on-purple);
+      border-radius: 10px 10px 0 10px;
     }
     .chatbubble.user.error {
       background: var(--red);
