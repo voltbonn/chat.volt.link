@@ -501,6 +501,8 @@
           .replace(/^- (.+)$/gm, `<li>$1</li>`) // replace - with <li>
           .replace(/\n/g, '<br />') // replace \n with <br />
           .replace(/<\/li><br \/>/g, '</li>') // remove accidental <br /> after </li>
+          .replace(/(<br \/>)+$/, '') // remove linebreaks at the end
+
 
         new_chatbubble.innerHTML = text
         new_messages_node.appendChild(new_chatbubble)
