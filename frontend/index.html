@@ -656,17 +656,17 @@
     display_messages()
 
 
-  function check_url_for_message() {
-    const url = new URL(window.location.href)
-    const message = url.searchParams.get('msg')
-    if (message) {
-      messages.push({ role: 'user', content: message })
-      display_messages()
-      send_messages()
+    function check_url_for_message() {
+      const url = new URL(window.location.href)
+      const message = url.searchParams.get('msg')
+      if (message) {
+        messages.push({ role: 'user', content: message })
+        display_messages()
+        send_messages()
+      }
     }
-  }
     window.addEventListener('load', check_url_for_message)
-  window.addEventListener('popstate', check_url_for_message) // on url change
+    window.addEventListener('popstate', check_url_for_message) // on url change
 
 
 
