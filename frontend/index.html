@@ -426,14 +426,14 @@
         return String(error)
       }
     }
-  
-  
+
+
     const messages_node = document.getElementById('messages')
     const new_message_node = document.getElementById('new_message')
     const send_message_node = document.getElementById('send_message')
     const input_box_node = document.getElementById('input_box')
     const loading_node = document.getElementById('loading')
-  
+
     let messages = [
       // {
       //   role: 'assistant',
@@ -462,7 +462,7 @@
           text = message.error
         }
 
-        
+
         const url_regexp = /(?<!@)\b((?:(?:https?|ftp):\/\/)?([\w-]+(?:\.[\w-]+)+(?:[\w.,@?^=%&:/~+#-]*[\w@?^=%&/~+#-])?(?<!\.)))/gim;
         const email_regexp = /([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9_-]+)/gim;
 
@@ -500,7 +500,7 @@
     function is_dev() {
       return window.location.hostname === 'localhost' || window.location.hostname === '0.0.0.0'
     }
-  
+
     function send_messages() {
       loading_node.classList.add('active')
 
@@ -509,7 +509,7 @@
       }
 
       socket.emit('query', { messages });
-      
+
       /*
       const url = (
         is_dev()
@@ -526,7 +526,7 @@
             error: new_response.error || null,
           })
           display_messages()
-        
+
           // scroll to the new_message_node
           input_box_node.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'nearest' })
           // focus new_message_node
@@ -545,7 +545,7 @@
         */
     }
     function use_text_input() {
-    
+
       const new_message = new_message_node.value
         .replace(/^[\s\n\r]+/gm, '') // remove lines and whitespace at the beginning
         .replace(/[\s\n\r]+$/gm, '') // remove lines and whitespace at the end
@@ -559,9 +559,9 @@
       new_message_node.value = ''
       send_messages()
     }
-  
+
     send_message_node.addEventListener('click', use_text_input)
-  
+
     // fire use_text_input when pressing the shift and enter key together
     new_message_node.addEventListener('keyup', function(event) {
       if (event.key === 'Enter') { // event.shiftKey === true
@@ -569,7 +569,7 @@
         use_text_input()
       }
     })
-  
+
     display_messages()
 
 
@@ -597,7 +597,7 @@
     )
     const socket = io(url)
 
-  
+
     socket.on('error', console.error.bind(console));
     // socket.on('response', ({ id, response, error }) => {
     //   messages.push({
@@ -610,7 +610,7 @@
     // })
     socket.on('partial_response', ({ id, response, error }) => {
       loading_node.classList.remove('active')
-            
+
       const message_index = messages.findIndex(message => message.id === id)
       if (message_index === -1) {
         // create new message
