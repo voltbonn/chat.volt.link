@@ -55,8 +55,6 @@ const facts = [
   fact`Statistiken|Mitglieder|Großbritanien``Volt hat in Großbritanien 298 Mitglieder. (Stand 2023-01-01)`,
   fact`kommunal|Erfolg|Großbritanien``Mit Ewan Hoyle hat Volt UK in Glasgow 4% erreicht.`,
 
-  fact`City-Lead|Potsdam|Personen``City-Leads von Volt Potsdam: Thomas Rosen und Georg Sichardt`,
-
   fact`Europa|Tech|Help``Technische Hilfe für interne technische Probleme in Volt Europa bekommst du unter https://help.volteuropa.org/`,
   fact`always|Europa|Tech|Help``Beim Helpdesk kannst jederzeit von echten Menschen Hilfe zu deinen technischen Problemen bekommen. Die Email Adresse des Volt Europa Helpdesk lautet help@volteuropa.org.`,
   fact`Europa|Tech``Informationen zu technischen Themen in Volt Europa gibt es im Tech Intranet unter https://sites.google.com/volteuropa.org/eur-tech`,
