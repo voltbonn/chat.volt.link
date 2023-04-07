@@ -195,6 +195,8 @@
     }
 
     button {
+      display: inline-flex;
+
       font-family: var(--font-family-button);
       text-decoration: none;
 
@@ -220,6 +222,11 @@
       background: var(--background-color);
     }
 
+    button svg {
+      height: 20px;
+      width: auto;
+    }
+
     button.text {
       color: var(--background-color);
       fill: var(--background-color);
@@ -231,6 +238,11 @@
       --background-color: var(--purple);
       --text-color: var(--on-purple);
     }
+/* 
+    button.gray {
+      --background-color: var(--gray);
+      --text-color: var(--on-gray);
+    } */
 
     button.red {
       --background-color: var(--red);
@@ -303,14 +315,25 @@
     .chatbubble {
       position: relative;
       display: inline-flex;
-      flex-direction: column;
+      flex-direction: row;
       gap: 10px;
+    }
+    .chatbubble.user {
+      flex-direction: row-reverse;
+    }
+    .chatbubble .content {
       padding: 10px;
       margin-block-end: 10px;
       max-width: 80%;
       word-wrap: break-word;
     }
-    .chatbubble.assistant {
+    .chatbubble .actions {
+      display: flex;
+      align-items: flex-start;
+      align-content: flex-start;
+      flex-wrap: wrap;
+    }
+    .chatbubble.assistant .content {
       align-self: flex-start;
       background: var(--gray-light);
       color: var(--purple);
@@ -320,7 +343,7 @@
     .chatbubble.assistant.error {
       color: var(--red);
     }
-    .chatbubble.user {
+    .chatbubble.user .content {
       align-self: flex-end;
       background: var(--purple);
       color: var(--on-purple);
@@ -404,6 +427,10 @@
   </div>
 
   <script type="module">
+
+    const info_svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 96 960 960"><path d="M442 787h82V536h-82v251Zm38.07-310q20.43 0 34.18-13.513Q528 449.975 528 430q0-21.95-13.795-35.475Q500.41 381 480.018 381q-21.518 0-34.768 13.525T432 429.5q0 20.6 13.82 34.05Q459.64 477 480.07 477Zm.334 524q-88.872 0-166.125-33.084-77.254-33.083-135.183-91.012-57.929-57.929-91.012-135.119Q55 664.594 55 575.638q0-88.957 33.084-166.285 33.083-77.328 90.855-134.809 57.772-57.482 135.036-91.013Q391.238 150 480.279 150q89.04 0 166.486 33.454 77.446 33.453 134.853 90.802 57.407 57.349 90.895 134.877Q906 486.66 906 575.734q0 89.01-33.531 166.247-33.531 77.237-91.013 134.86-57.481 57.623-134.831 90.891Q569.276 1001 480.404 1001Z"/></svg>`
+    const feedback_svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 96 960 960"><path d="M83 680q-34 0-58.5-23.944T0 597V351q0-15.529 6-30.265Q12 306 25 292L220 96l34 35.5q6 8.5 10 14.821 4 6.322 4 16.679v9l-28 128h186q26.25 0 44.125 17.981Q488 335.961 488 361.889V413q0 9-1.5 18t-3.5 14l-80 184q-13.079 29.639-34.039 40.319Q348 680 311 680H83Zm241-83 83-186v-27H154l26-129-97 99v243h241Zm416 459-33-35.5q-7-8.5-11-14.82-4-6.323-4-16.68v-9l29-129H534q-26.25 0-44.125-17.375T472 790.269V739q0-9 1.5-18t3.5-14l80-185q13-29 34-39.5t58-10.5h228q34 0 58.5 24t24.5 58v246q0 17-6 31.5T936 859l-196 197ZM636 554l-83 187v27h253l-26 129 97-98.714V554H636ZM83 597V354l97-99-26 129h253v27l-83 186H83Zm794-43v244l-97 99 26-129H553v-27l83-187h241Z"/></svg>`
+
     import {io} from '/socket.io.esm.min.js'
 
     import '/remarkable.min.js';
@@ -456,11 +483,24 @@
       //   content: `Was ist Volt?`,
       // },
     ]
+    function get_previous_messages(last_message_content) {
+      const previous_messages = []
+      for (const message of messages) {
+        previous_messages.push(message)
+        if (message.content === last_message_content) {
+          break
+        }
+      }
+      return previous_messages
+    }
+
     function display_messages() {
       const new_messages_node = document.createElement('div')
 
 
       for (const message of messages) {
+        const this_message_content = message.content
+
         const new_chatbubble = document.createElement('div')
         new_chatbubble.classList.add('chatbubble')
         new_chatbubble.classList.add(message.role)
@@ -503,8 +543,37 @@
           .replace(/<\/li><br \/>/g, '</li>') // remove accidental <br /> after </li>
           .replace(/(<br \/>)+$/, '') // remove linebreaks at the end
 
+        const new_content = document.createElement('div')
+        new_content.classList.add('content')
+        new_content.innerHTML = text
+        new_chatbubble.appendChild(new_content)
 
-        new_chatbubble.innerHTML = text
+        const chat_history = get_previous_messages(this_message_content)
+          .map(message => `${message.role}: ${message.content}`)
+          .join('\n\n')
+
+        if (message.role === 'assistant') {
+          // const new_facts = document.createElement('div')
+          // new_facts.classList.add('facts')
+          // for (const fact of message.facts) {
+          //   const new_fact = document.createElement('div')
+          //   new_fact.classList.add('fact')
+          //   new_fact.innerHTML = fact
+          //   new_facts.appendChild(new_fact)
+          // }
+          // new_chatbubble.appendChild(new_facts)
+
+          const new_actions = document.createElement('div')
+          new_actions.classList.add('actions')
+          new_actions.innerHTML = `
+            <a target="_blank" href="https://docs.google.com/forms/d/e/1FAIpQLSebrPY7u6YWMGzj3rMRnDjhBvmCPwXLFyS1D7S1fBdpi2IwmQ/viewform?usp=pp_url&entry.190795242=${encodeURIComponent(chat_history)}">
+              <button class="text">${feedback_svg}</button>
+            </a>
+          `
+          new_chatbubble.appendChild(new_actions)
+
+        }
+
         new_messages_node.appendChild(new_chatbubble)
       }
 
