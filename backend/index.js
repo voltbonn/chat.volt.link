@@ -129,7 +129,7 @@ async function get_next_message(messages, callback, partial_callback) {
     }
 
     // only use the last N messages (to prevent too long chats)
-    messages = messages.slice(-7)
+    messages = messages.slice(-9)
 
     // the chat should not be too long
     if (JSON.stringify(messages).length > 10000) {
@@ -149,10 +149,11 @@ async function get_next_message(messages, callback, partial_callback) {
       return
     }
 
+const bot_name = "default" // helpdesk
 
     try {
       const full_text = await ask_the_bot_with_setup(
-        { bot_name: 'helpdesk' },
+        { bot_name: bot_name },
         messages,
         // [
         //   { role: 'user', content: 'Was ist Volt Europa?' },
