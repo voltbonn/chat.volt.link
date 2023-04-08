@@ -827,11 +827,11 @@
             new_info_button.setAttribute('id', new_info_button_id)
             onEvent('click', `#${new_info_button_id}`, () => {
               open_popup(`
-                <h2>The answer:</h2>
+                <h2>The answer</h2>
                 <br />
                 ${markdown_to_html(message.content)}
                 <hr />
-                <h2>Data used to generate the answer:</h2>
+                <h2>Data used to generate the answer</h2>
                 ${markdown_to_html(message.information)}
               `)
             })
