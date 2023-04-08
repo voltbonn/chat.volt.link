@@ -812,6 +812,8 @@
                 ${markdown_to_html(message.content)}
                 <hr />
                 <h2>Data used to generate the answer</h2>
+                <br />
+                <p>The data changes based on the asked question and the previous context.</p>
                 ${markdown_to_html(message.information)}
               `)
             })
