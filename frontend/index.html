@@ -340,7 +340,11 @@
       display: flex;
       align-items: flex-start;
       align-content: flex-start;
-      flex-wrap: wrap;
+    }
+    @media (max-width: 500px) {
+      .chatbubble .actions {
+        flex-wrap: wrap;
+      }
     }
     .chatbubble.assistant .content {
       align-self: flex-start;
