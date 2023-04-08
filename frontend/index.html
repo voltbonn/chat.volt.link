@@ -701,6 +701,9 @@
     }
     function new_node_id () {
       return `_${Math.random().toString(36).substring(2, 15)}` // an id should not start with a number. that the reason for the underscore
+
+      // todo: maybe use nanoid
+      // export let nanoid=(t=21)=>crypto.getRandomValues(new Uint8Array(t)).reduce(((t,e)=>t+=(e&=63)<36?e.toString(36):e<62?(e-26).toString(36).toUpperCase():e>62?"-":"_"),"");
     }
     // END events
 
