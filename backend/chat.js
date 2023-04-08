@@ -9,6 +9,10 @@ const configuration = new Configuration({
 const openai = new OpenAIApi(configuration)
 
 async function ask_the_bot(system_setup, messages, onTokenCallback, options = {}) {
+
+  const { information = null } = options
+  delete options.information;
+
   const has_onTokenCallback = typeof onTokenCallback === 'function'
 
   if (typeof system_setup === 'string') {
@@ -36,10 +40,10 @@ async function ask_the_bot(system_setup, messages, onTokenCallback, options = {}
     // without the stream option
     return new Promise(resolve => {
       try {
-        resolve(completion.data?.choices[0]?.message?.content)
+        resolve({ information, text: completion.data?.choices[0]?.message?.content })
       } catch (error) {
         console.error('ERROR', error)
-        resolve('')
+        resolve({ information, text: ''})
       }
     })
   } else {
@@ -47,6 +51,7 @@ async function ask_the_bot(system_setup, messages, onTokenCallback, options = {}
     // with the stream option
     return new Promise(resolve => {
       let result = ''
+      let is_first = true
       completion.data.on('data', data => {
         const lines = data?.toString()
           ?.split('\n')
@@ -54,7 +59,7 @@ async function ask_the_bot(system_setup, messages, onTokenCallback, options = {}
         for (const line of lines) {
           const message = line.replace(/^data: /, '')
           if (message === '[DONE]') {
-            resolve(result)
+            resolve({ information, text: result })
           } else {
             let token;
             try {
@@ -64,7 +69,12 @@ async function ask_the_bot(system_setup, messages, onTokenCallback, options = {}
             }
             if (token) {
               result += token
-              onTokenCallback(token)
+              if (is_first) { // only send the information once at the first time
+                onTokenCallback({ information, text: token })
+                is_first = false
+              } else {
+                onTokenCallback({ information: null, text: token })
+              }
             }
           }
         }
@@ -120,9 +130,10 @@ Fragestellung: ${text}`
 
 // Antworte nur als JSON-Array. Keine weitere Erklärung.
 
-  const full_text = await ask_the_bot(null, [{ role: 'user', content: facts_retrival_system_setup }], null, {
+  const bot_response = await ask_the_bot(null, [{ role: 'user', content: facts_retrival_system_setup }], null, {
     temperature: 0.5,
   })
+  const full_text = bot_response.text
 
   const found_categories = full_text
     .replace('.', ' ')
@@ -159,12 +170,15 @@ async function get_system_setup(options, text) {
   const filtered_facts = filter_fact_by_bot(facts, bot)
   let found_facts = await get_matching_facts(filtered_facts, text)
 
-  const max_amount_of_letters = 2000 // otherwise loading the chat would take too long
+  const max_amount_of_letters = 4000 // otherwise loading the chat would take too long
   found_facts = found_facts.slice(0, max_amount_of_letters)
 
   const prompt = add_data_to_prompt(get_prompt('system_setup', bot), { facts: found_facts })
 
-  return prompt
+  return {
+    prompt,
+    facts: found_facts
+  }
 
   return `Handle wie ein Kundendienst Chat-Bot für Volt.
 
@@ -202,18 +216,24 @@ Antworte ab jetzt in kurzen Chat-Nachrichten auf Fragen.`
 // Antworte ab jetzt im Q&A-Format auf Fragen.
 }
 
-async function ask_the_bot_with_setup(options = {}, messages, ...attr) {
+async function ask_the_bot_with_setup(system_setup_options = {}, messages, onTokenCallback, options = {}) {
   // get the latest two messages
   const msgs = messages.slice(-2)
     .map(m => m.content)
     .join('\n')
 
-  const system_setup = await get_system_setup(options, msgs)
+  const {
+    prompt: system_setup,
+    facts: information,
+  } = await get_system_setup(system_setup_options, msgs)
+
+  options.information = information
 
   return await ask_the_bot(
     system_setup,
     messages,
-    ...attr
+    onTokenCallback,
+    options,
   )
 }
 

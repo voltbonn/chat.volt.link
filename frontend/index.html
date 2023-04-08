@@ -24,6 +24,9 @@
       --purple-dark: #19022d;
       --purple-darker: #0d0019;
 
+      --purple-light-rgb: 181, 141, 217;
+      --purple-rgb: 80, 35, 121;
+
       --green-lighter: #d1ffe9;
       --green-light: #94fcc9;
       --green: #1bbe6f;
@@ -168,6 +171,12 @@
       font-family: var(--font-family-code);
       font-size: 19px;
       white-space: break-spaces;
+    }
+
+    hr {
+      margin-block: 20px;
+      color: var(--purple);
+      border-style: solid;
     }
 
     textarea {
@@ -381,6 +390,94 @@
     li {
       margin-inline-start: 20px;
     }
+
+    .popup {
+      position: fixed;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      pointer-events: none;
+    }
+
+    .popup.open {
+      pointer-events: auto;
+    }
+
+    .popup .backdrop {
+      position: fixed;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      cursor: pointer;
+
+      background-color: rgba(var(--purple-rgb), 0);
+      backdrop-filter: blur(0px);
+      transition: background-color var(--timing), backdrop-filter var(--timing);
+    }
+
+    .popup.open .backdrop {
+      background: rgba(var(--purple-rgb), .2);
+      backdrop-filter: blur(2px);
+      transition: background-color var(--timing), backdrop-filter var(--timing);
+    }
+
+    .popup .dialog {
+      --basis_x0_5: 2.5px;
+      --basis: 5px;
+      --basis_x2: 10px;
+      --basis_x4: 20px;
+      --basis_x8: 40px;
+      --basis_x16: 80px;
+      --basis_x32: 160px;
+
+      --shadow-color-rgba: rgba(var(--purple-rgb), 0.2);
+
+      position: relative;
+      top: var(--basis_x16);
+      left: 50%;
+      -webkit-transform: translate3d(-50%, 0, 0);
+      transform: translate3d(-50%, 0, 0);
+      width: 800px;
+      max-width: calc(100% - var(--basis_x8));
+      max-height: calc(100% - var(--basis_x32));
+      overflow: auto;
+      -webkit-overflow-scrolling: touch;
+      background: white;
+      margin-bottom: var(--basis_x8);
+      box-shadow: 0 var(--basis_x16) var(--basis_x32) var(--shadow-color-rgba), 0 var(--basis_x8) var(--basis_x16) var(--shadow-color-rgba), 0 var(--basis_x2) var(--basis_x4) var(--shadow-color-rgba), 0 0 var(--basis_x0_5) var(--shadow-color-rgba);
+      border-radius: var(--basis_x2);
+      padding: var(--basis_x4) var(--basis_x8);
+
+      transform: translate3d(-50%, 50%, 0);
+      opacity: 0;
+      transition: transform var(--timing), opacity var(--timing);
+    }
+
+    @media (max-height: 700px) {
+      .popup .dialog {
+        top: var(--basis_x4);
+        max-height: calc(100% - var(--basis_x8));
+      }
+    }
+
+    @media (max-height: 600px),
+    (max-width: 600px) {
+      .popup .dialog {
+        top: 0;
+        height: 100%;
+        max-height: 100%;
+        max-width: 100%;
+        border-radius: 0;
+      }
+    }
+
+    .popup.open .dialog {
+      transform: translate3d(-50%, 0, 0);
+      opacity: 1;
+      transition: transform var(--timing), opacity var(--timing);
+    }
   </style>
 </head>
 
@@ -393,11 +490,31 @@
     This is a chat-bot demo for Volt. It can answer some basic questions about Volt and its policies.
   </strong></p>
   <p><strong>
-    Please know that the bot may sometimes halucinate wrong information. If you're unsure, ask a human for clarification.
+    Please know that the bot may sometimes halucinate wrong information. If you're unsure, check the data it used to generate the answer (i) or ask a human for clarification.
   </strong></p>
   <p>You can ask questions in any language.</p>
 
-  <div class="messages" id="messages"></div>
+  <!-- <div class="messages" id="messages"></div> -->
+
+  <div class="messages" id="messages">
+    <div class="chatbubble user">
+      <div class="content">
+        <p>Was ist Volt?</p>
+      </div>
+    </div>
+    <div class="chatbubble assistant">
+      <div class="content">
+        <p>Hello World!</p>
+      </div>
+      <div class="actions">
+        <button class="text"></button>
+        <a target="_blank" href="https://docs.google.com/forms/d/e/1FAIpQLSebrPY7u6YWMGzj3rMRnDjhBvmCPwXLFyS1D7S1fBdpi2IwmQ/viewform?usp=pp_url&entry.190795242=_CHAT_HISTORY_">
+          <button class="text"></button>
+        </a>
+      </div>
+    </div>
+  </div>
+
   <div class="loading" id="loading">
     <p class="caption">
       <!-- Am denken… -->
@@ -426,7 +543,10 @@
     <br />
   </div>
 
+  <div id="overlays"></div>
+
   <script type="module">
+    // throw new Error('This is a demo chat-bot for Volt. It can answer some basic questions about Volts policies. Please know that it may halucinate wrong information. If you\'re unsure, check the data it used to generate the answer (i) or ask a human for clarification. You can ask questions in any language. The entered data is sent to servers of the company OpenAI in America. No metadata about you is sent along. or use the Enter-Key.');
 
     const info_svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 96 960 960"><path d="M442 787h82V536h-82v251Zm38.07-310q20.43 0 34.18-13.513Q528 449.975 528 430q0-21.95-13.795-35.475Q500.41 381 480.018 381q-21.518 0-34.768 13.525T432 429.5q0 20.6 13.82 34.05Q459.64 477 480.07 477Zm.334 524q-88.872 0-166.125-33.084-77.254-33.083-135.183-91.012-57.929-57.929-91.012-135.119Q55 664.594 55 575.638q0-88.957 33.084-166.285 33.083-77.328 90.855-134.809 57.772-57.482 135.036-91.013Q391.238 150 480.279 150q89.04 0 166.486 33.454 77.446 33.453 134.853 90.802 57.407 57.349 90.895 134.877Q906 486.66 906 575.734q0 89.01-33.531 166.247-33.531 77.237-91.013 134.86-57.481 57.623-134.831 90.891Q569.276 1001 480.404 1001Z"/></svg>`
     const feedback_svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 96 960 960"><path d="M83 680q-34 0-58.5-23.944T0 597V351q0-15.529 6-30.265Q12 306 25 292L220 96l34 35.5q6 8.5 10 14.821 4 6.322 4 16.679v9l-28 128h186q26.25 0 44.125 17.981Q488 335.961 488 361.889V413q0 9-1.5 18t-3.5 14l-80 184q-13.079 29.639-34.039 40.319Q348 680 311 680H83Zm241-83 83-186v-27H154l26-129-97 99v243h241Zm416 459-33-35.5q-7-8.5-11-14.82-4-6.323-4-16.68v-9l29-129H534q-26.25 0-44.125-17.375T472 790.269V739q0-9 1.5-18t3.5-14l80-185q13-29 34-39.5t58-10.5h228q34 0 58.5 24t24.5 58v246q0 17-6 31.5T936 859l-196 197ZM636 554l-83 187v27h253l-26 129 97-98.714V554H636ZM83 597V354l97-99-26 129h253v27l-83 186H83Zm794-43v244l-97 99 26-129H553v-27l83-187h241Z"/></svg>`
@@ -457,7 +577,6 @@
         if (!response.ok) {
           return { response: '', error: response.statusText }
         } else {
-          console.log('response', response)
           return response.json() // parses JSON response into native JavaScript objects
         }
       } catch (error) {
@@ -466,21 +585,137 @@
       }
     }
 
-
     const messages_node = document.getElementById('messages')
     const new_message_node = document.getElementById('new_message')
     const send_message_node = document.getElementById('send_message')
     const input_box_node = document.getElementById('input_box')
     const loading_node = document.getElementById('loading')
 
-    let messages = [
+
+
+    // START events
+    window.event_listeners = [] // ['click', '...']
+    window.event_callbacks = [
       // {
-      //   role: 'assistant',
-      //   content: ``,
-      // },
+      //   event_name: 'click',
+      //   selector: 'kajshfg',
+      //   callback: () => {
+      //     console.debug('clicked')
+      //   }
+      // }
+    ]
+    function get_node_parents (node, parents = []) {
+      if (!Array.isArray(parents)) {
+        parents = []
+      }
+      if (parents.length === 0) {
+        parents.push(node)
+      }
+
+      const parentNode = node.parentNode
+
+      if (
+        parentNode.nodeName !== null
+        && parentNode.nodeName !== 'BODY'
+        && parentNode.nodeName !== 'HTML'
+        && parentNode.nodeName !== '#document'
+      ) {
+        parents.push(parentNode)
+        parents = get_node_parents(parentNode, parents)
+      }
+
+      return parents
+    }
+    function on_any_event (event) {
+      const parentNodes = get_node_parents(event.target)
+      for (const parentNode of parentNodes) {
+        for (const event_callback_info of window.event_callbacks) {
+          if (
+            parentNode.matches(event_callback_info.selector)
+            && event.type === event_callback_info.event_name
+          ) {
+            event_callback_info.callback(event)
+          }
+        }
+      }
+    }
+    function re_add_event_listeners() {
+      const current_event_listeners = window.event_listeners
+      const wished_event_listeners = window.event_callbacks.map(ec => ec.event_name)
+
+      const new_event_listeners = wished_event_listeners.filter(wel => !current_event_listeners.includes(wel))
+      const removed_event_listeners = current_event_listeners.filter(cel => !wished_event_listeners.includes(cel))
+
+      for (const event_listener_name of new_event_listeners) {
+        window.event_listeners.push(event_listener_name)
+        document.addEventListener(event_listener_name, on_any_event)
+      }
+      for (const event_listener_name of removed_event_listeners) {
+        window.event_listeners = window.event_listeners.filter(item => item !== event_listener_name)
+        document.removeEventListener(event_listener_name, on_any_event)
+      }
+    }
+    function waitForElm(selector) {
+      // source: https://stackoverflow.com/questions/5525071/how-to-wait-until-an-element-exists
+      // Wait till the selector is found in the dom and then resolve the promise.
+      // I think this does only work in modern browsers.
+      return new Promise(resolve => {
+        if (document.querySelector(selector)) {
+          return resolve(document.querySelector(selector));
+        }
+
+        const observer = new MutationObserver(mutations => {
+          // for (const mutation of mutations) {
+            // if ([...mutation.addedNodes].find(node => node.matches(selector))) { // this only checks the added nodes. not the whole dom like with document.querySelector(selector)
+              const node = document.querySelector(selector)
+            if (node) { // alternative to the if above
+              resolve(node);
+              observer.disconnect();
+            }
+          // }
+        });
+
+        observer.observe(document.body, {
+          childList: true,
+          subtree: true
+        });
+      });
+    }
+    function onEvent(event_name, selector, callback) {
+      waitForElm(selector)
+        .then(() => {
+          window.event_callbacks.push({
+            event_name,
+            selector,
+            callback,
+          })
+          re_add_event_listeners()
+        })
+    }
+    function notOnEvent(event_name, selector) {
+      // remove event listerner
+      window.event_callbacks = window.event_callbacks.filter(ec => {
+        return !(ec.event_name === event_name && ec.selector === selector)
+      })
+      re_add_event_listeners()
+    }
+    function new_node_id () {
+      return `_${Math.random().toString(36).substring(2, 15)}` // an id should not start with a number. that the reason for the underscore
+    }
+    // END events
+
+
+
+    let messages = [
       // {
       //   role: 'user',
       //   content: `Was ist Volt?`,
+      //   information: '',
+      // },
+      // {
+      //   role: 'assistant',
+      //   content: `You can contact Volt Potsdam via email at potsdam@voltdeutschland.org. Information about Volt Potsdam events can be found on their Instagram page (@voltpotsdam) and their website (www.voltbrandenburg.org/potsdam).`,
+      //   information: `- abc\n- 123`,
       // },
     ]
     function get_previous_messages(last_message_content) {
@@ -494,6 +729,37 @@
       return previous_messages
     }
 
+    function markdown_to_html(text) {
+      const url_regexp = /(?<!@)\b((?:(?:https?|ftp):\/\/)?([\w-]+(?:\.[\w-]+)+(?:[\w.,@?^=%&:/~+#-]*[\w@?^=%&/~+#-])?(?<!\.)))/gim;
+      const email_regexp = /([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9_-]+)/gim;
+
+      // make all URLs have a protocol
+      const url_matches = text.matchAll(url_regexp)
+      if (url_matches) {
+        for (const url_match of url_matches) {
+          const url = url_match[0]
+          if (
+            !url.startsWith('https://')
+            && !url.startsWith('http://')
+            && !url.startsWith('ftp://')
+          ) {
+            text = text.replaceAll(url, 'https://' + url)
+          }
+        }
+      }
+
+      text = markdown.render(text)
+
+      text = text
+        .replace(url_regexp, '<a href="$1" target="_blank">$2</a>') // Make URLs clickable
+        .replace(email_regexp, '<a href="mailto:$1">$1</a>') // Make emails clickable
+        .replace(/^- (.+)$/gm, `<li>$1</li>`) // replace - with <li>
+        .replace(/\n/g, '<br />') // replace \n with <br />
+        .replace(/<\/li><br \/>/g, '</li>') // remove accidental <br /> after </li>
+        .replace(/(<br \/>)+$/, '') // remove linebreaks at the end
+
+      return text
+    }
     function display_messages() {
       const new_messages_node = document.createElement('div')
 
@@ -514,34 +780,7 @@
           text = message.error
         }
 
-
-        const url_regexp = /(?<!@)\b((?:(?:https?|ftp):\/\/)?([\w-]+(?:\.[\w-]+)+(?:[\w.,@?^=%&:/~+#-]*[\w@?^=%&/~+#-])?(?<!\.)))/gim;
-        const email_regexp = /([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9_-]+)/gim;
-
-        // make all URLs have a protocol
-        const url_matches = text.matchAll(url_regexp)
-        if (url_matches) {
-          for (const url_match of url_matches) {
-            const url = url_match[0]
-            if (
-              !url.startsWith('https://')
-              && !url.startsWith('http://')
-              && !url.startsWith('ftp://')
-            ) {
-              text = text.replaceAll(url, 'https://' + url)
-            }
-          }
-        }
-
-        text = markdown.render(text)
-
-        text = text
-          .replace(url_regexp, '<a href="$1" target="_blank">$2</a>') // Make URLs clickable
-          .replace(email_regexp, '<a href="mailto:$1">$1</a>') // Make emails clickable
-          .replace(/^- (.+)$/gm, `<li>$1</li>`) // replace - with <li>
-          .replace(/\n/g, '<br />') // replace \n with <br />
-          .replace(/<\/li><br \/>/g, '</li>') // remove accidental <br /> after </li>
-          .replace(/(<br \/>)+$/, '') // remove linebreaks at the end
+        text = markdown_to_html(text)
 
         const new_content = document.createElement('div')
         new_content.classList.add('content')
@@ -570,8 +809,30 @@
               <button class="text">${feedback_svg}</button>
             </a>
           `
-          new_chatbubble.appendChild(new_actions)
 
+          if (message.information) {
+            // <button class="text" id="info_toggle_button">${info_svg}</button>
+            const new_info_button = document.createElement('button')
+            new_info_button.classList.add('text')
+            new_info_button.innerHTML = info_svg
+
+            const new_info_button_id = new_node_id()
+            new_info_button.setAttribute('id', new_info_button_id)
+            onEvent('click', `#${new_info_button_id}`, () => {
+              open_popup(`
+                <h2>The answer:</h2>
+                <br />
+                ${markdown_to_html(message.content)}
+                <hr />
+                <h2>Data used to generate the answer:</h2>
+                ${markdown_to_html(message.information)}
+              `)
+            })
+
+            new_actions.prepend(new_info_button)
+          }
+
+          new_chatbubble.appendChild(new_actions)
         }
 
         new_messages_node.appendChild(new_chatbubble)
@@ -643,6 +904,42 @@
       send_messages()
     }
 
+    function open_popup(dialog_html) {
+      const random_ele_id = new_node_id()
+
+      const new_popup = document.createElement('div')
+      new_popup.classList.add('popup')
+      new_popup.setAttribute('id', random_ele_id)
+      new_popup.innerHTML = `
+        <div class="backdrop close_target"></div>
+        <div class="dialog">
+          <button class="close_target">Close</button>
+          <br />
+          <br />
+          ${dialog_html}
+          <br />
+          <br />
+          <button class="close_target">Close</button>
+        </div>
+      `
+      onEvent('click', `#${random_ele_id} .close_target`, () => {
+        new_popup.classList.remove('open')
+        setTimeout(() => {
+          new_popup.remove()
+          notOnEvent('click', `#${random_ele_id} .close_target`)
+        }, 200)
+      })
+
+      document.querySelector('#overlays').appendChild(new_popup)
+
+      waitForElm(`#${random_ele_id}`)
+        .then(() => {
+          setTimeout(() => {
+            new_popup.classList.add('open')
+          }, 100)
+        })
+    }
+
     send_message_node.addEventListener('click', use_text_input)
 
     // fire use_text_input when pressing the shift and enter key together
@@ -702,7 +999,12 @@
     //   })
     //   display_messages()
     // })
-    socket.on('partial_response', ({ id, response, error }) => {
+    socket.on('partial_response', data => {
+      console.log('data', data)
+
+      const { id, information, response, error } = data
+
+      console.log('response', response)
       loading_node.classList.remove('active')
 
       const message_index = messages.findIndex(message => message.id === id)
@@ -711,6 +1013,7 @@
         messages.push({
           id,
           role: 'assistant',
+          information: information || null,
           content: response || null,
           error: error || null,
         })

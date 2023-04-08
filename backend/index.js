@@ -93,10 +93,16 @@ app.use('/api/chat', rateLimit({
 
 async function get_next_message(messages, callback, partial_callback) {
 
+  const default_callback_obj = {
+    information: null,
+    response: null,
+    error: null,
+  }
+
     // the messages should be an array
     if (Array.isArray(messages) === false) {
       callback({
-        response: null,
+        ...default_callback_obj,
         error: 'Plase enter a text.'
       })
       return
@@ -122,7 +128,7 @@ async function get_next_message(messages, callback, partial_callback) {
     // there should be at least one message
     if (messages.length === 0) {
       callback({
-        response: null,
+        ...default_callback_obj,
         error: 'Plase enter a text.'
       })
       return
@@ -134,7 +140,7 @@ async function get_next_message(messages, callback, partial_callback) {
     // the chat should not be too long
     if (JSON.stringify(messages).length > 10000) {
       callback({
-        response: null,
+        ...default_callback_obj,
         error: 'The chat is too long. Please reload the website to start a new chat.'
       })
       return
@@ -143,26 +149,28 @@ async function get_next_message(messages, callback, partial_callback) {
     // the last message should not be from the assistant
     if (messages[messages.length - 1].role === 'assistant') {
       callback({
-        response: null,
+        ...default_callback_obj,
         error: 'The last message should not be from the assistant.'
       })
       return
     }
 
-const bot_name = "default" // helpdesk
+    const bot_name = 'default' // helpdesk
 
     try {
-      const full_text = await ask_the_bot_with_setup(
+      const bot_response = await ask_the_bot_with_setup(
         { bot_name: bot_name },
         messages,
         // [
         //   { role: 'user', content: 'Was ist Volt Europa?' },
         // ],
         // null,
-        token => {
+        bot_response => {
+          // response = { information: string, text: string }
           partial_callback({
-            response: token,
-            error: null,
+            ...default_callback_obj,
+            information: bot_response.information,
+            response: bot_response.text,
           })
           // process.stdout.write(token)
           // let node wait for 100 ms
@@ -171,12 +179,14 @@ const bot_name = "default" // helpdesk
       )
 
       callback({
-        response: full_text,
-        error: null,
+        ...default_callback_obj,
+        information: bot_response.information,
+        response: bot_response.text,
       })
     } catch (error) {
       console.error(error)
       callback({
+        ...default_callback_obj,
         response: '',
         error: String(error),
       })
@@ -184,14 +194,7 @@ const bot_name = "default" // helpdesk
 }
 app.post('/api/chat', async (req, res) => {
   let messages = req.body.messages || []
-  
-  await get_next_message(messages, ({ response, error }) => {
-    res.json({
-      response,
-      error,
-    })
-  })
-  
+  await get_next_message(messages, res.json)
 })
 
 
@@ -209,18 +212,16 @@ io.on('connection', (socket) => {
 
     await get_next_message(
       messages,
-      ({ response, error }) => {
+      data => {
         socket.emit('response', {
+          ...data,
           id: md5_hash,
-          response,
-          error,
         });
       },
-      ({ response, error }) => {
+      data => {
         socket.emit('partial_response', {
+          ...data,
           id: md5_hash,
-          response,
-          error,
         });
       }
     )
