@@ -736,6 +736,14 @@
 
 
 
+    function trackEvent(...attributes) {
+      if (window.hasOwnProperty('umami')) {
+        window.umami.trackEvent(...attributes)
+      }
+    }
+
+
+
     let messages = [
       // {
       //   role: 'user',
@@ -880,9 +888,7 @@
     function send_messages() {
       loading_node.classList.add('active')
 
-      if (window.hasOwnProperty('umami')) {
-        window.umami.trackEvent('send_messages', 'send_messages')
-      }
+      trackEvent('send_messages', 'send_messages')
 
       socket.emit('query', { messages });
 
