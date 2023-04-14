@@ -875,7 +875,7 @@
           const new_feedback_button_id = new_node_id()
           new_feedback_button.setAttribute('id', new_feedback_button_id)
           onEvent('click', `#${new_feedback_button_id}`, () => {
-            trackEvent('clicked_feedback', 'clicked_feedback')
+            trackEvent('clicked_answer_feedback', 'clicked_answer_feedback')
           })
           new_actions.append(new_feedback_button)
 
