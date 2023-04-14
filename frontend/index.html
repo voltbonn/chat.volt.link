@@ -482,6 +482,37 @@
       opacity: 1;
       transition: transform var(--timing), opacity var(--timing);
     }
+
+    body .slow_connection_info {
+      display: none;
+    }
+    body.slow_connection .slow_connection_info {
+      display: block;
+      padding: 15px;
+      background: var(--yellow);
+      color: var(--on-yellow);
+      font-weight: bold;
+    }
+
+    body .offline_info {
+      display: none;
+    }
+    body.offline .offline_info {
+      display: block;
+      padding: 15px;
+      background: var(--red);
+      color: var(--on-red);
+      font-weight: bold;
+    }
+    body.offline .input_box {
+      opacity: 0.5;
+      pointer-events: none;
+      cursor: not-allowed !important;
+      transition: opacity var(--timing);
+    }
+    body.offline .slow_connection_info {
+      display: none;
+    }
   </style>
 </head>
 
@@ -499,6 +530,15 @@
   <p>You can ask questions in any language.</p>
 
   <div class="messages" id="messages"></div>
+  <p class="offline_info caption">
+    You are offline or we could not connect to our server.<br />
+    Please check your internet connection.
+  </p>
+  <p class="slow_connection_info caption">
+    Your connection seams slow.<br />
+    <br />
+    The website should work fine, but you may need to wait longer for an answer (at least <span class="ping"></span>ms). Please check your internet connection to fix this.
+  </p>
   <div class="loading" id="loading">
     <p class="caption">
       <!-- Am denken… -->
@@ -574,6 +614,7 @@
     const send_message_node = document.getElementById('send_message')
     const input_box_node = document.getElementById('input_box')
     const loading_node = document.getElementById('loading')
+    const ping_nodes = document.querySelectorAll('.ping')
 
 
 
@@ -956,8 +997,42 @@
 
 
 
+    function set_ping(ping) {
+      ping_nodes.forEach(ping_node => {
+        ping_node.innerHTML = ping
+      })
+    }
+    function set_slow_status(ping) {
+      if (ping >= 100) {
+        set_ping(ping)
+        document.querySelector('body').classList.add('slow_connection')
+      } else {
+        document.querySelector('body').classList.remove('slow_connection')
+      }
+    }
+    function set_online_status(online) {
+      if (online) {
+        document.querySelector('body').classList.remove('offline')
+      } else {
+        document.querySelector('body').classList.add('offline')
+      }
+    }
+    function init_online_check() {
+      set_online_status(navigator.onLine)
 
+      window.addEventListener('online', () => {
+        // Set set_online_status to online when they change to online.
+        set_online_status(true)
+      })
 
+      window.addEventListener('offline', () => {
+        // Set set_online_status to offline when they change to offline.
+        set_online_status(false)
+      })
+    }
+    window.addEventListener('load', () => {
+      init_online_check()
+    })
 
 
 
@@ -978,6 +1053,19 @@
     const socket = io(url)
 
 
+    setInterval(() => {
+      const start = Date.now()
+
+      socket.emit('ping', () => {
+        const duration = Date.now() - start;
+        console.log('duration', duration)
+        set_slow_status(duration)
+      })
+    }, 1000)
+
+    socket.on('connect', () => set_online_status(socket.connected))
+    socket.on('reconnect', () => set_online_status(socket.connected))
+    socket.on('disconnect', () => set_online_status(socket.connected))
     socket.on('error', console.error.bind(console));
     // socket.on('response', ({ id, response, error }) => {
     //   messages.push({
