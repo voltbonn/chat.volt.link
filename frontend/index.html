@@ -857,6 +857,7 @@
             const new_info_button_id = new_node_id()
             new_info_button.setAttribute('id', new_info_button_id)
             onEvent('click', `#${new_info_button_id}`, () => {
+              trackEvent('clicked_show_answer_info', 'clicked_show_answer_info')
               open_popup(`
                 <h2>The answer</h2>
                 <br />
