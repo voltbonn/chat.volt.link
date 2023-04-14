@@ -842,11 +842,6 @@
 
           const new_actions = document.createElement('div')
           new_actions.classList.add('actions')
-          new_actions.innerHTML = `
-            <a target="_blank" href="https://docs.google.com/forms/d/e/1FAIpQLSebrPY7u6YWMGzj3rMRnDjhBvmCPwXLFyS1D7S1fBdpi2IwmQ/viewform?usp=pp_url&entry.190795242=${encodeURIComponent(chat_history)}">
-              <button class="text">${feedback_svg}</button>
-            </a>
-          `
 
           if (message.information) {
             // <button class="text" id="info_toggle_button">${info_svg}</button>
@@ -870,8 +865,19 @@
               `)
             })
 
-            new_actions.prepend(new_info_button)
+            new_actions.append(new_info_button)
           }
+
+          const new_feedback_button = document.createElement('a')
+          new_feedback_button.setAttribute('target', '_blank')
+          new_feedback_button.setAttribute('href', `https://docs.google.com/forms/d/e/1FAIpQLSebrPY7u6YWMGzj3rMRnDjhBvmCPwXLFyS1D7S1fBdpi2IwmQ/viewform?usp=pp_url&entry.190795242=${encodeURIComponent(chat_history)}`)
+          new_feedback_button.innerHTML = `<button class="text">${feedback_svg}</button>`
+          const new_feedback_button_id = new_node_id()
+          new_feedback_button.setAttribute('id', new_feedback_button_id)
+          onEvent('click', `#${new_feedback_button_id}`, () => {
+            trackEvent('clicked_feedback', 'clicked_feedback')
+          })
+          new_actions.append(new_feedback_button)
 
           new_chatbubble.appendChild(new_actions)
         }
@@ -1067,7 +1073,6 @@
 
       socket.emit('ping', () => {
         const duration = Date.now() - start;
-        console.log('duration', duration)
         set_slow_status(duration)
       })
     }, 1000)
