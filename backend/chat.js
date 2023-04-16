@@ -26,7 +26,7 @@ async function ask_the_bot(system_setup, messages, onTokenCallback, options = {}
   const completion = await openai.createChatCompletion({
     model: 'gpt-3.5-turbo',
     n: 1,
-    temperature: 1,
+    temperature: 0.7, // Higher values like 0.8 will make the output more random, while lower values like 0.2 will make it more focused and deterministic.
     max_tokens: 500,
     stream: has_onTokenCallback,
     messages: [
