@@ -1018,7 +1018,7 @@
       })
     }
     function set_slow_status(ping) {
-      if (ping >= 100) {
+      if (ping >= 300) { // if ping is longer than 300ms
         set_ping(ping)
         document.querySelector('body').classList.add('slow_connection')
       } else {
