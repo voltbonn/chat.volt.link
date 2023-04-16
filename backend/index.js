@@ -91,7 +91,12 @@ app.use('/api/chat', rateLimit({
   legacyHeaders: false, // Disable the `X-RateLimit-*` headers
 })) // apply rate limiter to all requests
 
-async function get_next_message(messages, callback, partial_callback) {
+async function get_next_message(options = {}, callback, partial_callback) {
+
+  const {
+    messages = [],
+    information = null,
+  } = options
 
   const default_callback_obj = {
     information: null,
@@ -159,7 +164,10 @@ async function get_next_message(messages, callback, partial_callback) {
 
     try {
       const bot_response = await ask_the_bot_with_setup(
-        { bot_name: bot_name },
+        {
+          bot_name,
+          information,
+        },
         messages,
         // [
         //   { role: 'user', content: 'Was ist Volt Europa?' },
@@ -194,7 +202,7 @@ async function get_next_message(messages, callback, partial_callback) {
 }
 app.post('/api/chat', async (req, res) => {
   let messages = req.body.messages || []
-  await get_next_message(messages, res.json)
+  await get_next_message({ messages }, res.json)
 })
 
 
@@ -208,11 +216,17 @@ const io = new Server(server);
 // Emit welcome message on connection
 io.on('connection', (socket) => {
   socket.on('ping', callback => callback())
-  socket.on('query', async ({ messages = [] }) => {
+  socket.on('query', async ({
+    messages = [],
+    information = null,
+  }) => {
     const md5_hash = crypto.createHash('md5').update(JSON.stringify(messages)).digest('hex')
 
     await get_next_message(
-      messages,
+      {
+        messages,
+        information,
+      },
       data => {
         socket.emit('response', {
           ...data,

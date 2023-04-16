@@ -161,17 +161,29 @@ Fragestellung: ${text}`
 }
 
 async function get_system_setup(options, text) {
-  const {
+  let {
     bot_name = 'helpdesk',
+    information = null,
   } = options || {}
 
-  const bot = get_bot(bot_name)
+  let found_facts = ''
 
-  const filtered_facts = filter_fact_by_bot(facts, bot)
-  let found_facts = await get_matching_facts(filtered_facts, text)
+  if (typeof information === 'string' && information.length > 0) {
+    found_facts = information
+  }
 
   const max_amount_of_letters = 4000 // otherwise loading the chat would take too long
-  found_facts = found_facts.slice(0, max_amount_of_letters)
+
+  if (found_facts.length > max_amount_of_letters) {
+    found_facts = found_facts.slice(0, max_amount_of_letters)
+  } else if (found_facts.length < max_amount_of_letters) {
+    const bot = get_bot(bot_name)
+
+    const filtered_facts = filter_fact_by_bot(facts, bot)
+    found_facts += await get_matching_facts(filtered_facts, text)
+
+    found_facts = found_facts.slice(0, max_amount_of_letters)
+  }
 
   const prompt = add_data_to_prompt(get_prompt('system_setup', bot), { facts: found_facts })
 

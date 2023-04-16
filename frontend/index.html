@@ -743,7 +743,7 @@
     }
 
 
-
+    window.info = null // to also include custom information from a user per url ?info=...
     let messages = [
       // {
       //   role: 'user',
@@ -897,7 +897,10 @@
 
       trackEvent('send_messages', 'send_messages')
 
-      socket.emit('query', { messages });
+      socket.emit('query', {
+        messages,
+        information: window.information || null,
+      })
 
       /*
       const url = (
@@ -1000,6 +1003,12 @@
 
     function check_url_for_message() {
       const url = new URL(window.location.href)
+
+      const information = url.searchParams.get('information')
+      if (information) {
+        window.information = information
+      }
+
       const message = url.searchParams.get('msg')
       if (message) {
         messages.push({ role: 'user', content: message })
