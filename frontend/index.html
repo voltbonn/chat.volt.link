@@ -520,6 +520,18 @@
 
 <body>
   <h1>Volt Chat Bot</h1>
+
+  <div style="display: flex; gap: 10px;">
+    <button id="default_backend">
+      Default Backend
+    </button>
+    <button id="michaels_backend" class="text">
+      Micheals Backend
+    </button>
+  </div>
+  <hr />
+  <br />
+
   <!-- <p><strong>Der Chat-Bot kann dir einige Fragen zu Volt Potsdam, und technischen Fragen zu Volt beantworten. Es stehen aber auch ein paar generelle Information zu gesamt Volt zur Verfügung.</strong><br />You should be able to ask questions in any language.</p> -->
   <!-- <p><strong>Der Chat-Bot kann dir technischen Fragen zu Volt beantworten. Es stehen aber auch ein paar generelle Information zu gesamt Volt zur Verfügung.</strong><br />You should be able to ask questions in any language.</p> -->
   <!-- <p><strong>The chatbot can answer technical questions about Volt. However, there are also some general information available about Volt as a whole.</strong><br /><br />You can ask questions in any language.</p> -->
@@ -744,6 +756,33 @@
 
 
 
+
+
+    window.backend_version = 'default' // default / michael
+
+    function init_backend_switcher () {
+      const button_default_backend = document.querySelector('#default_backend')
+      const button_michaels_backend = document.querySelector('#michaels_backend')
+
+      function set_backend_version(new_backend_version) {
+        window.backend_version = new_backend_version
+        if (new_backend_version === 'default') {
+          button_default_backend.classList.remove('text')
+          button_michaels_backend.classList.add('text')
+        } else {
+          button_default_backend.classList.add('text')
+          button_michaels_backend.classList.remove('text')
+        }
+      }
+
+      button_default_backend.addEventListener('click', () => set_backend_version('default'))
+      button_michaels_backend.addEventListener('click', () => set_backend_version('michael'))
+    }
+
+
+
+
+
     let messages = [
       // {
       //   role: 'user',
@@ -800,7 +839,6 @@
     }
     function display_messages() {
       const new_messages_node = document.createElement('div')
-
 
       for (const message of messages) {
         const this_message_content = message.content
@@ -897,7 +935,10 @@
 
       trackEvent('send_messages', 'send_messages')
 
-      socket.emit('query', { messages });
+      socket.emit('query', {
+        messages,
+        backend_version: window.backend_version,
+      })
 
       /*
       const url = (
@@ -1047,6 +1088,7 @@
     }
     window.addEventListener('load', () => {
       init_online_check()
+      init_backend_switcher()
     })
 
 
@@ -1077,42 +1119,55 @@
       })
     }, 1000)
 
-    socket.on('connect', () => set_online_status(socket.connected))
-    socket.on('reconnect', () => set_online_status(socket.connected))
-    socket.on('disconnect', () => set_online_status(socket.connected))
-    socket.on('error', console.error.bind(console));
-    // socket.on('response', ({ id, response, error }) => {
-    //   messages.push({
-    //     id,
-    //     role: 'assistant',
-    //     content: response || null,
-    //     error: error || null,
-    //   })
-    //   display_messages()
-    // })
-    socket.on('partial_response', data => {
-      console.log('data', data)
-
-      const { id, information, response, error } = data
-
-      console.log('response', response)
-      loading_node.classList.remove('active')
+    function push_or_replace_msg (new_message, options = {}) {
+      const id = new_message.id
+      const content = new_message.content
 
       const message_index = messages.findIndex(message => message.id === id)
       if (message_index === -1) {
         // create new message
-        messages.push({
-          id,
-          role: 'assistant',
-          information: information || null,
-          content: response || null,
-          error: error || null,
-        })
+        messages.push(new_message)
       } else {
-        // append to existing message by id
-        messages[message_index].content += response
+        if (options.replace === true) {
+          // append to existing message by id
+          messages[message_index] = new_message
+        } else {
+          // append to existing message by id
+          messages[message_index].content += content
+        }
       }
+    }
 
+    socket.on('connect', () => set_online_status(socket.connected))
+    socket.on('reconnect', () => set_online_status(socket.connected))
+    socket.on('disconnect', () => set_online_status(socket.connected))
+    socket.on('error', console.error.bind(console));
+    socket.on('response', data => {
+      const { id, information, content, error } = data
+
+      loading_node.classList.remove('active')
+
+      push_or_replace_msg({
+        id,
+        role: 'assistant',
+        information: information || null,
+        content: content || null,
+        error: error || null,
+      }, { replace: true })
+      display_messages()
+    })
+    socket.on('partial_response', data => {
+      const { id, information, content, error } = data
+
+      loading_node.classList.remove('active')
+
+      push_or_replace_msg({
+        id,
+        role: 'assistant',
+        information: information || null,
+        content: content || null,
+        error: error || null,
+      }, { replace: false })
       display_messages()
     })
   </script>

@@ -1,3 +1,5 @@
+const fetch = require('node-fetch')
+
 const { Configuration, OpenAIApi } = require('openai')
 
 const { facts } = require('./facts.js')
@@ -9,7 +11,6 @@ const configuration = new Configuration({
 const openai = new OpenAIApi(configuration)
 
 async function ask_the_bot(system_setup, messages, onTokenCallback, options = {}) {
-
   const { information = null } = options
   delete options.information;
 
@@ -35,7 +36,7 @@ async function ask_the_bot(system_setup, messages, onTokenCallback, options = {}
     ],
     ...options,
   }, { responseType: has_onTokenCallback ? 'stream' : null })
-  
+
   if (!has_onTokenCallback) {
     // without the stream option
     return new Promise(resolve => {
@@ -237,9 +238,36 @@ async function ask_the_bot_with_setup(system_setup_options = {}, messages, onTok
   )
 }
 
+async function ask_the_bot_michael(messages) {
+  return new Promise(resolve => {
+
+    const query = messages.map(m => `${m.role}: ${m.content}`).join('\n\n')
+
+    const url = `http://13.48.6.196:5000/policy_query?query=${encodeURIComponent(query)}`
+
+    // use fetch to get the response
+    fetch(url)
+      .then(response => response.json())
+      .then(data => {
+        resolve({
+          information: data.policies.map(t => `- ${t}`).join('\n'),
+          text: data.answer,
+        })
+      })
+      .catch(error => {
+        console.error(error)
+        resolve({
+          information: 'Could not access 13.48.6.196:5000 or another error occured.',
+          text: 'Error while asking the bot.',
+        })
+      })
+  })
+}
+
 module.exports = {
   ask_the_bot,
   ask_the_bot_with_setup,
+  ask_the_bot_michael,
 }
 
 /*
