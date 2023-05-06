@@ -221,6 +221,11 @@ app.post('/api/chat', async (req, res) => {
 })
 
 
+app.post('/api/newest_document_ts', async (req, res) => {
+  res.json({
+    timestamp: new Date().getTime(), // - 31556952, // TODO get from db
+  })
+})
 app.post('/api/add_documents', async (req, res) => {
   let documents = req.body.documents || []
   res.json({
