@@ -218,6 +218,14 @@ app.post('/api/chat', async (req, res) => {
 })
 
 
+app.post('/api/add_documents', async (req, res) => {
+  let documents = req.body.documents || []
+  res.json({
+    error: 'not implemented yet'
+  })
+})
+
+
 
 
 
