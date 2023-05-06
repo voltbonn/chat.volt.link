@@ -33,6 +33,9 @@ function checkOrigin(origin) {
       // allow from subdomains
       || origin.endsWith('.volt.link')
 
+      || origin === 'policy.volteuropa.org'
+      || origin.endsWith('.volteuropa.org')
+
       // allow for localhost
       // || origin.endsWith('localhost:3000')
       // || origin.endsWith('localhost:4000')
@@ -221,7 +224,8 @@ app.post('/api/chat', async (req, res) => {
 app.post('/api/add_documents', async (req, res) => {
   let documents = req.body.documents || []
   res.json({
-    error: 'not implemented yet'
+    error: 'not implemented yet',
+    documents_count: documents.length,
   })
 })
 
