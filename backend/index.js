@@ -33,7 +33,7 @@ function checkOrigin(origin) {
       // allow from subdomains
       || origin.endsWith('.volt.link')
 
-      || origin === 'policy.volteuropa.org'
+      || origin === 'https://policy.volteuropa.org'
       || origin.endsWith('.volteuropa.org')
 
       // allow for localhost
@@ -62,6 +62,8 @@ app.use(express.json())
 app.use(function (req, res, next) {
   // const origin = req.get('origin')
   const origin = req.header('Origin')
+  console.log('origin', origin)
+  console.log('checkOrigin(origin)', checkOrigin(origin))
   if (checkOrigin(origin)) {
     req.is_subdomain = true
     req.origin = origin
