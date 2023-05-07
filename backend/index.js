@@ -227,7 +227,7 @@ app.post('/api/chat', async (req, res) => {
 })
 
 
-app.post('/api/newest_document_ts', async (req, res) => { // TODO get from db
+app.get('/api/newest_document_ts', async (req, res) => { // TODO get from db
   res.json({
     timestamp: new Date().getTime(), // - 31556952,
   })
