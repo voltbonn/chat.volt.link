@@ -274,12 +274,17 @@ app.post('/api/add_documents', async (req, res) => {
 app.post('/api/nearest_documents', async (req, res) => {
   try {
     let document = req.body.document || ''
+    let amount = parseInt(req.body.amount || 10)
 
     if (typeof document !== 'string' || document.length === 0) {
       throw new Error('Please enter a text.')
     }
 
-    const texts = await get_nearest_texts(documents)
+    if (amount <= 0) {
+      amount = 10
+    }
+
+    const texts = await get_nearest_texts(documents, amount)
 
     res.json({
       texts,
