@@ -338,11 +338,11 @@ async function get_nearest_texts (text, amount) {
 
 
 
-async function EXAMPLE_add_embeddings_from_texts () {
-  const texts = ['hello', 'world']
-  await add_texts_to_embedding_table(texts)
-}
-EXAMPLE_add_embeddings_from_texts()
+// async function EXAMPLE_add_embeddings_from_texts () {
+//   const texts = ['hello', 'world']
+//   await add_texts_to_embedding_table(texts)
+// }
+// EXAMPLE_add_embeddings_from_texts()
 
 
 
