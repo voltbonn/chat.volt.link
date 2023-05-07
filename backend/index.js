@@ -12,11 +12,11 @@ const crypto = require('crypto')
 
 // const fs = require('fs')
 
-const {
-  delete_index_and_label_table,
-  add_texts_to_embedding_table,
-  get_nearest_texts,
-} = require('./embeddings.js')
+// const {
+//   delete_index_and_label_table,
+//   add_texts_to_embedding_table,
+//   get_nearest_texts,
+// } = require('./embeddings.js')
 
 const {
   ask_the_bot_with_setup,
@@ -233,7 +233,11 @@ app.get('/api/newest_document_ts', async (req, res) => { // TODO get from db
   })
 })
 app.get('/api/empty_document_index', async (req, res) => {
-
+  res.json({
+    done: false,
+    error: 'Not implemented yet.',
+  })
+  /*
   try {
     await delete_index_and_label_table()
 
@@ -249,8 +253,14 @@ app.get('/api/empty_document_index', async (req, res) => {
       error: String(error),
     })
   }
+  */
 })
 app.post('/api/add_documents', async (req, res) => {
+  res.json({
+    done: false,
+    error: 'Not implemented yet.',
+  })
+  /*
   try {
     let documents = req.body.documents || []
 
@@ -270,8 +280,14 @@ app.post('/api/add_documents', async (req, res) => {
       error: String(error),
     })
   }
+  */
 })
 app.post('/api/nearest_documents', async (req, res) => {
+  res.json({
+    done: false,
+    error: 'Not implemented yet.',
+  })
+  /*
   try {
     let document = req.body.document || ''
     let amount = parseInt(req.body.amount || 10)
@@ -298,6 +314,7 @@ app.post('/api/nearest_documents', async (req, res) => {
       error: String(error),
     })
   }
+  */
 })
 
 
