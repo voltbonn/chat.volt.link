@@ -13,6 +13,12 @@ const crypto = require('crypto')
 // const fs = require('fs')
 
 const {
+  delete_index_and_label_table,
+  add_texts_to_embedding_table,
+  get_nearest_texts,
+} = require('./embeddings.js')
+
+const {
   ask_the_bot_with_setup,
   ask_the_bot_michael,
 } = require('./chat.js')
@@ -221,18 +227,74 @@ app.post('/api/chat', async (req, res) => {
 })
 
 
-app.post('/api/newest_document_ts', async (req, res) => {
+app.post('/api/newest_document_ts', async (req, res) => { // TODO get from db
   res.json({
-    timestamp: new Date().getTime(), // - 31556952, // TODO get from db
+    timestamp: new Date().getTime(), // - 31556952,
   })
+})
+app.get('/api/empty_document_index', async (req, res) => {
+
+  try {
+    await delete_index_and_label_table()
+
+    res.json({
+      done: true,
+      error: null,
+    })
+  } catch (error) {
+    console.error(error)
+
+    res.json({
+      done: false,
+      error: String(error),
+    })
+  }
 })
 app.post('/api/add_documents', async (req, res) => {
-  let documents = req.body.documents || []
-  res.json({
-    error: 'not implemented yet',
-    documents_count: documents.length,
-  })
+  try {
+    let documents = req.body.documents || []
+
+    await add_texts_to_embedding_table(documents)
+
+    res.json({
+      done: true,
+      documents_count: documents.length,
+      error: null,
+    })
+  } catch (error) {
+    console.error(error)
+
+    res.json({
+      done: false,
+      documents_count: null,
+      error: String(error),
+    })
+  }
 })
+app.post('/api/nearest_documents', async (req, res) => {
+  try {
+    let document = req.body.document || ''
+
+    if (typeof document !== 'string' || document.length === 0) {
+      throw new Error('Please enter a text.')
+    }
+
+    const texts = await get_nearest_texts(documents)
+
+    res.json({
+      texts,
+      error: null,
+    })
+  } catch (error) {
+    console.error(error)
+
+    res.json({
+      texts: [],
+      error: String(error),
+    })
+  }
+})
+
 
 
 
