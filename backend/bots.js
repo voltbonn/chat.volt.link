@@ -94,7 +94,19 @@ Antworte ab jetzt in kurzen Chat-Nachrichten auf Fragen.`
       max_tokens: 2000,
     },
     prompts: {
-      system_setup: `Akt as a translation spcialist for Volt. In the next prompt, you get the language to translate to and the text to translate. Only return the translation. Don't answer the question. Don't start with a wrapping comment. Only the translation. But keep all original html and markdown formatting as it is.`
+      // system_setup: `Akt as a translation spcialist for Volt. In the next prompt, you get the language to translate to and the text to translate. Only return the translation. Don't answer the question. Don't start with a wrapping comment. Only the translation. But keep all original html and markdown formatting as it is.`
+      system_setup: `Translate the text into the requested language. The user provides language to translate into and the text. You generate the translation. Keep all original html and markdown formatting as it is.
+
+Example:
+Language: German
+Text:
+<strong>Hello</strong>
+World
+Translation:
+<strong>Hallo</strong>
+Welt
+      `
+
     }
   },
 }
