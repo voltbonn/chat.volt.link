@@ -98,7 +98,7 @@ Antworte ab jetzt in kurzen Chat-Nachrichten auf Fragen.`
       system_setup: `Translate the text into the requested language. The user provides language to translate into and the text. You generate the translation. Keep all original html and markdown formatting as it is.
 
 Example:
-Language: German
+Target-Language: German
 Text:
 <strong>Hello</strong>
 World
