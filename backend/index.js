@@ -226,12 +226,12 @@ app.post('/api/chat', async (req, res) => {
       console.log('new_messages', new_messages)
       res.json(new_messages)
     }
-  
+
     let messages = req.body.messages || []
     let backend_version = req.body.backend_version || 'default'
-  
+
     console.log('messages', messages)
-  
+
     await get_next_message(messages, get_next_message_callback, null, { backend_version })
   } catch (error) {
     console.error(error)
