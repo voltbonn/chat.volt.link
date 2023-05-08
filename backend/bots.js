@@ -2,6 +2,10 @@ const bots = {
   default: {
     title: 'Volt Q&A Bot',
     accepted_categories: null, // null means all categories
+    options: {
+      temperature: 0.5,
+      max_tokens: 750,
+    },
     prompts: {
       system_setup: `Handle wie ein Frage-Antwort Chat-Bot für Volt.
 
@@ -43,6 +47,10 @@ Antworte ab jetzt in kurzen Chat-Nachrichten auf Fragen.`
   helpdesk: {
     title: 'Volt Helpdesk Bot',
     accepted_categories: 'Tech|Help|Europa|Tusker|Workplace|Email|Quellcode|Glossar',
+    options: {
+      temperature: 0.5,
+      max_tokens: 500,
+    },
     prompts: {
       system_setup: `Handle wie ein Kundendienst Chat-Bot für den Tech-Bereich von Volt Europa.
 
@@ -76,6 +84,17 @@ Verbotene Fragen/Themen (du kannst nur Fakten erzählen):
 - Keine Gedichte
 
 Antworte ab jetzt in kurzen Chat-Nachrichten auf Fragen.`
+    }
+  },
+  translate: {
+    title: 'Volt Q&A Bot',
+    accepted_categories: '',
+    options: {
+      temperature: 0.5,
+      max_tokens: 2000,
+    },
+    prompts: {
+      system_setup: `Akt as a translation spcialist for Volt. In the next prompt, you get the language to translate to and the text to translate. Only return the translation. Don't answer the question. Don't start with a wrapping comment. Only the translation. But keep all original html and markdown formatting as it is.`
     }
   },
 }

@@ -11,7 +11,11 @@ const configuration = new Configuration({
 const openai = new OpenAIApi(configuration)
 
 async function ask_the_bot(system_setup, messages, onTokenCallback, options = {}) {
-  const { information = null } = options
+  const {
+    information = null,
+    max_tokens = 500,
+    temperature = 0.7,
+  } = options
   delete options.information;
 
   const has_onTokenCallback = typeof onTokenCallback === 'function'
@@ -27,8 +31,8 @@ async function ask_the_bot(system_setup, messages, onTokenCallback, options = {}
   const completion = await openai.createChatCompletion({
     model: 'gpt-3.5-turbo',
     n: 1,
-    temperature: 0.7, // Higher values like 0.8 will make the output more random, while lower values like 0.2 will make it more focused and deterministic.
-    max_tokens: 500,
+    temperature, // Higher values like 0.8 will make the output more random, while lower values like 0.2 will make it more focused and deterministic.
+    max_tokens,
     stream: has_onTokenCallback,
     messages: [
       ...system_setup,
@@ -178,7 +182,8 @@ async function get_system_setup(options, text) {
 
   return {
     prompt,
-    facts: found_facts
+    facts: found_facts,
+    options: bot.options,
   }
 
   return `Handle wie ein Kundendienst Chat-Bot für Volt.
@@ -226,6 +231,7 @@ async function ask_the_bot_with_setup(system_setup_options = {}, messages, onTok
   const {
     prompt: system_setup,
     facts: information,
+    options: bot_options,
   } = await get_system_setup(system_setup_options, msgs)
 
   options.information = information
@@ -234,7 +240,10 @@ async function ask_the_bot_with_setup(system_setup_options = {}, messages, onTok
     system_setup,
     messages,
     onTokenCallback,
-    options,
+    {
+      ...options,
+      ...bot_options,
+    },
   )
 }
 

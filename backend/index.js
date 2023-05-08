@@ -106,6 +106,7 @@ app.use('/api/chat', rateLimit({
 async function get_next_message(messages, callback, partial_callback, options) {
 
   let {
+    bot_name = 'default', // default / helpdesk / translate
     backend_version = 'default', // default / michael
   } = options || {}
 
@@ -171,8 +172,6 @@ async function get_next_message(messages, callback, partial_callback, options) {
       return
     }
 
-    const bot_name = 'default' // helpdesk
-
     try {
       if (backend_version === 'michael') {
         const bot_response = await ask_the_bot_michael(messages)
@@ -228,11 +227,15 @@ app.post('/api/chat', async (req, res) => {
     }
 
     let messages = req.body.messages || []
+    let bot_name = req.body.bot_name || 'default'
     let backend_version = req.body.backend_version || 'default'
 
     console.log('messages', messages)
 
-    await get_next_message(messages, get_next_message_callback, null, { backend_version })
+    await get_next_message(messages, get_next_message_callback, null, {
+      bot_name,
+      backend_version,
+    })
   } catch (error) {
     console.error(error)
     res.json({
