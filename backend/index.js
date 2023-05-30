@@ -43,6 +43,8 @@ function checkOrigin(origin) {
       || origin.endsWith('.volteuropa.org')
       || origin.endsWith('policy.volteuropa.org')
 
+      || origin.endsWith('.volteuropa.org')
+
       // allow for localhost
       // || origin.endsWith('localhost:3000')
       // || origin.endsWith('localhost:4000')
