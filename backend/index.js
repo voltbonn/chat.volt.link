@@ -349,18 +349,27 @@ const { Server } = require("socket.io");
 // const io = new Server(server);
 
 const io = new Server(server, {
-  allowRequest: (req, callback) => {
-    const origin = req.header('Origin')
-    if (checkOrigin(origin)) {
-      // req.origin = origin
-      // res.setHeader('Access-Control-Allow-Origin', origin)
-      // res.setHeader('Access-Control-Allow-Credentials', true)
-      callback(null, true); // only allow requests without 'origin' header
-    }
-
-    // const noOriginHeader = req.headers.origin === undefined;
-    // callback(null, noOriginHeader); // only allow requests without 'origin' header
+  cors: {
+    // origin: "https://my-frontend.com",
+    // or with an array of origins
+    origin: [
+      'https://chat.volt.link',
+      'https://policy.volteuropa.org',
+    ],
+    // credentials: true
   }
+  // allowRequest: (req, callback) => {
+  //   const origin = req.header('Origin')
+  //   if (checkOrigin(origin)) {
+  //     // req.origin = origin
+  //     // res.setHeader('Access-Control-Allow-Origin', origin)
+  //     // res.setHeader('Access-Control-Allow-Credentials', true)
+  //     callback(null, true); // only allow requests without 'origin' header
+  //   }
+
+  //   // const noOriginHeader = req.headers.origin === undefined;
+  //   // callback(null, noOriginHeader); // only allow requests without 'origin' header
+  // }
 })
 
 // Emit welcome message on connection
