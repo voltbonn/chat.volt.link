@@ -250,12 +250,37 @@ async function ask_the_bot_with_setup(system_setup_options = {}, messages, onTok
 async function ask_the_bot_michael(messages) {
   return new Promise(resolve => {
 
-    const query = messages.map(m => `${m.role}: ${m.content}`).join('\n\n')
+    // const query = messages.map(m => `${m.role}: ${m.content}`).join('\n\n')
 
-    const url = `http://13.48.6.196:5000/policy_query?query=${encodeURIComponent(query)}`
+    const url = `https://policy-chatbot-o72maq36aq-ew.a.run.app/policy_chat`
+
+    const additional_setup_policy_bot = 'You are bot to help with questions about Volt policies. Answer like a bot for Volt not as Volt itself!'
+
+    const body = {
+      messages: [
+        { role: 'user', content: additional_setup_policy_bot },
+        ...messages,
+      ],
+      search_params: {
+        search_type: 'similarity',
+        k: 10,
+      },
+      model_params: {
+        temperature: 1,
+        presence_penalty: 0.1,
+        frequency_penalty: 0.1,
+      },
+    }
 
     // use fetch to get the response
-    fetch(url)
+    fetch(url, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(body)
+    })
       .then(response => response.json())
       .then(data => {
         resolve({
@@ -266,7 +291,7 @@ async function ask_the_bot_michael(messages) {
       .catch(error => {
         console.error(error)
         resolve({
-          information: 'Could not access 13.48.6.196:5000 or another error occured.',
+          information: 'Could not access a part of the policy-chat-bot-backend or another error occured.',
           text: 'Error while asking the bot.',
         })
       })
