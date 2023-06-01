@@ -225,15 +225,12 @@ async function get_next_message(messages, callback, partial_callback, options) {
 app.post('/api/chat', async (req, res) => {
   try {
     function get_next_message_callback(new_messages) {
-      console.log('new_messages', new_messages)
       res.json(new_messages)
     }
 
     let messages = req.body.messages || []
     let bot_name = req.body.bot_name || 'default'
     let backend_version = req.body.backend_version || 'default'
-
-    console.log('messages', messages)
 
     await get_next_message(messages, get_next_message_callback, null, {
       bot_name,
