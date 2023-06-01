@@ -104,11 +104,15 @@
       --font-family: 'Ubuntu', 'Noto Kufi Arabic', 'Geeza Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
       --font-family-code: 'Ubuntu Mono', 'Noto Kufi Arabic', 'Geeza Pro', 'Courier New', Courier, monospace;
 
-      --basis: 1rem;
-      --basis_x0_5: calc(var(--basis) * 0.5);
-      --basis_x2: calc(var(--basis) * 2);
-      --basis_x4: calc(var(--basis) * 4);
-      --basis_x8: calc(var(--basis) * 8);
+      --basis_x0_5: 2.5px;
+      --basis: 5px;
+      --basis_x2: 10px;
+      --basis_x4: 20px;
+      --basis_x8: 40px;
+      --basis_x16: 80px;
+      --basis_x32: 160px;
+
+      --shadow-color-rgba: rgba(var(--purple-rgb), 0.2);
     }
 
     :root {
@@ -429,24 +433,14 @@
     }
 
     .popup .dialog {
-      --basis_x0_5: 2.5px;
-      --basis: 5px;
-      --basis_x2: 10px;
-      --basis_x4: 20px;
-      --basis_x8: 40px;
-      --basis_x16: 80px;
-      --basis_x32: 160px;
-
-      --shadow-color-rgba: rgba(var(--purple-rgb), 0.2);
-
       position: relative;
-      top: var(--basis_x16);
+      top: var(--basis_x8);
       left: 50%;
       -webkit-transform: translate3d(-50%, 0, 0);
       transform: translate3d(-50%, 0, 0);
       width: 800px;
       max-width: calc(100% - var(--basis_x8));
-      max-height: calc(100% - var(--basis_x32));
+      max-height: calc(100% - var(--basis_x16));
       overflow: auto;
       -webkit-overflow-scrolling: touch;
       background: white;
