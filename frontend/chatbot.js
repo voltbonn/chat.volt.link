@@ -890,7 +890,9 @@ function start_chatbot_scripts() {
       init_online_check()
       init_backend_switcher()
       init_socket()
-      init_addEventListeners()
+      try {
+        init_addEventListeners()
+      } catch (e) {}
       init_translate_on_text_selection();
     })
 }
