@@ -665,11 +665,9 @@ function show_inline_chat_bot_frame() {
 
       <div>
         <button class="green" id="send_message">
-          <!-- Senden -->
           Send
         </button>
         <p class="caption">
-          <!-- oder verwende die Enter-Taste -->
           or use the Enter-Key.
         </p>
       </div>
