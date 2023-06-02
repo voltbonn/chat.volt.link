@@ -698,10 +698,10 @@ function deselect_all_text() {
 }
 function get_current_text_selection() {
   if (window.getSelection) {
-    return String(window.getSelection().getRangeAt(0)) || ''
+    return window.getSelection().getRangeAt(0).toString() || window.getSelection().toString() || ''
   }
   if (document.getSelection) {
-    return String(document.getSelection().getRangeAt(0)) || ''
+    return document.getSelection().getRangeAt(0).toString() || document.getSelection().toString() || ''
   }
   if (document.selection) {
     return document.selection.createRange().text || ''
