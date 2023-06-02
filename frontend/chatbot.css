@@ -132,6 +132,8 @@
 }
 
 .chatbot_styles .chatbot {
+  display: flex;
+  align-items: center;
 
   background-size: 1300px auto;
   background-position: center center;
