@@ -215,6 +215,7 @@
 
 .chatbot_styles textarea {
   min-height: 80px;
+  border-radius: 10px 10px 0 10px;
 }
 
 .chatbot_styles textarea:hover {
@@ -545,6 +546,7 @@ body.slow_connection .slow_connection_info {
   background: var(--yellow);
   color: var(--on-yellow);
   font-weight: bold;
+  border-radius: 10px;
 }
 
 body .offline_info {
@@ -557,6 +559,7 @@ body.offline .offline_info {
   background: var(--red);
   color: var(--on-red);
   font-weight: bold;
+  border-radius: 10px;
 }
 
 /*
