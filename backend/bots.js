@@ -1,6 +1,7 @@
 const bots = {
   default: {
     title: 'Volt Q&A Bot',
+    context_sources: ['facts'], // facts / policy
     accepted_categories: null, // null means all categories
     options: {
       temperature: 0.5,
@@ -46,6 +47,7 @@ Antworte ab jetzt in kurzen Chat-Nachrichten auf Fragen.`
   },
   helpdesk: {
     title: 'Volt Helpdesk Bot',
+    context_sources: ['facts'], // facts / policy
     accepted_categories: 'Tech|Help|Europa|Tusker|Workplace|Email|Quellcode|Glossar',
     options: {
       temperature: 0.5,
@@ -88,7 +90,8 @@ Antworte ab jetzt in kurzen Chat-Nachrichten auf Fragen.`
   },
   translate: {
     title: 'Volt Q&A Bot',
-    accepted_categories: '',
+    context_sources: ['facts'], // facts / policy
+    accepted_categories: '', // no categories
     options: {
       temperature: 0.5,
       max_tokens: 2000,
@@ -107,6 +110,30 @@ Translation:
 Welt
       `
 
+    }
+  },
+  policy: {
+    title: 'Volt Policy Chat Bot',
+    context_sources: ['policy'], // facts / policy
+    accepted_categories: '', // null means all categories
+    options: {
+      temperature: 0.5,
+      max_tokens: 750,
+    },
+    prompts: {
+      system_setup: `Answer the question strictly according to the given context. Provide a detailed argumentation based on the given context. Answer in the plural form as the political party Volt. If the question cannot be answered from the context, reply with 'We cannot find an answer to this query based on our policies.' Context: {{facts}}`
+    }
+  },
+  empty: {
+    title: 'Empty Bot',
+    context_sources: [],
+    accepted_categories: '', // an empty string means no categories
+    options: {
+      temperature: 0.5,
+      max_tokens: 750,
+    },
+    prompts: {
+      system_setup: ''
     }
   },
 }

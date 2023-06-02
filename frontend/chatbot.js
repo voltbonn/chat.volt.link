@@ -217,8 +217,8 @@ function trackEvent(...attributes) {
 
 
 
-
-window.backend_version = 'michael' // default / michael
+window.bot_name = 'policy' // default / helpdesk / translate / policy
+window.backend_version = 'default' // default / michael
 
 function init_backend_switcher() {
   const button_default_backend = document.querySelector('#default_backend')
@@ -395,6 +395,7 @@ function send_messages() {
 
   window.socket.emit('query', {
     messages: window.messages,
+    bot_name: window.bot_name,
     backend_version: window.backend_version,
   })
 
@@ -730,6 +731,7 @@ async function load_translation(text, language) {
   ]
   return postData(url, {
     messages: t_messages,
+    bot_name: 'empty',
     backend_version: window.backend_version,
   })
 }

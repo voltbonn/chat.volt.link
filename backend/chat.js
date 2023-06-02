@@ -20,7 +20,7 @@ async function ask_the_bot(system_setup, messages, onTokenCallback, options = {}
 
   const has_onTokenCallback = typeof onTokenCallback === 'function'
 
-  if (typeof system_setup === 'string') {
+  if (typeof system_setup === 'string' && system_setup.length > 0) {
     system_setup = [
       { role: 'system', content: system_setup },
     ]
@@ -165,20 +165,83 @@ Fragestellung: ${text}`
   return found_facts
 }
 
+
+async function get_matching_policies(text) {
+  return new Promise(resolve => {
+
+    const url = `https://policy-chatbot-o72maq36aq-ew.a.run.app/policy_chat`
+
+    const body = {
+      messages: [
+        { role: 'user', content: text },
+      ],
+      search_params: {
+        search_type: 'similarity',
+        k: 10,
+      },
+      model_params: {
+        temperature: 1,
+        presence_penalty: 0.1,
+        frequency_penalty: 0.1,
+      },
+      only_context: true,
+    }
+
+    // use fetch to get the response
+    fetch(url, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(body)
+    })
+      .then(response => response.json())
+      .then(data => {
+        const context = data.query[0].content.split('Context: ')[1]
+        resolve(context)
+      })
+      .catch(error => {
+        console.error(error)
+        resolve('')
+      })
+  })
+}
+
 async function get_system_setup(options, text) {
   const {
     bot_name = 'helpdesk',
   } = options || {}
 
   const bot = get_bot(bot_name)
+  const context_sources = bot.context_sources || []
+  const template_prompt = get_prompt('system_setup', bot)
 
-  const filtered_facts = filter_fact_by_bot(facts, bot)
-  let found_facts = await get_matching_facts(filtered_facts, text)
+  if (
+    template_prompt === ''
+    || typeof template_prompt !== 'string'
+    || context_sources.length > 0
+  ) {
+    return {
+      prompt: '',
+      facts: '',
+      options: bot.options,
+    }
+  }
+
+  let found_facts = ''
+  if (context_sources.includes('facts')) {
+    const filtered_facts = filter_fact_by_bot(facts, bot)
+    found_facts += await get_matching_facts(filtered_facts, text)
+  }
+  if (context_sources.includes('policy')) {
+    found_facts += await get_matching_policies(text)
+  }
 
   const max_amount_of_letters = 4000 // otherwise loading the chat would take too long
   found_facts = found_facts.slice(0, max_amount_of_letters)
 
-  const prompt = add_data_to_prompt(get_prompt('system_setup', bot), { facts: found_facts })
+  const prompt = add_data_to_prompt(template_prompt, { facts: found_facts })
 
   return {
     prompt,
