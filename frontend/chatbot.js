@@ -698,15 +698,17 @@ function deselect_all_text() {
   document.getSelection().removeAllRanges();
 }
 function get_current_text_selection() {
-  if (window.getSelection) {
-    return window.getSelection().getRangeAt(0).toString() || window.getSelection().toString() || ''
-  }
-  if (document.getSelection) {
-    return document.getSelection().getRangeAt(0).toString() || document.getSelection().toString() || ''
-  }
-  if (document.selection) {
-    return document.selection.createRange().text || ''
-  }
+  try {
+    if (window.getSelection) {
+      return window.getSelection().getRangeAt(0).toString() || window.getSelection().toString() || ''
+    }
+    if (document.getSelection) {
+      return document.getSelection().getRangeAt(0).toString() || document.getSelection().toString() || ''
+    }
+    if (document.selection) {
+      return document.selection.createRange().text || ''
+    }
+  } catch (e) {}
 
   return ''
 }
