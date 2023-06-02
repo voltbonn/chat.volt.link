@@ -165,7 +165,14 @@
   line-height: 1.1;
   margin-block-end: 2rem;
 }
-
+.chatbot_styles h2 {
+  font-family: var(--font-family-website-title);
+  font-weight: bold;
+  font-size: 30px;
+  letter-spacing: -0.5px;
+  line-height: 1.1;
+  margin-block-end: 20px;
+}
 @media (max-width: 700px) {
   .chatbot_styles h1 {
     font-size: 40px;
@@ -345,6 +352,9 @@
 .chatbot_styles a {
   text-decoration: underline;
   color: inherit;
+}
+.chatbot_styles .chatbot_center > a {
+  text-decoration: none;
 }
 
 .chatbot_styles a:hover,

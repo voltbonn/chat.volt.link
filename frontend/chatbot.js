@@ -606,6 +606,9 @@ function show_inline_chat_bot_frame() {
   for (let node of show_chat_bot_nodes) {
     node.innerHTML = `
 <div class="chatbot_center">
+  <a target="_blank" href="https://chat.volt.link/">
+    <h2>Volt Chat Bot</h2>
+  </a>
 <!--
   <p><strong>
     This is a chat-bot demo for Volt. It can answer some basic questions about Volt and its policies.
