@@ -546,6 +546,7 @@ body.slow_connection .slow_connection_info {
   background: var(--yellow);
   color: var(--on-yellow);
   font-weight: bold;
+  opacity: 1;
   border-radius: 10px;
 }
 
@@ -559,6 +560,7 @@ body.offline .offline_info {
   background: var(--red);
   color: var(--on-red);
   font-weight: bold;
+  opacity: 1;
   border-radius: 10px;
 }
 
