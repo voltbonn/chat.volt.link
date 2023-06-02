@@ -676,8 +676,6 @@ function show_inline_chat_bot_frame() {
     <br />
   </div>
 </div>
-
-<div id="overlays"></div>
   `
   }
 }
@@ -882,8 +880,23 @@ function init_translate_on_text_selection() {
   document.addEventListener('selectionchange', handleSelectionChange)
 }
 
+function add_overlays_wrapper() {
+  // <div class="chatbot_styles">
+  //  <div id="overlays"></div>
+  // </div>
+  const overlays_chatbot_styles_node = document.createElement('div')
+  overlays_chatbot_styles_node.classList.add('chatbot_styles')
+
+  const overlays_node = document.createElement('div')
+  overlays_node.id = 'overlays'
+  overlays_chatbot_styles_node.appendChild(overlays_node)
+
+  document.body.appendChild(overlays_chatbot_styles_node)
+}
+
 function start_chatbot_scripts() {
   show_inline_chat_bot_frame()
+  add_overlays_wrapper()
   init_element_nodes()
   chatbot_imports()
     .then(() => {
