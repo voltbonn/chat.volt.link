@@ -870,5 +870,5 @@ function start_chatbot_scripts() {
       init_translate_on_text_selection();
     })
 }
-window.addEventListener('load', start_chatbot_scripts)
+// window.addEventListener('load', start_chatbot_scripts)
 start_chatbot_scripts()
