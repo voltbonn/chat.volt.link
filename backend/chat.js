@@ -220,7 +220,7 @@ async function get_system_setup(options, text) {
   if (
     template_prompt === ''
     || typeof template_prompt !== 'string'
-    || context_sources.length > 0
+    || context_sources.length === 0
   ) {
     return {
       prompt: '',
