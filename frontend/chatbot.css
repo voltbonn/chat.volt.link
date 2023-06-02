@@ -351,7 +351,8 @@
   text-decoration: none;
 }
 
-.chatbot_styles a {
+.chatbot_styles a,
+.chatbot_styles a:visited {
   text-decoration: underline;
   color: inherit;
 }
@@ -361,8 +362,7 @@
 
 .chatbot_styles a:hover,
 .chatbot_styles a:active,
-.chatbot_styles a:focus,
-.chatbot_styles a:visited {
+.chatbot_styles a:focus {
   text-decoration: double underline;
   color: inherit;
 }
