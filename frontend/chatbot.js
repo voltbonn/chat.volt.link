@@ -807,7 +807,7 @@ function init_translate_on_text_selection() {
           <br />
 
           <h4>Original Text:</h4>
-          <p>${original_selected_text}</p>
+          <p>${markdown_to_html(original_selected_text)}</p>
 
           <h4>Choose a Language:</h4>
           <p>Just type what language you want to translate to.</p>
