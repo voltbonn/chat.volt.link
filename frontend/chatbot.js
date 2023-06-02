@@ -1,29 +1,30 @@
 
 function is_dev() {
-  return window.location.hostname === 'localhost' || window.location.hostname === '0.0.0.0'
+  return (
+    window.location.hostname === 'localhost'
+    || window.location.hostname === '0.0.0.0'
+    || window.location.hostname.startsWith('192.168.')
+  )
 }
 window.is_dev = is_dev
+
+const domain = (
+  window.is_dev()
+    ? 'http://localhost:4009/'
+    : 'https://chat.volt.link/'
+)
 
 async function chatbot_imports() {
 
   //import {io} from 'https://chat.volt.link/socket.io.esm.min.js'
   //import 'https://chat.volt.link/remarkable.min.js';
 
-  let socket_io_import_url = (
-    window.is_dev()
-      ? 'http://localhost:4009/socket.io.esm.min.js'
-      : 'https://chat.volt.link/socket.io.esm.min.js'
-  )
+  let socket_io_import_url = `${domain}socket.io.esm.min.js`
 
   const { io } = await import(socket_io_import_url)
   window.io = io
 
-  const url = (
-    window.is_dev()
-      ? 'http://localhost:4009/'
-      : 'https://chat.volt.link/'
-  )
-  window.socket = io(url)
+  window.socket = io(domain)
 
   setInterval(() => {
     const start = Date.now()
@@ -400,11 +401,7 @@ function send_messages() {
   })
 
   /*
-  const url = (
-    is_dev()
-      ? 'http://localhost:4009/api/chat'
-      : 'https://chat.volt.link/api/chat'
-  )
+  const url = `${domain}api/chat`
   postData(url, { messages })
     .then(new_response => {
       window.loading_node.classList.remove('active')
@@ -724,11 +721,7 @@ function hide_translate_button() {
 }
 
 async function load_translation(text, language) {
-  const url = (
-    window.is_dev()
-      ? 'http://localhost:4009/api/chat'
-      : 'https://chat.volt.link/api/chat'
-  )
+  const url = `${domain}api/chat`
 
   const t_messages = [
     { role: 'user', content: `Translate the following text into ${language}:` },
