@@ -109,7 +109,7 @@ app.use('/api/chat', rateLimit({
 async function get_next_message(messages, callback, partial_callback, options) {
 
   let {
-    bot_name = 'default', // default / helpdesk / translate
+    bot_name = 'default', // default / helpdesk / translate / policy / empty
     backend_version = 'default', // default / michael
   } = options || {}
 
