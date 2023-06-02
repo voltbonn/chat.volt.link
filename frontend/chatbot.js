@@ -598,6 +598,29 @@ function init_addEventListeners() {
   window.addEventListener('popstate', check_url_for_message) // on url change
 }
 
+function show_credits_popup() {
+  const dialog_html = `
+    <h2>Credits</h2>
+    <p>A few people that helped develop the chat bot:</p>
+
+    <h3>Main Development & Design</h3>
+    <ul>
+      <li><a target="_blank" href="https://volteuropa.workplace.com/profile.php?id=100089687731726">Michael Eichelbeck</a></li>
+      <li><a target="_blank" href="https://thomasrosen.me">Thomas Rosen</a></li>
+    </ul>
+    <br />
+
+    <h3>Involved Teams</h3>
+    <ul>
+      <li><a target="_blank" href="https://volteuropa.workplace.com/groups/eur.policy">EUR Policy</a>: Inês Bravo Figueiredo</h4>
+      <li><a target="_blank" href="https://volteuropa.workplace.com/groups/202183643862811">EUR Data Analytics</a>: Mike Winkel, Simon Riezebos, Lukas Partzsch</h4>
+      <li><a target="_blank" href="https://volteuropa.workplace.com/groups/techgeneral">EUR Tech</a></h4>
+      <li><a target="_blank" href="https://volteuropa.workplace.com/groups/165765234069902">EUR Comms</a></h4>
+    </ul>
+  `
+  open_popup(dialog_html)
+} 
+
 function show_inline_chat_bot_frame() {
   const show_chat_bot_nodes = document.querySelectorAll('.chatbot')
   for (let node of show_chat_bot_nodes) {
@@ -638,7 +661,7 @@ function show_inline_chat_bot_frame() {
     <textarea id="new_message" rows="1" cols="50" placeholder="Ask away…"></textarea>
     <br />
     <div style="display: flex; gap: 20px; margin-block-start: 5px;">
-      <p class="caption"><a target="_blank" href="https://drive.google.com/file/d/1UOdlEjoF9LFwBbZOXPDfsnuvv13tqmlk/view">Terms of Use of the Chatbot</a> • The entered data is sent to servers of the company <a href="https://platform.openai.com/docs/data-usage-policies" target="_blank">OpenAI</a> in America. It is not permanently stored there. No metadata about you is sent along.</p>
+      <p class="caption"><a href="javascript:show_credits_popup();">Credits / Contributers</a> • <a target="_blank" href="https://drive.google.com/file/d/1UOdlEjoF9LFwBbZOXPDfsnuvv13tqmlk/view">Terms of Use of the Chatbot</a> • The entered data is sent to servers of the company <a href="https://platform.openai.com/docs/data-usage-policies" target="_blank">OpenAI</a> in America. It is not permanently stored there. No metadata about you is sent along.</p>
 
       <div>
         <button class="green" id="send_message">
