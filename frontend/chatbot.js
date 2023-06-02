@@ -697,8 +697,19 @@ function deselect_all_text() {
   document.getSelection().removeAllRanges();
 }
 function get_current_text_selection() {
-  return document.getSelection().toString()
+  if (window.getSelection) {
+    return window.getSelection();
+  }
+  if (document.getSelection) {
+    return document.getSelection().toString();
+  }
+  if (document.selection) {
+    return document.selection.createRange().text;
+  }
+
+  return '';
 }
+
 function show_translate_button() {
   document.querySelector('#translate_button').classList.add('active')
 }
