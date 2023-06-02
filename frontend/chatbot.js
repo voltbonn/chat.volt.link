@@ -697,9 +697,6 @@ function deselect_all_text() {
   document.getSelection().removeAllRanges();
 }
 function get_current_text_selection() {
-  if (window.getSelection) {
-    return window.getSelection();
-  }
   if (document.getSelection) {
     return document.getSelection().toString();
   }
