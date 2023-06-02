@@ -703,10 +703,10 @@ function deselect_all_text() {
 function get_current_text_selection() {
   try {
     if (window.getSelection) {
-      return window.getSelection().getRangeAt(0).toString() || window.getSelection().toString() || ''
+      return window.getSelection().toString() || window.getSelection().getRangeAt(0).toString() || ''
     }
     if (document.getSelection) {
-      return document.getSelection().getRangeAt(0).toString() || document.getSelection().toString() || ''
+      return document.getSelection().toString() || document.getSelection().getRangeAt(0).toString() || ''
     }
     if (document.selection) {
       return document.selection.createRange().text || ''
@@ -771,9 +771,12 @@ function init_translate_on_text_selection() {
     return null
   }
 
-  translate_button.addEventListener('click', () => {
+  let original_selected_text = ''
 
-    const original_selected_text = get_current_text_selection()
+  translate_button.addEventListener('mousedown', () => {
+    original_selected_text = get_current_text_selection()
+  })
+  translate_button.addEventListener('click', () => {
     deselect_all_text()
     hide_translate_button()
 
