@@ -372,7 +372,11 @@ const io = new Server(server, {
 // Emit welcome message on connection
 io.on('connection', (socket) => {
   socket.on('ping', callback => callback())
-  socket.on('query', async ({ messages = [], backend_version = 'default' }) => {
+  socket.on('query', async ({
+    messages = [],
+    bot_name = 'default',
+    backend_version = 'default'
+  }) => {
     const md5_hash = crypto.createHash('md5').update(JSON.stringify(messages)).digest('hex')
 
     await get_next_message(
@@ -390,6 +394,7 @@ io.on('connection', (socket) => {
         });
       },
       {
+        bot_name,
         backend_version,
       }
     )
