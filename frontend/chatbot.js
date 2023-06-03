@@ -612,10 +612,10 @@ function show_credits_popup() {
 
     <h3>Involved Teams</h3>
     <ul>
-      <li><a target="_blank" href="https://volteuropa.workplace.com/groups/eur.policy">EUR Policy</a>: Inês Bravo Figueiredo</h4>
-      <li><a target="_blank" href="https://volteuropa.workplace.com/groups/202183643862811">EUR Data Analytics</a>: Mike Winkel, Simon Riezebos, Lukas Partzsch</h4>
-      <li><a target="_blank" href="https://volteuropa.workplace.com/groups/techgeneral">EUR Tech</a></h4>
-      <li><a target="_blank" href="https://volteuropa.workplace.com/groups/165765234069902">EUR Comms</a></h4>
+      <li><a target="_blank" href="https://volteuropa.workplace.com/groups/eur.policy">EUR Policy</a>: Inês Bravo Figueiredo, Lukas Partzsch, Mike Winkel</h4>
+      <li><a target="_blank" href="https://volteuropa.workplace.com/groups/202183643862811">EUR Data Analytics</a>: Simon Riezebos, Silvia Fallone</h4>
+      <li><a target="_blank" href="https://volteuropa.workplace.com/groups/165765234069902">EUR Comms</a>: Jennifer Traini</h4>
+      <li><a target="_blank" href="https://volteuropa.workplace.com/groups/techgeneral">EUR Tech</a>: Thomas Rosen</h4>
     </ul>
   `
   open_popup(dialog_html)
