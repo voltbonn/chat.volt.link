@@ -36,6 +36,18 @@
 
   <script src="./chatbot.js"></script>
 
+  <script>
+    if ("serviceWorker" in navigator) {
+      console.log("serviceWorker in navigator");
+      console.log('navigator.serviceWorker', navigator.serviceWorker)
+      navigator.serviceWorker.register('./sw.js')
+      .ready().then(function(registration) {
+          console.log('Service Worker Ready');
+          console.log('registration', registration)
+        });
+    }
+  </script>
+
 </body>
 
 </html>
