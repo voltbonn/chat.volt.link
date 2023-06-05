@@ -807,10 +807,10 @@ function init_translate_on_text_selection() {
       <div class="chatbot_corner">
       <!-- <div class="messages">
         <div class="chatbubble user">
-          <div class="content">Hello World Hello World Hello World Hello WorldHello World Hello WorldHello World Hello WorldHello WorldHello World Hello World Hello WorldHello World Hello World Hello World  Hello World  Hello World Hello World</div>
+          <div class="content">Hello World</div>
         </div>
         <div class="chatbubble assistant">
-          <div class="content">Hello World Hello World Hello World Hello WorldHello World Hello WorldHello World Hello WorldHello WorldHello World Hello World Hello WorldHello World Hello World Hello World  Hello World  Hello World Hello World</div>
+          <div class="content">Hello World</div>
         </div>
       </div> -->
       <div class="chatbot_button_triggers">
