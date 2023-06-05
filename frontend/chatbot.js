@@ -14,7 +14,23 @@ const domain = (
     : 'https://chat.volt.link/'
 )
 
+// function loadScript(url) {
+//   var script = document.createElement('script')
+//   script.type = 'text/javascript'
+//   script.src = url
+//   document.head.appendChild(script)
+// }
+function loadCSS(url) {
+  var link = document.createElement("link");
+  link.rel = "stylesheet";
+  link.href = url;
+
+  document.head.appendChild(link);
+}
+
 async function chatbot_imports() {
+
+  loadCSS(`${domain}chatbot.css`)
 
   //import {io} from 'https://chat.volt.link/socket.io.esm.min.js'
   //import 'https://chat.volt.link/remarkable.min.js';
