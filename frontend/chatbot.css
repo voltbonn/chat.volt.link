@@ -150,6 +150,7 @@
   border-radius: 20px 20px 20px 0;
 
   width: 100%;
+  transition: height var(--timing);
 }
 
 @media (min-width: 700px) {
