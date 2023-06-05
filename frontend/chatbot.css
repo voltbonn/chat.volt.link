@@ -1,4 +1,4 @@
-:root {
+.chatbot_styles {
   --purple-lighter: #e6ccff;
   --purple-light: #b58dd9;
   --purple: #502379;
@@ -99,7 +99,7 @@
   --shadow-color-rgba: rgba(var(--purple-rgb), 0.2);
 }
 
-:root {
+.chatbot_styles {
   --font-family-website-title: var(--font-family);
   --font-family-headline: var(--font-family);
   --font-family-text: var(--font-family);
