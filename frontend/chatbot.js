@@ -685,11 +685,11 @@ function show_inline_chat_bot_frame() {
 -->
 
   <div class="messages" id="messages">
-      <div class="chatbubble assistant"><div class="content"><p>Please read the following disclaimer before using the chatbot: <a target="_blank" href="https://chat.volt.link/VOLT%20EUROPA%20Chatbot%20Disclaimer.pdf">Terms of Use of the Chatbot</a>.</p></div></div>
-      <div class="chatbubble assistant"><div class="content"><p><strong>
+      <div class="chatbubble assistant no_animation"><div class="content"><p>Please read the following disclaimer before using the chatbot: <a target="_blank" href="https://chat.volt.link/VOLT%20EUROPA%20Chatbot%20Disclaimer.pdf">Terms of Use of the Chatbot</a>.</p></div></div>
+      <div class="chatbubble assistant no_animation"><div class="content"><p><strong>
         What do you want to know?
       </strong></p></div></div>
-      <div class="chatbubble assistant"><div class="content"><p>You can ask questions in any language.</p></div></div>
+      <div class="chatbubble assistant no_animation"><div class="content"><p>You can ask questions in any language.</p></div></div>
   </div>
   <p class="offline_info caption">
     You are offline or we could not connect to our server.<br />

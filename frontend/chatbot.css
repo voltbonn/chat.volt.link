@@ -84,6 +84,8 @@
   --blur: 20px;
 
   --timing: .2s ease-in-out;
+  --timing_double: .4s ease-in-out;
+  --timing_quadruple: .8s ease-in-out;
 
   --font-family: 'Ubuntu', 'Noto Kufi Arabic', 'Geeza Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
   --font-family-code: 'Ubuntu Mono', 'Noto Kufi Arabic', 'Geeza Pro', 'Courier New', Courier, monospace;
@@ -131,6 +133,20 @@
 
   max-width: 1200px;
   margin: 0 auto;
+
+  animation: fade_in var(--timing_quadruple);
+}
+
+@keyframes fade_in {
+  0% {
+    filter: blur(4px);
+    opacity: 0;
+  }
+
+  100% {
+    filter: blur(0px);
+    opacity: 1;
+  }
 }
 
 @media (min-width: 700px) {
@@ -150,7 +166,6 @@
   border-radius: 20px 20px 20px 0;
 
   width: 100%;
-  transition: height var(--timing);
 }
 
 @media (min-width: 700px) {
@@ -383,6 +398,19 @@
   display: inline-flex;
   flex-direction: row;
   gap: 10px;
+}
+.chatbot_styles .chatbubble:not(.no_animation) {
+  animation: push_up var(--timing_double);
+}
+@keyframes push_up {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .chatbot_styles .chatbubble.user {
