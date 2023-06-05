@@ -17,15 +17,6 @@
   <script async defer data-website-id="81c67243-c55c-476c-ada6-a9d97324d731" src="https://umami.volteuropa.org/umami.js" data-domains="chat.volt.link"></script>
 
   <link rel="stylesheet" href="./chatbot.css" />
-
-  <style>
-    .chatbot_styles .chatbot {
-      min-height: calc(100vh - 20px);
-      min-height: calc(100svh - 20px);
-      max-width: 100%;
-      width: calc(100vw - 20px);
-    }
-  </style>
 </head>
 
 <body>
@@ -35,6 +26,14 @@
   </div>
 
   <script src="./chatbot.js"></script>
+  <style>
+    .chatbot_styles .chatbot {
+      min-height: calc(100vh - 20px);
+      min-height: calc(100svh - 20px);
+      max-width: 100%;
+      width: calc(100vw - 20px);
+    }
+  </style>
 
   <script>
     if ("serviceWorker" in navigator) {
@@ -43,7 +42,6 @@
       navigator.serviceWorker.register('./sw.js')
     }
   </script>
-
 </body>
 
 </html>
