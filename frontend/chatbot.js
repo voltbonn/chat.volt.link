@@ -264,11 +264,13 @@ function init_backend_switcher() {
 
 window.messages = [
   // {
+  //   id: '1',
   //   role: 'user',
   //   content: `Was ist Volt?`,
   //   information: '',
   // },
   // {
+  //   id: '2',
   //   role: 'assistant',
   //   content: `You can contact Volt Potsdam via email at potsdam@voltdeutschland.org. Information about Volt Potsdam events can be found on their Instagram page (@voltpotsdam) and their website (www.voltbrandenburg.org/potsdam).`,
   //   information: `- abc\n- 123`,
@@ -316,30 +318,58 @@ function markdown_to_html(text) {
 
   return text
 }
+function get_message_text(message) {
+
+  let text = ''
+  if (typeof message.content === 'string' && message.content.length > 0) {
+    text = message.content
+  }
+  if (typeof message.error === 'string' && message.error.length > 0) {
+    new_chatbubble.classList.add('error')
+    text = message.error
+  }
+
+  text = markdown_to_html(text)
+
+  return text
+}
 function display_messages() {
-  const new_messages_node = document.createElement('div')
+  console.log(' ')
+  console.log('display_messages()')
+  // const new_messages_node = document.createElement('div')
+
+  const existing_chatbubbles = [...window.messages_node.querySelectorAll('.chatbubble')]
+  console.log('existing_chatbubbles', existing_chatbubbles)
 
   for (const message of window.messages) {
+
+    const message_html = get_message_text(message)
+
+    const existing_chatbubble = existing_chatbubbles
+      .find(chatbubble => chatbubble.dataset.message_id === message.id)
+
+    console.log('existing_chatbubble', existing_chatbubble)
+
+    if (!!existing_chatbubble) {
+      // append to existing message by id
+      const existing_content = existing_chatbubble.querySelector('.content')
+      if (!!existing_content && existing_content.innerHTML !== message_html) {
+        existing_content.innerHTML = message_html
+      }
+
+      continue // skip to next message
+    }
+
     const this_message_content = message.content
 
     const new_chatbubble = document.createElement('div')
     new_chatbubble.classList.add('chatbubble')
     new_chatbubble.classList.add(message.role)
-
-    let text = ''
-    if (typeof message.content === 'string' && message.content.length > 0) {
-      text = message.content
-    }
-    if (typeof message.error === 'string' && message.error.length > 0) {
-      new_chatbubble.classList.add('error')
-      text = message.error
-    }
-
-    text = markdown_to_html(text)
+    new_chatbubble.dataset.message_id = message.id
 
     const new_content = document.createElement('div')
     new_content.classList.add('content')
-    new_content.innerHTML = text
+    new_content.innerHTML = message_html
     new_chatbubble.appendChild(new_content)
 
     const chat_history = get_previous_messages(this_message_content)
@@ -399,10 +429,10 @@ function display_messages() {
       new_chatbubble.appendChild(new_actions)
     }
 
-    new_messages_node.appendChild(new_chatbubble)
+    window.messages_node.appendChild(new_chatbubble)
   }
 
-  window.messages_node.innerHTML = new_messages_node.innerHTML
+  // window.messages_node.innerHTML = new_messages_node.innerHTML
 }
 
 function send_messages() {
@@ -423,6 +453,7 @@ function send_messages() {
       window.loading_node.classList.remove('active')
 
       window.messages.push({
+        id: new_node_id(),
         role: 'assistant',
         content: new_response.response || null,
         error: new_response.error || null,
@@ -438,6 +469,7 @@ function send_messages() {
       window.loading_node.classList.remove('active')
 
       window.messages.push({
+        id: new_node_id(),
         role: 'assistant',
         content: new_response.response || null,
         error: new_response.error || null,
@@ -456,7 +488,7 @@ function use_text_input() {
     return
   }
 
-  window.messages.push({ role: 'user', content: new_message })
+  window.messages.push({ id: new_node_id(), role: 'user', content: new_message })
   display_messages()
   window.new_message_node.value = ''
   send_messages()
@@ -499,7 +531,7 @@ function check_url_for_message() {
   const url = new URL(window.location.href)
   const message = url.searchParams.get('msg')
   if (message) {
-    window.messages.push({ role: 'user', content: message })
+    window.messages.push({ id: new_node_id(), role: 'user', content: message })
     display_messages()
     send_messages()
   }
