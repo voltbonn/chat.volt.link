@@ -41,10 +41,6 @@
       console.log("serviceWorker in navigator");
       console.log('navigator.serviceWorker', navigator.serviceWorker)
       navigator.serviceWorker.register('./sw.js')
-      .ready().then(function(registration) {
-          console.log('Service Worker Ready');
-          console.log('registration', registration)
-        });
     }
   </script>
 
