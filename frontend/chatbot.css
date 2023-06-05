@@ -112,25 +112,6 @@
   padding: 0;
 }
 
-.chatbot_styles .chatbot_center {
-  max-width: 100%;
-  padding: 20px;
-  margin: 0 auto;
-  --backgound: var(--purple);
-  --text: var(--on-purple);
-  background: var(--backgound);
-  color: var(--text);
-  border-radius: 20px 20px 20px 0;
-
-  width: 100%;
-}
-
-@media (min-width: 700px) {
-  .chatbot_styles .chatbot_center {
-    width: 600px;
-  }
-}
-
 .chatbot_styles .chatbot {
   display: flex;
   align-items: center;
@@ -156,6 +137,24 @@
   .chatbot_styles .chatbot {
     background-image: url("https://chat.volt.link/AI%20Pattern%20Background%20Pi-Shading%20Colorful%201200w.png");
     padding: 20px;
+  }
+}
+.chatbot_styles .chatbot_center {
+  max-width: 100%;
+  padding: 20px;
+  margin: 0 auto;
+  --backgound: var(--purple);
+  --text: var(--on-purple);
+  background: var(--backgound);
+  color: var(--text);
+  border-radius: 20px 20px 20px 0;
+
+  width: 100%;
+}
+
+@media (min-width: 700px) {
+  .chatbot_styles .chatbot_center {
+    width: 600px;
   }
 }
 
