@@ -333,12 +333,9 @@ function get_message_text(message) {
   return text
 }
 function display_messages() {
-  console.log(' ')
-  console.log('display_messages()')
   // const new_messages_node = document.createElement('div')
 
   const existing_chatbubbles = [...window.messages_node.querySelectorAll('.chatbubble')]
-  console.log('existing_chatbubbles', existing_chatbubbles)
 
   for (const message of window.messages) {
 
@@ -347,7 +344,6 @@ function display_messages() {
     const existing_chatbubble = existing_chatbubbles
       .find(chatbubble => chatbubble.dataset.message_id === message.id)
 
-    console.log('existing_chatbubble', existing_chatbubble)
 
     if (!!existing_chatbubble) {
       // append to existing message by id
