@@ -386,9 +386,6 @@ function display_messages() {
     new_content.innerHTML = message_html
     new_chatbubble.appendChild(new_content)
 
-    const chat_history = get_previous_messages(this_message_content)
-      .map(this_message => `${this_message.role}: ${this_message.content}`)
-      .join('\n\n')
 
     if (message.role === 'assistant') {
       // const new_facts = document.createElement('div')
@@ -430,12 +427,19 @@ function display_messages() {
       }
 
       const new_feedback_button = document.createElement('a')
-      new_feedback_button.setAttribute('target', '_blank')
-      new_feedback_button.setAttribute('href', `https://docs.google.com/forms/d/e/1FAIpQLSebrPY7u6YWMGzj3rMRnDjhBvmCPwXLFyS1D7S1fBdpi2IwmQ/viewform?usp=pp_url&entry.190795242=${encodeURIComponent(chat_history)}`)
+      // new_feedback_button.setAttribute('target', '_blank')
+      // new_feedback_button.setAttribute('href', `https://docs.google.com/forms/d/e/1FAIpQLSebrPY7u6YWMGzj3rMRnDjhBvmCPwXLFyS1D7S1fBdpi2IwmQ/viewform?usp=pp_url&entry.190795242=${encodeURIComponent(chat_history)}`)
       new_feedback_button.innerHTML = `<button class="text">${feedback_svg}</button>`
       const new_feedback_button_id = new_node_id()
       new_feedback_button.setAttribute('id', new_feedback_button_id)
       onEvent('click', `#${new_feedback_button_id}`, () => {
+
+        const chat_history = get_previous_messages(this_message_content)
+          .map(this_message => `${this_message.role}: ${this_message.content}`)
+          .join('\n\n')
+
+        window.open(`https://docs.google.com/forms/d/e/1FAIpQLSebrPY7u6YWMGzj3rMRnDjhBvmCPwXLFyS1D7S1fBdpi2IwmQ/viewform?usp=pp_url&entry.190795242=${encodeURIComponent(chat_history)}`, "_blank");
+
         trackEvent('clicked_answer_feedback', 'clicked_answer_feedback')
       })
       new_actions.append(new_feedback_button)
