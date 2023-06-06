@@ -423,6 +423,9 @@
   max-width: 80%;
   word-wrap: break-word;
 }
+.chatbot_styles .chatbubble.emoji .content {
+  font-size: 36px;
+}
 
 .chatbot_styles .chatbubble.user+.chatbubble.assistant .content,
 .chatbot_styles .chatbubble.assistant+.chatbubble.user .content {

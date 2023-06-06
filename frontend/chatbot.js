@@ -332,6 +332,13 @@ function get_message_text(message) {
 
   return text
 }
+
+// emoji start
+const emoji_and_special_regex = /(\p{Emoji}\uFE0F|[\p{Emoji_Presentation}\p{Extended_Pictographic}\s=+.()\[\]!?,;:-_/\\¿¡*^°])/gu
+const remove_emoji = str => str.replace(emoji_and_special_regex, '')
+const is_only_emoji = str => !remove_emoji(str).length
+// emoji end
+
 function display_messages() {
   // const new_messages_node = document.createElement('div')
 
@@ -344,6 +351,8 @@ function display_messages() {
     const existing_chatbubble = existing_chatbubbles
       .find(chatbubble => chatbubble.dataset.message_id === message.id)
 
+    const this_message_content = message.content
+    const text_only_contains_emojis = is_only_emoji(this_message_content)
 
     if (!!existing_chatbubble) {
       // append to existing message by id
@@ -352,13 +361,20 @@ function display_messages() {
         existing_content.innerHTML = message_html
       }
 
+      if (text_only_contains_emojis) {
+        existing_chatbubble.classList.add('emoji')
+      } else {
+        existing_chatbubble.classList.remove('emoji')
+      }
+
       continue // skip to next message
     }
 
-    const this_message_content = message.content
-
     const new_chatbubble = document.createElement('div')
     new_chatbubble.classList.add('chatbubble')
+    if (text_only_contains_emojis) {
+      new_chatbubble.classList.add('emoji')
+    }
     if (typeof message.error === 'string' && message.error.length > 0) {
       new_chatbubble.classList.add('error')
     }
@@ -371,7 +387,7 @@ function display_messages() {
     new_chatbubble.appendChild(new_content)
 
     const chat_history = get_previous_messages(this_message_content)
-      .map(message => `${message.role}: ${message.content}`)
+      .map(message => `${message.role}: ${this_message_content}`)
       .join('\n\n')
 
     if (message.role === 'assistant') {
