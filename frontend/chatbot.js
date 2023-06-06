@@ -335,8 +335,8 @@ function get_message_text(message) {
 
 // emoji start
 const emoji_and_special_regex = /(\p{Emoji}\uFE0F|[\p{Emoji_Presentation}\p{Extended_Pictographic}\s=+.()\[\]!?,;:-_/\\¿¡*^°])/gu
-const remove_emoji = str => str.replace(emoji_and_special_regex, '')
-const is_only_emoji = str => !remove_emoji(str).length
+const remove_emoji = str => (str || '').replace(emoji_and_special_regex, '')
+const is_only_emoji = str => !remove_emoji(str || '').length
 // emoji end
 
 function display_messages() {
