@@ -325,7 +325,6 @@ function get_message_text(message) {
     text = message.content
   }
   if (typeof message.error === 'string' && message.error.length > 0) {
-    new_chatbubble.classList.add('error')
     text = message.error
   }
 
@@ -364,6 +363,9 @@ function display_messages() {
 
     const new_chatbubble = document.createElement('div')
     new_chatbubble.classList.add('chatbubble')
+    if (typeof message.error === 'string' && message.error.length > 0) {
+      new_chatbubble.classList.add('error')
+    }
     new_chatbubble.classList.add(message.role)
     new_chatbubble.dataset.message_id = message.id
 
