@@ -387,7 +387,7 @@ function display_messages() {
     new_chatbubble.appendChild(new_content)
 
     const chat_history = get_previous_messages(this_message_content)
-      .map(message => `${message.role}: ${this_message_content}`)
+      .map(this_message => `${this_message.role}: ${this_message.content}`)
       .join('\n\n')
 
     if (message.role === 'assistant') {
