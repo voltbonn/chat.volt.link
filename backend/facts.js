@@ -79,7 +79,7 @@ const facts = [
   fact`Policy``Der jetzige Slogan von Volt lautet "Future. Made in Europe."`,
   fact`Policy``Der ehemalige Slogan von Volt lautete: paneuropäisch, pragmatisch und progressiv.`,
 
-  fact`Policy``
+  fact`Policy|Challenges``
 Volt hat 5+1 Herausforderungen definiert, die jedes europäische Land angehen muss.
 
 Die ersten drei Herausforderungen betreffen den Staat, seine Organisation, die Wirtschaft und das soziale Umfeld in unserer Gesellschaft.
@@ -88,7 +88,16 @@ Wie schaffen wir ein nachhaltiges, globales Gleichgewicht und stellen sicher, da
 Basierend auf diesen 5 Herausforderungen werden wir unsere nationalen Programme entwickeln.
 
 „+1“ ist unser Vorschlag, die EU zu stärken und zu reformieren. Diese Herausforderung wird in allen nationalen Programmen gleich enthalten sein und bildet den Leitfaden unserer Europapolitik.
-  `,
+
+Die 5+1 Herausforderungen sind:
+- 1. Smart State
+- 2. Economic Renaissance
+- 3. Social Equality
+- 4. Global Balance
+- 5. Citizen Empowerment
+- +1 EU-Reform
+`,
+  /*
   fact`Policy|Smart State``
 1. Intelligenter Staat
 
@@ -264,6 +273,7 @@ Wir wollen daher ein System erstellen und unterstützen, welches die Integrität
 Wir wollen ein europäisches Grenzschutz-System, welches unter anderem die Erstaufnahme von Asylsuchenden in einer geordneten und humanen Weise gewährleistet.
 Unsere gemeinsamen, europäischen Werte sollen sicherstellen, dass Geflüchtete beim ersten Kontakt erkennen können, wofür wir als europäische Bürger stehen.
 `,
+*/
 
   fact`Tech|Tusker|Voting|Email|Purpose``For what? Tusker serves two main functions: voting for Volt members (whether this be at General Assemblies, National Assemblies or Local Assemblies as well of course for our Policy Votes and all different democratic expressions within Volt) & emailing (again, across the wide variety of segments Volt has).`,
   fact`Tech|Tusker|Voting|Email|Access``For who? Tusker is reserved for usage by the following functions
