@@ -10,6 +10,7 @@
     "remarkable": "^2.0.1",
     "socket.io": "^4.6.1",
     "sqlite": "^4.2.0",
+    "sqlite-vss": "^0.1.1-alpha.19",
     "sqlite3": "^5.1.6"
   },
   "scripts": {
