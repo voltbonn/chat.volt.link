@@ -5,6 +5,8 @@ const { Configuration, OpenAIApi } = require('openai')
 const { facts } = require('./facts.js')
 const { get_bot, filter_fact_by_bot, get_prompt, add_data_to_prompt } = require('./bots.js')
 
+const { get_intend } = require('./intends.js')
+
 const configuration = new Configuration({
   apiKey: process.env.OPENAI_API_KEY,
 })
