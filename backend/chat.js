@@ -20,6 +20,17 @@ async function ask_the_bot(system_setup, messages, onTokenCallback, options = {}
 
   const has_onTokenCallback = typeof onTokenCallback === 'function'
 
+
+
+  const user_input = messages[messages.length - 1].content // the last message is the user input
+  const { intend, similarity } = await get_intend(user_input)
+  const intend_response = {
+    key: intend,
+    similarity: similarity,
+  }
+
+
+
   if (typeof system_setup === 'string' && system_setup.length > 0) {
     system_setup = [
       { role: 'system', content: system_setup },
@@ -45,7 +56,11 @@ async function ask_the_bot(system_setup, messages, onTokenCallback, options = {}
     // without the stream option
     return new Promise(resolve => {
       try {
-        resolve({ information, text: completion.data?.choices[0]?.message?.content })
+        resolve({
+          information,
+          text: completion.data?.choices[0]?.message?.content,
+          intend: intend_response,
+        })
       } catch (error) {
         console.error('ERROR', error)
         resolve({ information, text: ''})
@@ -64,7 +79,11 @@ async function ask_the_bot(system_setup, messages, onTokenCallback, options = {}
         for (const line of lines) {
           const message = line.replace(/^data: /, '')
           if (message === '[DONE]') {
-            resolve({ information, text: result })
+            resolve({
+              information,
+              text: result,
+              intend: intend_response,
+            })
           } else {
             let token;
             try {
@@ -75,10 +94,18 @@ async function ask_the_bot(system_setup, messages, onTokenCallback, options = {}
             if (token) {
               result += token
               if (is_first) { // only send the information once at the first time
-                onTokenCallback({ information, text: token })
+                onTokenCallback({
+                  information,
+                  text: token,
+                  intend: intend_response,
+                })
                 is_first = false
               } else {
-                onTokenCallback({ information: null, text: token })
+                onTokenCallback({
+                  information: null,
+                  text: token,
+                  intend: null,
+                })
               }
             }
           }

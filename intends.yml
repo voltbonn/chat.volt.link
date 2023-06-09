@@ -1,0 +1,23 @@
+intends:
+  show_links:
+    - 'show me the links please'
+    - 'what policies do you have'
+    - 'with links please'
+  what_can_you_do:
+    - 'What can you do?'
+    - 'What are you capable of?'
+    - 'What are your capabilities'
+    - 'What are you made for?'
+    - 'Ich bin neu hier'
+    - 'What is this?'
+    - 'Ich komm nicht weiter.'
+  help:
+    - 'I need help!'
+    - 'I need human support.'
+  bug:
+    - 'I found a bug'
+    - 'I found a problem'
+    - 'How can I help you?'
+    - 'This is wrong!'
+    - 'ich möchte die antwort verbessern'
+
