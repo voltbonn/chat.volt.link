@@ -620,13 +620,16 @@ function init_socket() {
   window.socket.on('disconnect', () => set_online_status(window.socket.connected))
   window.socket.on('error', console.error.bind(console));
   window.socket.on('response', data => {
-    const { id, information, content, error } = data
+    const { id, intend, information, content, error } = data
+
+    console.log('response', data)
 
     window.loading_node.classList.remove('active')
 
     push_or_replace_msg({
       id,
       role: 'assistant',
+      intend: intend || null,
       information: information || null,
       content: content || null,
       error: error || null,
@@ -634,13 +637,16 @@ function init_socket() {
     display_messages()
   })
   window.socket.on('partial_response', data => {
-    const { id, information, content, error } = data
+    const { id, intend, information, content, error } = data
+
+    console.log('partial_response', data)
 
     window.loading_node.classList.remove('active')
 
     push_or_replace_msg({
       id,
       role: 'assistant',
+      intend: intend || null,
       information: information || null,
       content: content || null,
       error: error || null,
