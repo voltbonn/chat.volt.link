@@ -115,6 +115,7 @@ async function get_next_message(messages, callback, partial_callback, options) {
 
   const default_callback_obj = {
     information: null,
+    intend: null,
     content: null,
     error: null,
   }
@@ -142,6 +143,7 @@ async function get_next_message(messages, callback, partial_callback, options) {
         return {
           role: message.role,
           content: message.content,
+          intend: message.intend,
         }
       })
 
@@ -197,6 +199,7 @@ async function get_next_message(messages, callback, partial_callback, options) {
           if (typeof partial_callback === 'function') {
             partial_callback({
               ...default_callback_obj,
+              intend: bot_response.intend,
               information: bot_response.information,
               content: bot_response.text,
             })
@@ -209,6 +212,7 @@ async function get_next_message(messages, callback, partial_callback, options) {
 
       callback({
         ...default_callback_obj,
+        intend: bot_response.intend,
         information: bot_response.information,
         content: bot_response.text,
       })
