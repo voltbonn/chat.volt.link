@@ -639,8 +639,6 @@ function init_socket() {
   window.socket.on('partial_response', data => {
     const { id, intend, information, content, error } = data
 
-    console.log('partial_response', data)
-
     window.loading_node.classList.remove('active')
 
     push_or_replace_msg({
