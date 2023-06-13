@@ -339,6 +339,75 @@ const remove_emoji = str => (str || '').replace(emoji_and_special_regex, '')
 const is_only_emoji = str => !remove_emoji(str || '').length
 // emoji end
 
+function get_message_text_from_intend(intend) {
+  const intend_key = intend.key
+
+  if (intend_key === 'help') {
+    return `
+      <h3>🛟 We can help you!</h3>
+      <br />
+      You can post your question in the <a href="https://volteuropa.workplace.com/groups/techgeneral" target="_blank">EUR Tech group</a>.<br /> Or you can send an email to the <a href="mailto:thomas.rosen@volteuropa.org">Chat Bot team</a>.
+    `
+  }
+
+  if (intend_key === 'idea') {
+    return `
+      <h3>ℹ️ We need your ideas!</h3>
+      You have an idea for a new feature or improvement? Or you want to help with the development?<br />
+      <br />
+      Send a message to the <a href="mailto:thomas.rosen@volteuropa.org">Chat Bot team</a> and we will get back to you as soon as possible.
+    `
+  }
+
+  if (intend_key === 'bug') {
+    return `
+      <h3>Oh no! A bug 🐞</h3>
+      <br />
+      You can post an info about the bug in the <a href="https://volteuropa.workplace.com/groups/techgeneral" target="_blank">EUR Tech group</a>.<br /> Or you can send an email to the <a href="mailto:thomas.rosen@volteuropa.org">Chat Bot team</a>.
+    `
+  }
+
+  if (intend_key === 'what_can_you_do') {
+    return `
+      <h3>💡 Explore the possibilities!</h3>
+      A few idea what you can do with the Chat Bot:<br />
+      <br />
+      <ul class="no_dot">
+        <li>ℹ️ Get basic information about Volt</li>
+        <li>📄 Summaries Volt policies</li>
+        <li>💬 Train to debate on Volt policies</li>
+        <li>🖼️ Generate first drafts for social media posts</li>
+      </ul>
+    `
+    // <li>Search for policies</li>
+  }
+}
+
+function append_info_chat_bubble(message, existing_chatbubbles) {
+
+  const info_id = `info_${message.id}`
+
+  const existing_chatbubble = existing_chatbubbles
+    .find(chatbubble => chatbubble.dataset.message_id === info_id)
+
+  if (!!existing_chatbubble) {
+    return
+  }
+
+  const new_chatbubble = document.createElement('div')
+  new_chatbubble.classList.add('chatbubble')
+   new_chatbubble.classList.add('info')
+  new_chatbubble.classList.add(message.role)
+  new_chatbubble.dataset.message_id = info_id
+
+  const new_content = document.createElement('div')
+  new_content.classList.add('content')
+  new_content.innerHTML = get_message_text_from_intend(message.intend)
+  new_chatbubble.appendChild(new_content)
+
+  window.messages_node.appendChild(new_chatbubble)
+}
+
 function display_messages() {
   // const new_messages_node = document.createElement('div')
 
@@ -347,12 +416,13 @@ function display_messages() {
   for (const message of window.messages) {
 
     const message_html = get_message_text(message)
-
-    const existing_chatbubble = existing_chatbubbles
-      .find(chatbubble => chatbubble.dataset.message_id === message.id)
+    const message_id = `msg_${message.id}`
 
     const this_message_content = message.content
     const text_only_contains_emojis = is_only_emoji(this_message_content)
+
+    const existing_chatbubble = existing_chatbubbles
+      .find(chatbubble => chatbubble.dataset.message_id === message_id)
 
     if (!!existing_chatbubble) {
       // append to existing message by id
@@ -379,7 +449,7 @@ function display_messages() {
       new_chatbubble.classList.add('error')
     }
     new_chatbubble.classList.add(message.role)
-    new_chatbubble.dataset.message_id = message.id
+    new_chatbubble.dataset.message_id = message_id
 
     const new_content = document.createElement('div')
     new_content.classList.add('content')
@@ -448,6 +518,14 @@ function display_messages() {
     }
 
     window.messages_node.appendChild(new_chatbubble)
+
+    if (
+      typeof message.intend === 'object'
+      && message.intend !== null
+      && message.intend.hasOwnProperty('key')
+    ) {
+      append_info_chat_bubble(message, existing_chatbubbles)
+    }
   }
 
   // window.messages_node.innerHTML = new_messages_node.innerHTML
