@@ -363,7 +363,9 @@ function get_message_text_from_intend(intend) {
     return `
       <h3>Oh no! A bug 🐞</h3>
       <br />
-      You can post an info about the bug in the <a href="https://volteuropa.workplace.com/groups/techgeneral" target="_blank">EUR Tech group</a>.<br /> Or you can send an email to the <a href="mailto:thomas.rosen@volteuropa.org">Chat Bot team</a>.
+      If the bot provided wrong information or there was another error in the answers, you can use the feedback form to report it. Just click on the thumbs-up/thumbs-down next to the message.<br />
+      <br />
+      Additional you can post an info about the bug in the <a href="https://volteuropa.workplace.com/groups/techgeneral" target="_blank">EUR Tech group</a>.<br /> Or you can send an email to the <a href="mailto:thomas.rosen@volteuropa.org">Chat Bot team</a>.
     `
   }
 
