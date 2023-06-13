@@ -483,11 +483,9 @@
 }
 
 .chatbot_styles .chatbubble.info .content {
-  /*
   box-shadow: inset 0 0 0 1px rgba(var(--blue-light-rgb), 1);
   background: rgba(var(--blue-dark-rgb), 0.3);
   color: var(--blue-light);
-  */
 
   /*
   box-shadow: inset 0 0 0 1px var(--blue);
@@ -495,9 +493,11 @@
   color: var(--on-blue-dark);
   */
 
+  /*
   box-shadow: none;
   background: var(--blue);
   color: var(--on-blue);
+  */
 }
 
 .chatbot_styles .chatbubble p {
