@@ -1,8 +1,19 @@
 intends:
-  show_links:
-    - 'show me the links please'
-    - 'what policies do you have'
-    - 'with links please'
+  idea:
+    - 'I have an idea'
+    - 'Ich möchte den Bot verbessern.'
+    - 'Kann ich mit programmieren?'
+    - 'Diesem Chat Bot fehlt diese und jene Funktion.'
+    - 'I wanna help you.'
+    - 'How can i help the developers?'
+  help:
+    - 'I need help!'
+    - 'I need human support.'
+  bug:
+    - 'I found a bug'
+    - 'I found a problem'
+    - 'This is wrong!'
+    - 'ich möchte die antwort verbessern'
   what_can_you_do:
     - 'What can you do?'
     - 'What are you capable of?'
@@ -11,13 +22,7 @@ intends:
     - 'Ich bin neu hier'
     - 'What is this?'
     - 'Ich komm nicht weiter.'
-  help:
-    - 'I need help!'
-    - 'I need human support.'
-  bug:
-    - 'I found a bug'
-    - 'I found a problem'
-    - 'How can I help you?'
-    - 'This is wrong!'
-    - 'ich möchte die antwort verbessern'
-
+  show_links:
+    - 'show me the links please'
+    - 'what policies do you have'
+    - 'with links please'
