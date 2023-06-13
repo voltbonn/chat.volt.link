@@ -14,6 +14,7 @@ intends:
     - 'I found a problem'
     - 'This is wrong!'
     - 'ich möchte die antwort verbessern'
+    - 'Ähhm really??? I think your answer is not correct.'
   what_can_you_do:
     - 'What can you do?'
     - 'What are you capable of?'
