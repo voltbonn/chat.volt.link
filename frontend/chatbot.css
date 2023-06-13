@@ -535,7 +535,8 @@
 .chatbot_styles li {
   margin-inline-start: 20px;
 }
-.chatbot_styles li.no_dot {
+.chatbot_styles li.no_dot,
+.chatbot_styles ul.no_dot li {
   list-style-type: none;
   margin-inline-start: 0px;
 }
