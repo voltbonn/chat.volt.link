@@ -190,6 +190,14 @@ async function parse_policy_wiki_export(filepath) {
   }
   replaceIncludes(webhome_files)
 
+  // only keep files with content length < X
+  const cut_off_content_length = 500 // 500 words = 625 tokens (roughly)
+  const word_split_regex = /[\s\n\r()!.:,;-]+/g
+  webhome_files = webhome_files
+    .filter(file => 
+      file.content.split(word_split_regex).length < cut_off_content_length
+    )
+
   // write webhome_files to one json file
   const webhome_files_json = JSON.stringify(webhome_files, null, 2)
   fs.writeFileSync('./webhome_files.json', webhome_files_json)
