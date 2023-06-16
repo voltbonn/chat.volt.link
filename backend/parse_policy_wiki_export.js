@@ -192,7 +192,7 @@ async function parse_policy_wiki_export(filepath) {
 
   // only keep files with content length < X
   const cut_off_content_length = 500 // 500 words = 625 tokens (roughly)
-  const word_split_regex = /[\s\n\r()!.:,;-]+/g
+  const word_split_regex = /[\s\n\r()!?¡¿.:,;\-+<>\[\]"'#]+/g
   webhome_files = webhome_files
     .filter(file => 
       file.content.split(word_split_regex).length < cut_off_content_length
