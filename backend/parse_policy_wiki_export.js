@@ -141,6 +141,7 @@ async function parse_policy_wiki_export(filepath) {
         .replace(/\\\\/g, `\n`) // replace weird xwiki linebreaks with normal ones
         .replace(/[^\S\r\n]+/g, ' ') // remove multiple spaces (source: https://itecnote.com/tecnote/r-match-whitespace-but-not-newlines/)
         .replace(/[\r\n\s]{2,}/gm, '\n\n') // max 1 empty line
+        .replace(/[\r\n\s]+$/, '') // remove trailing linebreaks and whitespace
 
       return {
         ...data,
@@ -168,6 +169,7 @@ async function parse_policy_wiki_export(filepath) {
         })
         .replace(/[^\S\r\n]+/g, ' ') // remove multiple spaces (source: https://itecnote.com/tecnote/r-match-whitespace-but-not-newlines/)
         .replace(/[\r\n\s]{2,}/gm, '\n\n') // max 1 empty line
+        .replace(/[\r\n\s]+$/, '') // remove trailing linebreaks and whitespace
 
       delete data.syntaxId; // not needed after parsing
 
