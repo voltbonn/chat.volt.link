@@ -51,16 +51,16 @@ async function parse_policy_wiki_export(filepath) {
 
       // const title = xml_parsed.xwikidoc.title
 
-      const parents = filepath
-        .replace(output_folder_path, '')
-        // .replace(title, '') // remove itself
-        .replace('/WebHome.xml', '')
-        .split('/')
-        .filter(Boolean) // remove empty strings
+      // const parents = filepath
+      //   .replace(output_folder_path, '')
+      //   // .replace(title, '') // remove itself
+      //   .replace('/WebHome.xml', '')
+      //   .split('/')
+      //   .filter(Boolean) // remove empty strings
 
       return {
         id: xml_parsed.xwikidoc['@_reference'],
-        parents,
+        // parents,
         // title,
         syntaxId: xml_parsed.xwikidoc.syntaxId,
         content: xml_parsed.xwikidoc.content,
