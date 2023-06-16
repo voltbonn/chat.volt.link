@@ -138,6 +138,7 @@ async function parse_policy_wiki_export(filepath) {
           return `# ${group1}\n`
         }) // remove formating of heading1
         .replace(/\=\n/g, '') // remove weird heading formatting (propbably a bug from importing)
+        .replace(/ \~\[ [0-9]+ \]/g, '') // remove references
 
         .replace(/----/g, `\n\n`) // replace formating of horizontal line two linebreaks
         .replace(/\\\\/g, `\n`) // replace weird xwiki linebreaks with normal ones
