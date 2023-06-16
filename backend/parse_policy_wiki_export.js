@@ -58,8 +58,10 @@ async function parse_policy_wiki_export(filepath) {
       //   .split('/')
       //   .filter(Boolean) // remove empty strings
 
+      const id = (xml_parsed.xwikidoc['@_reference'] || '').replace(/\.WebHome$/, '')
+
       return {
-        id: xml_parsed.xwikidoc['@_reference'],
+        id,
         // parents,
         // title,
         syntaxId: xml_parsed.xwikidoc.syntaxId,
