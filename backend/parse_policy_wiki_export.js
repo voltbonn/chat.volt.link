@@ -79,7 +79,7 @@ async function parse_policy_wiki_export(filepath) {
         .replace(/({{velocity}}(?:.|\n)*?{{\/velocity}})/gm, '') // remove velocity code
         .replace(/({{groovy}}(?:.|\n)*?{{\/groovy}})/gm, '') // remove groovy code
         .replace(/({{html}}(?:.|\n)*?{{\/html}})/gm, '') // remove html code
-        .replace(/==== Authors:.*====/gm, '') // remove authors
+        .replace(/==== (Authors|Author):.*====/gm, '') // remove authors
 
         .replace(/\(%.*?%\)/g, '') // remove parameters and style infos
 
