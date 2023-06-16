@@ -1,9 +1,11 @@
 {
   "dependencies": {
     "compute-cosine-similarity": "^1.0.0",
+    "decompress": "^4.2.1",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "express-rate-limit": "^6.7.0",
+    "fast-xml-parser": "^4.2.4",
     "http": "^0.0.1-security",
     "node-fetch": "2",
     "openai": "^3.2.1",
