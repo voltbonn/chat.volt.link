@@ -164,7 +164,7 @@ async function parse_policy_wiki_export(filepath) {
       const parsed_content = data.content
         .replace(include_regex, (match, p1, offset, string) => {
           const include_id = p1
-          const include = webhome_files.find(file => file.id === include_id)
+          const include = webhome_files.find(file => `${file.id}.WebHome` === include_id)
           if (!include) {
             return ''
           }
