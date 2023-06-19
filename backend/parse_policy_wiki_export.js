@@ -142,6 +142,8 @@ async function parse_policy_wiki_export(filepath) {
 
         .replace(/----/g, `\n\n`) // replace formating of horizontal line two linebreaks
         .replace(/\\\\/g, `\n`) // replace weird xwiki linebreaks with normal ones
+
+        .replace(/~(.)/g, `$1`) // remove escape character
         .replace(/[^\S\r\n]+/g, ' ') // remove multiple spaces (source: https://itecnote.com/tecnote/r-match-whitespace-but-not-newlines/)
         .replace(/[\r\n\s]{2,}/gm, '\n\n') // max 1 empty line
         .replace(/[\r\n\s]+$/, '') // remove trailing linebreaks and whitespace
