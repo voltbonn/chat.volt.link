@@ -249,6 +249,23 @@ async function parse_policy_wiki_export(filepath, url_prefix) {
       ...data,
     }))
 
+  console.info(`webhome files amount: ${webhome_files.length}`)
+
+  const max_content_length_letters = Math.max(...webhome_files.map(file => file.content.length))
+  const max_content_length_words = Math.max(...webhome_files.map(file => file.content.split(word_split_regex).length))
+  console.info(`max_content_length_letters: ${max_content_length_letters}`)
+  console.info(`max_content_length_words: ${max_content_length_words}`)
+  console.info(`max_content_length_tokens: ~${Math.round(max_content_length_words * 1.25)}`)
+
+
+  // // count of files with content length > X
+  // const files_with_content_length_gt = webhome_files.filter(file => file.content.split(word_split_regex).length > cut_off_content_length)
+  // console.info(`files_with_content_length_gt_${cut_off_content_length}: ${files_with_content_length_gt.length}`)
+
+  // // count of files with content length less than X
+  // const files_with_content_length_lt = webhome_files.filter(file => file.content.split(word_split_regex).length < cut_off_content_length)
+  // console.info(`files_with_content_length_lt_${cut_off_content_length}: ${files_with_content_length_lt.length}`)
+
   // delete the folder
   fs.rmSync(output_folder_path, { recursive: true })
 
