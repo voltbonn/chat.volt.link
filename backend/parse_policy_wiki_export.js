@@ -153,9 +153,18 @@ async function parse_policy_wiki_export(filepath) {
     })
     .filter(data => data.content.length > 0) // remove empty files
 
-  function replaceIncludes(webhome_files) {
-  // replace includes
-  webhome_files = webhome_files
+  // const full_text_letter_count_1 = webhome_files.map(data => data.content).join('').length
+  // console.log(`full_text_letter_count-1: ${full_text_letter_count_1}`)
+
+  function replaceIncludes(webhome_files, counter = 0) {
+    if (counter > 100) {
+      // prevent infinite loop
+      return webhome_files
+    }
+    counter += 1
+
+    // replace includes
+    webhome_files = webhome_files
     .map(data => {
 
       const include_regex = /{{include reference="(.*?)"\/}}/gm;
@@ -183,7 +192,7 @@ async function parse_policy_wiki_export(filepath) {
     })
 
     if (webhome_files.some(file => file.content.includes('{{include reference='))) {
-      return replaceIncludes(webhome_files)
+      return replaceIncludes(webhome_files, counter)
     }
 
     return webhome_files
