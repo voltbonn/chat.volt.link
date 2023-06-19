@@ -8,7 +8,7 @@ const options = {
 }
 const parser = new XMLParser(options)
 
-async function parse_policy_wiki_export(filepath) {
+async function parse_policy_wiki_export(filepath, url_prefix) {
   // convert xar file to folder
   const output_folder_path = './tmp_policy_wiki_export'
   await decompress(filepath, output_folder_path)
