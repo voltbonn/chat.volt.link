@@ -266,16 +266,16 @@ async function parse_policy_wiki_export(filepath, url_prefix) {
   // // only keep files with content length < X
   // const cut_off_content_length = 10000 // 500 words = 625 tokens (roughly)
   const word_split_regex = /[\s\n\r()!?¡¿.:,;\-–—*•+<>\[\]"'’“„”\/\\#]+/g
-  // webhome_files = webhome_files
-  // // .filter(file => {
-  // //   if (file.had_includes === true) {
-  // //     return file.content.split(word_split_regex).length < cut_off_content_length
-  // //   }
-  // //   return true
-  // // })
-  // .filter(file =>
-  //   !webhome_files.some(other_file => other_file.content !== file.content && other_file.content.includes(file.content)) // only keep files that are not included in other files
-  // )
+  webhome_files = webhome_files
+  // .filter(file => {
+  //   if (file.had_includes === true) {
+  //     return file.content.split(word_split_regex).length < cut_off_content_length
+  //   }
+  //   return true
+  // })
+  .filter(file =>
+    !webhome_files.some(other_file => other_file.content !== file.content && other_file.content.includes(file.content)) // only keep files that are not included in other files
+  )
 
 
   // const full_text_letter_count_3 = webhome_files.map(data => data.content).join('').length
