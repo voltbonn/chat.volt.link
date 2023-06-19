@@ -188,27 +188,67 @@ async function parse_policy_wiki_export(filepath) {
 
     return webhome_files
   }
-  replaceIncludes(webhome_files)
+  webhome_files = replaceIncludes(webhome_files)
 
-  // only keep files with content length < X
-  const cut_off_content_length = 500 // 500 words = 625 tokens (roughly)
-  const word_split_regex = /[\s\n\r()!?¡¿.:,;\-+<>\[\]"'#]+/g
+  // const full_text_letter_count_2 = webhome_files
+  //   .filter(file =>
+  //     !webhome_files.some(other_file => other_file.content !== file.content && other_file.content.includes(file.content)) // only keep files that are not included in other files
+  // )
+  // .map(data => data.content).join('').length
+  // console.log(`full_text_letter_count-2: ${full_text_letter_count_2}`)
+
+  // // only keep files with content length < X
+  // const cut_off_content_length = 10000 // 500 words = 625 tokens (roughly)
+  const word_split_regex = /[\s\n\r()!?¡¿.:,;\-–—*•+<>\[\]"'’“„”\/\\#]+/g
+  // webhome_files = webhome_files
+  // // .filter(file => {
+  // //   if (file.had_includes === true) {
+  // //     return file.content.split(word_split_regex).length < cut_off_content_length
+  // //   }
+  // //   return true
+  // // })
+  // .filter(file =>
+  //   !webhome_files.some(other_file => other_file.content !== file.content && other_file.content.includes(file.content)) // only keep files that are not included in other files
+  // )
+
+
+  // const full_text_letter_count_3 = webhome_files.map(data => data.content).join('').length
+  // console.log(`full_text_letter_count-3: ${full_text_letter_count_3}`)
+  // console.log(`f3/f2: ${Math.round((full_text_letter_count_3 / full_text_letter_count_2) * 100)}%`)
+
   webhome_files = webhome_files
-    .filter(file => 
-      file.content.split(word_split_regex).length < cut_off_content_length
-    )
-
-  // write webhome_files to one json file
-  const webhome_files_json = JSON.stringify(webhome_files, null, 2)
-  fs.writeFileSync('./webhome_files.json', webhome_files_json)
+    .map(data => ({
+      url: `${url_prefix}${
+        // encodeURI(data.id)
+        data.id
+        .split(/(?<!\\)\./g)
+        .map(part => encodeURIComponent(part.replace(/\\/g, '')))
+        .join('/')
+        // .replace(/(?<!\\)\./g, '/')
+        // .replace(/\+/g, '%2B') // replace + with %2B // idk why this is needed for the policy wiki // url don't work otherwise
+        // .replace(/\:/g, '%3A')
+        // .replace(/\./g, '%5C/')
+      }`,
+      ...data,
+    }))
 
   // delete the folder
   fs.rmSync(output_folder_path, { recursive: true })
+
+  return webhome_files
 }
 
 const filepath = './policy-wiki-export.xar'
-parse_policy_wiki_export(filepath)
-  .then(() => {
+const url_prefix = 'https://policy.volteuropa.org/bin/view/'
+const export_path = './policy_wiki_content.json'
+
+parse_policy_wiki_export(filepath, url_prefix)
+  .then(webhome_files => {
+
+    // write webhome_files to one json file
+    const webhome_files_json = JSON.stringify(webhome_files, null, 2)
+    fs.writeFileSync(export_path, webhome_files_json)
+
     console.info('done!')
   })
   .catch(error => {
