@@ -101,37 +101,37 @@ async function parse_policy_wiki_export(filepath) {
         .replace(/{{box.*?}}((?:.|[\n])*?){{\/box}}/gm, '') // replace box stuff
 
         // replace formating of headings with markdown formating
-        .replace(/======\s?(.*?)\s?======/g, (_, group1) => {
+        .replace(/^======\s?(.*?)\s?======/g, (_, group1) => {
           if (group1.replace(/[\s\n]/g, '').length === 0) {
             return '\n'
           }
           return `###### ${group1}\n`
         }) // remove formating of heading6
-        .replace(/=====\s?(.*?)\s?=====/g, (_, group1) => {
+        .replace(/^=====\s?(.*?)\s?=====/g, (_, group1) => {
           if (group1.replace(/[\s\n]/g, '').length === 0) {
             return '\n'
           }
           return `##### ${group1}\n`
         }) // remove formating of heading5
-        .replace(/====\s?(.*?)\s?====/g, (_, group1) => {
+        .replace(/^====\s?(.*?)\s?====/g, (_, group1) => {
           if (group1.replace(/[\s\n]/g, '').length === 0) {
             return '\n'
           }
           return `#### ${group1}\n`
         }) // remove formating of heading4
-        .replace(/===\s?(.*?)\s?===/g, (_, group1) => {
+        .replace(/^===\s?(.*?)\s?===/g, (_, group1) => {
           if (group1.replace(/[\s\n]/g, '').length === 0) {
             return '\n'
           }
           return `### ${group1}\n`
         }) // remove formating of heading3
-        .replace(/==\s?(.*?)\s?==/g, (_, group1) => {
+        .replace(/^==\s?(.*?)\s?==/g, (_, group1) => {
           if (group1.replace(/[\s\n]/g, '').length === 0) {
             return '\n'
           }
           return `## ${group1}\n`
         }) // remove formating of heading2
-        .replace(/=\s?(.*?)\s?=/g, (_, group1) => {
+        .replace(/^=\s?(.*?)\s?=/g, (_, group1) => {
           if (group1.replace(/[\s\n]/g, '').length === 0) {
             return '\n'
           }
