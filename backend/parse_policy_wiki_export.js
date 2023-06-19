@@ -191,8 +191,6 @@ async function parse_policy_wiki_export(filepath) {
         .replace(/[\r\n\s]{2,}/gm, '\n\n') // max 1 empty line
         .replace(/[\r\n\s]+$/, '') // remove trailing linebreaks and whitespace
 
-      delete data.syntaxId; // not needed after parsing
-
       return {
         ...data,
         content: parsed_content,
