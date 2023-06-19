@@ -276,6 +276,10 @@ const filepath = './policy-wiki-export.xar'
 const url_prefix = 'https://policy.volteuropa.org/bin/view/'
 const export_path = './policy_wiki_content.json'
 
+// const filepath = './policy-export-de.xar'
+// const url_prefix = 'https://policy.volteuropa.org/wiki/voltgermany/view/'
+// const export_path = './policy_wiki_content_de.json'
+
 parse_policy_wiki_export(filepath, url_prefix)
   .then(webhome_files => {
 
