@@ -64,7 +64,7 @@ async function parse_policy_wiki_export(filepath) {
         id,
         // parents,
         // title,
-        syntaxId: xml_parsed.xwikidoc.syntaxId,
+        // syntaxId: xml_parsed.xwikidoc.syntaxId,
         content: xml_parsed.xwikidoc.content,
       }
     })
