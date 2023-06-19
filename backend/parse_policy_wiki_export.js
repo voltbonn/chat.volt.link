@@ -97,7 +97,7 @@ async function parse_policy_wiki_export(filepath) {
 
         // remove comments
         .replace(/<!--((?:.|\n)*?)-->/gm, '') // remove html comments
-        .replace(/{{((?:.|\n)*?)}}/gm, '') // remove velocity comments
+        .replace(/{{(?!include)((?:.|\n)*?)}}/gm, '') // remove velocity comments (but not include macro)
         .replace(/{{box.*?}}((?:.|[\n])*?){{\/box}}/gm, '') // replace box stuff
 
         // replace formating of headings with markdown formating
