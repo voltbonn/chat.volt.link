@@ -169,6 +169,14 @@ async function parse_policy_wiki_export(filepath) {
 
       const include_regex = /{{include reference="(.*?)"\/}}/gm;
 
+      const has_includes = include_regex.test(data.content)
+      if (has_includes === false) {
+        data.had_includes = false
+        return data
+      }
+
+      data.had_includes = true
+
       // The substituted value will be contained in the result variable
       const parsed_content = data.content
         .replace(include_regex, (match, p1, offset, string) => {
