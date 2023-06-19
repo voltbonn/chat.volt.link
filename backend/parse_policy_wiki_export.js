@@ -60,11 +60,44 @@ async function parse_policy_wiki_export(filepath, url_prefix) {
 
       const id = (xml_parsed.xwikidoc['@_reference'] || '').replace(/\.WebHome$/, '')
 
+      let tags = []
+      if (
+        xml_parsed.xwikidoc.hasOwnProperty('object')
+        && typeof xml_parsed.xwikidoc.object === 'object'
+        && xml_parsed.xwikidoc.object !== null
+      ) {
+        const objects = (
+          Array.isArray(xml_parsed.xwikidoc.object)
+            ? xml_parsed.xwikidoc.object
+            : [xml_parsed.xwikidoc.object]
+        )
+
+        tags = objects
+          .flatMap(object => {
+            if (object.class.name === 'XWiki.XWikiComments') {
+              return null
+            }
+
+            if (Array.isArray(object.property)) {
+              return object.property
+                .flatMap(property => Object.values(property))
+            }
+
+            if (typeof object.property === 'object' && object.property !== null) {
+              return Object.values(object.property)
+            }
+
+            return null
+          })
+          .filter(Boolean) // remove nulls and empty strings
+      }
+
       return {
         id,
         // parents,
         // title,
         // syntaxId: xml_parsed.xwikidoc.syntaxId,
+        tags,
         content: xml_parsed.xwikidoc.content,
       }
     })
@@ -179,6 +212,8 @@ async function parse_policy_wiki_export(filepath, url_prefix) {
 
       data.had_includes = true
 
+      let tags_with_tags_of_includes = new Set(data.tags)
+
       // The substituted value will be contained in the result variable
       const parsed_content = data.content
         .replace(include_regex, (match, p1, offset, string) => {
@@ -187,14 +222,28 @@ async function parse_policy_wiki_export(filepath, url_prefix) {
           if (!include) {
             return ''
           }
+
+          for (const tag of include.tags) {
+            tags_with_tags_of_includes.add(tag)
+          }
+
           return include.content
         })
         .replace(/[^\S\r\n]+/g, ' ') // remove multiple spaces (source: https://itecnote.com/tecnote/r-match-whitespace-but-not-newlines/)
         .replace(/[\r\n\s]{2,}/gm, '\n\n') // max 1 empty line
         .replace(/[\r\n\s]+$/, '') // remove trailing linebreaks and whitespace
 
+
+      if (tags_with_tags_of_includes.size > 0) {
+        tags_with_tags_of_includes = [...tags_with_tags_of_includes] // convert set to array
+          .sort((a, b) => a.localeCompare(b)) // sort alphabetically
+      } else {
+        tags_with_tags_of_includes = []
+      }
+
       return {
         ...data,
+        tags: tags_with_tags_of_includes,
         content: parsed_content,
       }
     })
