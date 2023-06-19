@@ -155,14 +155,6 @@ async function parse_policy_wiki_export(filepath, url_prefix) {
     })
     .filter(data => data.content.length > 0) // remove empty files
 
-  // function shuffle(a) {
-  //   for (let i = a.length - 1; i > 0; i--) {
-  //     const j = Math.floor(Math.random() * (i + 1));
-  //     [a[i], a[j]] = [a[j], a[i]];
-  //   }
-  //   return a;
-  // }
-
   // const full_text_letter_count_1 = webhome_files.map(data => data.content).join('').length
   // console.log(`full_text_letter_count-1: ${full_text_letter_count_1}`)
 
