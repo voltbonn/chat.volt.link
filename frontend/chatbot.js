@@ -340,7 +340,7 @@ const is_only_emoji = str => !remove_emoji(str || '').length
 // emoji end
 
 function get_message_text_from_intend(intend) {
-  const intend_key = intend.key
+  const intend_key = intend?.key || ''
 
   if (intend_key === 'help') {
     return `
@@ -383,6 +383,8 @@ function get_message_text_from_intend(intend) {
     `
     // <li>Search for policies</li>
   }
+
+  return ''
 }
 
 function append_info_chat_bubble(message, existing_chatbubbles) {

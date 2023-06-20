@@ -96,6 +96,13 @@ async function embedding_similarity(embedding1, embedding2) {
 }
 
 async function get_intend(text) {
+  // NOTE this isn't working quite as expected
+  return {
+    intend: null,
+    similarity: 0,
+    example: null,
+  }
+
   await load_embeddings_cache()
   const intends_cache = await load_intends_file()
   const text_embedding = await get_embedding(text, false) // false = don't cache embedding
