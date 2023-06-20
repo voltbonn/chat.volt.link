@@ -155,6 +155,8 @@ Prohibited questions/topics (you can only provide facts):
 - No quotes.
 - No poems.
 
+Strict writing style guideline: Write at a 5th grade level. Use clear and simple language, even when explaining complex topics. Bias toward short sentences. Avoid jargon and acronyms.
+
 From now on, respond to questions as chat messages. Be short, compact and precise. Use linebreaks.
 `,
     }
