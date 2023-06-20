@@ -523,13 +523,13 @@ function display_messages() {
 
     window.messages_node.appendChild(new_chatbubble)
 
-    if (
-      typeof message.intend === 'object'
-      && message.intend !== null
-      && message.intend.hasOwnProperty('key')
-    ) {
-      append_info_chat_bubble(message, existing_chatbubbles)
-    }
+    // if (
+    //   typeof message.intend === 'object'
+    //   && message.intend !== null
+    //   && message.intend.hasOwnProperty('key')
+    // ) {
+    //   append_info_chat_bubble(message, existing_chatbubbles)
+    // }
   }
 
   // window.messages_node.innerHTML = new_messages_node.innerHTML
