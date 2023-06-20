@@ -143,7 +143,6 @@ async function get_next_message(messages, callback, partial_callback, options) {
         return {
           role: message.role,
           content: message.content,
-          intend: message.intend,
         }
       })
 
