@@ -400,7 +400,7 @@ function append_info_chat_bubble(message, existing_chatbubbles) {
 
   const new_chatbubble = document.createElement('div')
   new_chatbubble.classList.add('chatbubble')
-   new_chatbubble.classList.add('info')
+  new_chatbubble.classList.add('info')
   new_chatbubble.classList.add(message.role)
   new_chatbubble.dataset.message_id = info_id
 
