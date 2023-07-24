@@ -114,7 +114,7 @@ Welt
   },
   policy: {
     title: 'Volt Policy Chat Bot',
-    context_sources: ['facts','policy'], // facts / policy
+    context_sources: ['policy'], // facts / policy
     accepted_categories: 'Policy|Challenges|Chatbot|Programmierung|Abkürzung|Glossar',
     options: {
       temperature: 1,

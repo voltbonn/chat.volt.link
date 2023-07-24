@@ -214,6 +214,7 @@ async function get_matching_policies(text) {
         frequency_penalty: 0.1,
       },
       only_context: true,
+      return_urls: true,
     }
 
     // use fetch to get the response
@@ -259,12 +260,12 @@ async function get_system_setup(options, text) {
   }
 
   let found_facts = ''
+  if (context_sources.includes('policy')) {
+    found_facts += await get_matching_policies(text)
+  }
   if (context_sources.includes('facts')) {
     const filtered_facts = filter_fact_by_bot(facts, bot)
     found_facts += await get_matching_facts(filtered_facts, text)
-  }
-  if (context_sources.includes('policy')) {
-    found_facts += await get_matching_policies(text)
   }
 
   const max_amount_of_letters = 4000 // otherwise loading the chat would take too long
